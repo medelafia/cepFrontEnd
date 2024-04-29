@@ -1,0 +1,7 @@
+.hero {
+    height: calc(100vh - 60px);
+    border-radius: 0px 0px 20px 20px ;
+}
+.hero-title {
+    font-size: 3rem;
+}

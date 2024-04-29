@@ -1,0 +1,4 @@
+.search-bar {
+    height: 120px ;
+    border-radius: var(--primary-border-raduis);
+}
