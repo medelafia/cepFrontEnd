@@ -1,6 +1,6 @@
 export default function TopDestinations() {
     return (
-        <div className="top-destinations page">
+        <div className="top-destinations page section">
             <div className="custom-container py-5 h-100">
                 <div className="d-flex align-items-center justify-content-between"> 
                     <div className="title custom-text-secondary">

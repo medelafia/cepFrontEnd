@@ -1,14 +1,14 @@
 import { useState } from "react"
 
 export default function Cars() {
-    const [carsTable , setCarTable] = useState([
-        {"make" : "mercedes" , "model" : "mnk" , "year" : 2010 , "color" : "white" , "fuel type" : "gasoil" , "trans type" : "automatique" , "style type" : "normal" } , 
-        {"make" : "mercedes" , "model" : "mnk" , "year" : 2010 , "color" : "white" , "fuel type" : "gasoil" , "trans type" : "automatique" , "style type" : "normal" } ,
-        {"make" : "mercedes" , "model" : "mnk" , "year" : 2010 , "color" : "white" , "fuel type" : "gasoil" , "trans type" : "automatique" , "style type" : "normal" } 
+    const [cars , setCars] = useState([
+        {"id":1 , "make" : "mercedes" , "model" : "mnk" , "year" : 2010 , "color" : "white" , "fuel type" : "gasoil" , "trans type" : "automatique" , "style type" : "normal" } , 
+        {"id":2 ,"make" : "mercedes" , "model" : "mnk" , "year" : 2010 , "color" : "white" , "fuel type" : "gasoil" , "trans type" : "automatique" , "style type" : "normal" } ,
+        {"id":3 ,"make" : "mercedes" , "model" : "mnk" , "year" : 2010 , "color" : "white" , "fuel type" : "gasoil" , "trans type" : "automatique" , "style type" : "normal" } 
     ]) ; 
-    const displayCars = () => {
-        console.log(carsTable)
-        return carsTable.map((car,index) => <tr key={index}>
+    const renderCars = () => {
+        return cars.map((car,index) => <tr key={index}>
+                        <td>{car.id}</td>
                         <td>{car.make}</td>
                         <td>{car.model}</td>
                         <td>{car.year}</td>
@@ -16,6 +16,10 @@ export default function Cars() {
                         <td>{car["fuel type"]}</td>
                         <td>{car["trans type"]}</td>
                         <td>{car["style type"]}</td>
+                        <td>
+                            <button className="btn text-danger"><i class="fa-solid fa-trash"></i></button>
+                            <button className="btn text-success"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
                 </tr>
                 )
     }
@@ -28,6 +32,7 @@ export default function Cars() {
             <div className="bg-white p-2 rounded my-2 h-100">
                 <table className="table custom-text-secondary text-center">
                     <thead>
+                        <th>id</th>
                         <th>make</th>
                         <th>model</th>
                         <th>year</th>
@@ -38,12 +43,9 @@ export default function Cars() {
                         <th>actions</th>
                     </thead>
                     <tbody className="text-secondary">
-                        {displayCars}
+                        {cars.length == 0 ? <tr><td colSpan="9">no items</td></tr> : renderCars()}
                     </tbody>
                 </table>
-            </div>
-            <div className="bg-white rounded p-2">
-                 x,,d
             </div>
         </div>
     )

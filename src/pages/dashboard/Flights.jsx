@@ -1,4 +1,14 @@
+import { useState } from "react"
+
 export default function Flights(){
+    const [ flights , setFlights ] =useState([]) 
+    const renderFlights = () => {
+        return flights.map((flight , index ) => {
+            <tr>
+            
+            </tr>
+        })
+    }
     return (
         <div className="py-3 px-5 h-75">
             <div className="d-flex align-items-center justify-content-between">
@@ -9,6 +19,7 @@ export default function Flights(){
                 <table className="table custom-text-secondary text-center">
                     <thead>
                         <tr>
+                            <th>id</th>
                             <th>price</th>
                             <th>number places</th>
                             <th>date</th>
@@ -17,20 +28,13 @@ export default function Flights(){
                             <th>distance</th>
                             <th>airline name</th>
                             <th>flight class</th>
+                            <th>actions</th>
                         </tr>
                     </thead>
                     <tbody className="text-secondary">
-                        <tr>
-                            <td>dnd</td>
-                            <td>dkdd</td>
-                            <td>ddd</td>
-                            <td>dddddv</td>
-                        </tr>
+                        {flights.length == 0 ? <tr><td colSpan="10">no items</td></tr> : renderFlights()}
                     </tbody>
                 </table>
-            </div>
-            <div className="bg-white rounded p-2">
-                 x,,d
             </div>
         </div>
     )

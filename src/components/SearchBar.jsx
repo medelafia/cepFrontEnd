@@ -1,8 +1,17 @@
-import { ConstructionOutlined } from "@mui/icons-material"
+import { useEffect, useRef } from "react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import "./components.css"
 export default function SearchBar() {
     const [current , setCurrent] = useState("flights")
+    const beginAirport = useRef()
+    const [airports , setAirports] = useState([]) ; 
+    const navigate = useNavigate()
+    useEffect(()=> {
+        fetch("http://localhost:8084/airports/")
+        .then(res => res.json())
+        .then(data => setAirports(data)) 
+    } , [] )
     const handleClick = (e) => {
         setCurrent(e.currentTarget.innerText.toLowerCase())
         document.querySelectorAll(".search-bar-item").forEach(li => {
@@ -10,8 +19,21 @@ export default function SearchBar() {
         })
         e.currentTarget.classList.add("active")
     }
+    const displayAirports = () => {
+        return airports.map((airport , index ) => <option value={airport.name} key={index}>{airport.name}</option>)
+    }
+    const handleSearchClick = () => {
+        switch(current) {
+            case "flights" : navigate("/offers/flights" , {beginAirport : beginAirport.current.value}) ; 
+                break; 
+            case "hotels" : navigate("/offers/hotels" )
+                break ; 
+            case "cars" : navigate('/offers/cars')
+                break ; 
+        }
+    }
     return (
-        <div className="search-bar bg-white w-100">
+        <div className="search-bar bg-white w-100 custom-border">
             <ul className="d-flex align-items-center justify-content-center custom-text-secondary my-1">
                 <li className="mx-2 active search-bar-item" onClick={handleClick}>flights</li>
                 <li className="mx-2 search-bar-item" onClick={handleClick}>cars</li>
@@ -21,8 +43,12 @@ export default function SearchBar() {
                 { 
                     (current == "flights") ? 
                         <div className="d-flex w-100 mx-2">
-                            <input type="text" className="form-control mx-1 custom-text-secondary" placeholder="from"/> 
-                            <input type="text" className="form-control mx-1 custom-text-secondary" placeholder="to"/>
+                            <select name="from" ref={beginAirport} className="form-select mx-1 custom-text-secondary">
+                                {displayAirports()}
+                            </select> 
+                            <select name="from" id="" className="form-select mx-1 custom-text-secondary">
+                                {displayAirports()}
+                            </select> 
                             <input type="date" className="form-control mx-1 custom-text-secondary"/> 
                             <select name="" className="form-select custom-text-secondary">
                                 <option value="">economy</option>
@@ -51,7 +77,7 @@ export default function SearchBar() {
                             </div>
                         )
                 }
-                <button className="custom-btn-secondary btn">search</button>
+                <button className="custom-btn-secondary btn" onClick={handleSearchClick}>search</button>
             </div>
         </div>
     )

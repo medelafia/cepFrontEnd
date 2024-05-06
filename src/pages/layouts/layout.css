@@ -23,15 +23,16 @@ ul li:hover {
 }
 .active-dashboard-link {
     border-left: 3px solid var(--primary-color);
+    color:  var(--primary-color) ;
 }
 .dashboard-link {
     cursor: pointer;
     transition: 0.05s ;
 }
 .dashboard-link:hover {
-    border-left: 3px solid var(--primary-color);
+    border-left: 3px solid var(--third-color);
 }
-.hover {
+.hover:hover {
     border-bottom: 3px solid var(--secondary-color);
     color: var(--secondary-color);
 }
