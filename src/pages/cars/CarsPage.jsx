@@ -16,12 +16,14 @@ export default function Cars() {
         console.log(displayCars)
     } , []) 
     return (  
-        <div className="page bg-light p-2">
+        <div className="page p-2">
             <div className="w-100"> 
 
             </div>
             <div className="row w-100">
-                <div className="col-sm-4"></div>
+                <div className="col-sm-4">
+                    jbsjs
+                </div>
                 <div className="col-sm-8">
                     <div className="d-flex align-items-center justify-content-between">
                         <div className="text-capitalize">results</div>

@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { useFetch } from "../../hooks/custom-hooks"  
 
 export default function Rooms() {
+    const {isLoading , error , data} = useFetch("OFFERS-SERVICES", "/rooms/")
     const [rooms , setRooms] = useState([]) 
     const renderRooms = () => {
         return rooms.map((room , index) => {
@@ -8,12 +10,6 @@ export default function Rooms() {
         })
     }
     return (
-        <div className="py-3 px-5 h-75">
-            <div className="d-flex align-items-center justify-content-between">
-                <div className="custom-text-secondary text-capitalize">dashboard / Rooms </div>
-                <button className="btn custom-btn-secondary"><i class="fa-solid fa-plus mx-1"></i>add room</button>
-            </div>
-            <div className="bg-white p-2 rounded my-2 h-100">
                 <table className="table custom-text-secondary text-center">
                     <thead>
                         <th>id</th>
@@ -34,7 +30,5 @@ export default function Rooms() {
                         }
                     </tbody>
                 </table>
-            </div>
-        </div>
     )
 }

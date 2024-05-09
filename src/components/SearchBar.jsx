@@ -33,7 +33,7 @@ export default function SearchBar() {
         }
     }
     return (
-        <div className="search-bar bg-white w-100 custom-border">
+        <div className="search-bar bg-white w-100 border">
             <ul className="d-flex align-items-center justify-content-center custom-text-secondary my-1">
                 <li className="mx-2 active search-bar-item" onClick={handleClick}>flights</li>
                 <li className="mx-2 search-bar-item" onClick={handleClick}>cars</li>
@@ -77,7 +77,7 @@ export default function SearchBar() {
                             </div>
                         )
                 }
-                <button className="custom-btn-secondary btn" onClick={handleSearchClick}>search</button>
+                <button className="custom-btn-primary btn" onClick={handleSearchClick}>search</button>
             </div>
         </div>
     )

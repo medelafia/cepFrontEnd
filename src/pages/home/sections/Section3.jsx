@@ -1,6 +1,6 @@
 export default function Section3() {
     return (
-        <div className="section section3">
+        <div className="section section3 mt-5">
             <div className="custom-container">
                 <div className="custom-bg-secondary h-100 row">
                     <div className="col-sm-4 d-flex align-items-center justify-content-center">

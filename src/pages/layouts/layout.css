@@ -30,7 +30,8 @@ ul li:hover {
     transition: 0.05s ;
 }
 .dashboard-link:hover {
-    border-left: 3px solid var(--third-color);
+    border-left: 3px solid var(--primary-color);
+    color: var(--primary-color);
 }
 .hover:hover {
     border-bottom: 3px solid var(--secondary-color);
