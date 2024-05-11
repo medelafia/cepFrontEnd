@@ -1,16 +1,24 @@
+import { GoogleLogin } from "@react-oauth/google"
 import { useState } from "react"
 import { useRef } from "react"
+import FacebookLogin from "react-facebook-login"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import image from "../../assets/login.jpg"
+import { login } from "../../features/userSlice"
 import "./login.css"
 export default function Login() {
     const navigate = useNavigate()
     const [error ,setError] = useState(null)
+    const dispatch = useDispatch()
     const handleBackClick = () => {
         navigate("/")
     }
     const username = useRef("") ; 
     const password = useRef(""); 
+    const responseFacebook = (res) => {
+        console.log(res)
+    }
     const handleSignInClick = (e) => {
         e.preventDefault()
         const usernameValue = username.current.value ; 
@@ -18,7 +26,7 @@ export default function Login() {
         if(passwordValue == "" || username == "") {
             setError({errorContent : "all fields are required"})
         } else {
-            const data = {
+            /*const data = {
                 username : usernameValue , 
                 password : passwordValue 
             }
@@ -28,13 +36,13 @@ export default function Login() {
                 body : JSON.stringify(data) 
             }
             fetch("http://localhost:8089/accounts/login" , requestOptions)
-            .then(res => console.log(res)) 
+            .then(res => console.log(res)) */
+            console.log(dispatch(login({username : usernameValue})))
         }
 
     }
     return(
         <div className="d-flex w-100 login">
-
             <div className="image-section w-50">
                 <img src={image} className="image-login"/>
             </div>
@@ -63,6 +71,25 @@ export default function Login() {
                     <button className="custom-btn-secondary btn my-1 w-100" onClick={handleSignInClick}>Sign In</button>
                     <div className="text-center my-2">dont have account?<a className="text-primary" href="#">create account</a></div> 
                 </form>
+                <hr />
+                <div className="d-flex align-items-center justify-content-center flex-column">
+                    <FacebookLogin
+                        appId="324356744030127"
+                        autoLoad={true}
+                        fields="email,public_profile"
+                        callback={responseFacebook}
+                        cssClass="btn btn-primary my-2"
+                        icon="fa-facebook"
+                    />
+                    <GoogleLogin
+                        onSuccess={credentialResponse => {
+                            console.log(credentialResponse);
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                    />
+                </div>
             </div>
         </div>
     )

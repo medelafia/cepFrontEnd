@@ -17,17 +17,17 @@ import Clients from './pages/dashboard/Clients';
 import Service from './pages/services/Service';
 import About from "./pages/about/About" ; 
 import Contact from "./pages/contact/Contact" ;
-import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { Provider, useSelector } from 'react-redux';
 import FlightsPage from './pages/flights/FlightsPage';
 import HotelsPage from './pages/hotels/HotelsPage';
 import CarsPage from './pages/cars/CarsPage'
-import DestinationsPage from "./pages/destinations/DestinationsPage"
+import DestinationsPage from "./pages/destinations/DestinationsPage" 
+import { userSelector } from './store/selectors/userSelector';
  
 export default function App() {
+  const user = useSelector(userSelector)
   return (
     <div className="app">
-      <Provider store={store}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomeLayout/>}>
@@ -55,7 +55,6 @@ export default function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-        </Provider>
-      </div>
+    </div>
   )
 }

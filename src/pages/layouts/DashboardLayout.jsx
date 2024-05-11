@@ -15,7 +15,10 @@ export default function DashboardLayout() {
     return (
         <div className="d-flex">
             <div className="side-bar border-end d-flex flex-column">
-                <div className="title custom-text-primary p-3 text-center text-capitalize">travelboot</div>
+                <div className="custom-text-primary p-3 text-center text-capitalize d-flex align-items-center justify-content-center">
+                    <i className="fa-solid fa-plane plane"></i>
+                    <span className="title">travelboot</span>
+                </div>
                 <div className="d-flex flex-column my-5">
                     <Link to="/dashboard">
                         <div className={`my-1 custom-text-secondary ${getCurrentDashboardPage() == "" && "active-dashboard-link"} p-2 dashboard-link`} onClick={handleClick}>

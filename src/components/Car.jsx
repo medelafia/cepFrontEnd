@@ -1,14 +1,29 @@
+import CarProperty from "./CarProperty";
+
 export default function Car() {
     return (
-        <div className="w-100 rounded my-4 p-3 bg-white border ">
-            <div className="d-flex align-items-center justify-content-center">
-                <div className="w-25 p-3">
-                    <h5>car type</h5>
-                    <img src="" className="w-100" alt="" />
+        <div className="w-100 rounded my-4 p-2 bg-white border">
+            <div className="d-flex align-items-start justify-content-center">
+                <div className="w-25 p-2">
+                    <h5 className="text-capitalize">car type</h5>
+                    <div className="w-100 bg-primary" style={{height : "150px"}}>
+                        kd
+                    </div>
                 </div>
-                <div className="w-75 p-3">
+                <div className="w-50 p-2 d-flex align-items-start justify-content-start flex-column">
+                    <CarProperty carPropertyName="seats"/> 
+                    <CarProperty carPropertyName="seats"/> 
+                    <CarProperty carPropertyName="seats"/> 
+                </div>
+                <div className="w-25 p-2 d-flex">
+                    <div className="bg-light" style={{width : "1px" , height : "200px"}}>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-around p-1 flex-column" style={{width : "calc(100% - 1px)"}}>
+                        <div className="text-capitalize">free cancelation</div>
+                        <button className="btn custom-btn-secondary">book now</button>
+                    </div>
                 </div>
             </div>
         </div>
     )
-}
+} 
