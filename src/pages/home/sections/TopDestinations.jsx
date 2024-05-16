@@ -1,3 +1,4 @@
+import image1 from "../../../assets/marrakech.jpg" 
 export default function TopDestinations() {
     return (
         <div className="top-destinations section mb-5">
@@ -9,22 +10,22 @@ export default function TopDestinations() {
                     <a href="/offers/destinations" className="custom-text-secondary text-decoration-none">show more</a>
                 </div>
                 <div className="row my-4 h-100">
-                    <div className="col-md-4 h-100">
-                        <div className="container bg-primary rounded h-100">
-                            <img src="" alt="" />
+                    <div className="col-md-4 h-100 col-sm-12">
+                        <div className="bg-primary rounded h-100">
+                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
                         </div>
                     </div>
-                    <div className="col-md-4 h-100">
-                        <div className="container bg-primary rounded h-50">
-                            <img src="" alt="" />
+                    <div className="col-md-4 h-100 col-sm-12">
+                        <div className="bg-primary rounded h-50">
+                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
                         </div>
-                        <div className="container bg-primary rounded my-1 h-50">
-                            <img src="" alt="" />
+                        <div className="bg-primary rounded my-1 h-50">
+                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
                         </div>
                     </div>
-                    <div className="col-md-4 h-100">
-                        <div className="container bg-primary rounded h-100">
-                            <img src="" alt="" />
+                    <div className="col-md-4 h-100 col-sm-12">
+                        <div className="bg-primary rounded h-100">
+                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
                         </div>
                     </div>
                 </div>

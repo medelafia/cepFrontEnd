@@ -1,10 +1,11 @@
+import image from "../../../assets/login.jpg"
 export default function Section3() {
     return (
         <div className="section section3 mt-5">
             <div className="custom-container">
                 <div className="custom-bg-secondary h-100 row">
-                    <div className="col-sm-4 d-flex align-items-center justify-content-center">
-                        <img src="C://New folder//Personnal Folder//PFE//front-end//src//assets//marrakech.jpg" alt=""/>
+                    <div className="col-sm-4 d-flex align-items-center justify-content-center ">
+                        <img src={image} alt="" className="rounded"/>
                     </div>
                     <div className="col-sm-8 d-flex justify-content-center flex-column p-5">
                         <h1 className="text-white my-5 text-capitalize">travel to any corner around the world</h1>

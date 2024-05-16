@@ -1,16 +1,17 @@
 import CarProperty from "./CarProperty";
+import image from "../assets/image.png"
 
 export default function Car() {
     return (
         <div className="w-100 rounded my-4 p-2 bg-white border">
             <div className="d-flex align-items-start justify-content-center">
-                <div className="w-25 p-2">
+                <div className="w-50 p-2">
                     <h5 className="text-capitalize">car type</h5>
-                    <div className="w-100 bg-primary" style={{height : "150px"}}>
-                        kd
+                    <div className="w-100" style={{height : "150px"}}>
+                        <img src={image} style={{width : "70%" , height : "100%"}} alt="" />
                     </div>
                 </div>
-                <div className="w-50 p-2 d-flex align-items-start justify-content-start flex-column">
+                <div className="w-25 p-2 d-flex align-items-start justify-content-start flex-column">
                     <CarProperty carPropertyName="seats"/> 
                     <CarProperty carPropertyName="seats"/> 
                     <CarProperty carPropertyName="seats"/> 

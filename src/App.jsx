@@ -23,7 +23,12 @@ import HotelsPage from './pages/hotels/HotelsPage';
 import CarsPage from './pages/cars/CarsPage'
 import DestinationsPage from "./pages/destinations/DestinationsPage" 
 import { userSelector } from './store/selectors/userSelector';
- 
+import SignUp from './pages/signUp/SignUp';
+import OffersLayout from './pages/layouts/OffersLayout';
+import ErrorPage from './pages/errorsPages/ErrorPage';
+import PayementPage from './pages/payementPage/PayementPage';
+import Index from './pages/dashboard/Index';
+
 export default function App() {
   const user = useSelector(userSelector)
   return (
@@ -35,26 +40,32 @@ export default function App() {
               <Route element={<Service />} path="/services"/>
               <Route element={<About /> } path="/about" />
               <Route element={<Contact /> } path="/contact" /> 
-              <Route element={<FlightsPage />} path="/offers/flights" />
-              <Route element={<HotelsPage />} path="/offers/hotels" />
-              <Route element={<CarsPage />} path="/offers/cars" />
-              <Route element={<HotelsPage />} path="/offers/organized-travel" />
-              <Route element={<HotelsPage />} path="/offers/hotels" />
-              <Route element={<DestinationsPage />} path="/offers/destinations" /> 
+              <Route element={<OffersLayout />} path="/offers">
+                <Route element={<FlightsPage />} path="/offers/flights" />
+                <Route element={<HotelsPage />} path="/offers/hotels" />
+                <Route element={<CarsPage />} path="/offers/cars" />
+                <Route element={<HotelsPage />} path="/offers/organized-travel" />
+                <Route element={<HotelsPage />} path="/offers/hotels" />
+                <Route element={<DestinationsPage />} path="/offers/destinations" /> 
+              </Route>
+              <Route element={<SignUp /> } path="/signUp" />
             </Route>
             <Route path="/login" element={<Login />}/>
-            <Route path='/dashboard' element={<DashboardLayout />}>
-              <Route element={<Flights />} index /> 
-              <Route element={<Cars />} path="/dashboard/cars"/>
-              <Route element={<Stations />} path="/dashboard/stations"/>
-              <Route element={<Destinations/>} path="/dashboard/destinations" />
-              <Route element={<Rooms />} path="/dashboard/rooms" />
-              <Route element={<Travels/>} path="/dashboard/travels" />
-              <Route element={<Providers/>} path="/dashboard/providers" />
-              <Route element={<Clients /> } path="/dashboard/clients" /> 
+            <Route path='/dashboard' element={(user?.accountType == "PROVIDER")||(user?.accountType == "ADMIN") ? <DashboardLayout /> : <ErrorPage />}>
+              <Route element={<Index />} index /> 
+              <Route element={user?.providerType == "AIRLINE" ? <Flights /> : <ErrorPage status={401}/>} path="/dashboard/flights" /> 
+              <Route element={user?.providerType == "CAR_AGENCY" ? <Cars /> : <ErrorPage status={401} /> } path="/dashboard/cars"/>
+              <Route element={user?.accountType == "ADMIN" ? <Stations /> : <ErrorPage status={401} />} path="/dashboard/stations"/>
+              <Route element={user?.accountType == "ADMIN" ? <Destinations/> : <ErrorPage /> } path="/dashboard/destinations" />
+              <Route element={user?.providerType == "HOTEL" ? <Rooms /> : <ErrorPage /> } path="/dashboard/rooms" />
+              <Route element={user?.providerType == "TRAVEL_AGENCY" ? <Travels/> : <ErrorPage />} path="/dashboard/travels" />
+              <Route element={user?.accountType == "ADMIN" ? <Providers/> : <ErrorPage />} path="/dashboard/providers" />
+              <Route element={user?.accountType == "ADMIN" ? <Clients /> : <ErrorPage />} path="/dashboard/clients" /> 
             </Route>
+            <Route path="/*" element={<ErrorPage status={404} message="page not found"/>} /> 
+            <Route path="/payment" element={<PayementPage /> } />
           </Routes>
         </BrowserRouter>
     </div>
   )
-}
+} 

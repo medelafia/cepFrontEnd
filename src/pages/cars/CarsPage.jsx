@@ -17,7 +17,7 @@ export default function Cars() {
         console.log(displayCars)
     } , []) 
     return (  
-        <div className="page p-2 bg-light">
+        <div className="page p-2">
             <div className="w-100"> 
 
             </div>
@@ -35,7 +35,7 @@ export default function Cars() {
                 </div>
                 <div className="col-sm-8">
                     <div className="d-flex align-items-center justify-content-between">
-                        <div className="text-capitalize">results</div>
+                        <div className="text-capitalize">{cars.length} car</div>
                         <div className="d-flex align-items-center">
                             <div className="me-2">sort by</div>
                             <select name="" id="sort" className="form-select">
