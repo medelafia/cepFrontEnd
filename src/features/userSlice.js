@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     name : "mohamed" , 
     accountType : "PROVIDER" , 
-    providerType : "AIRLINE"
+    providerType : "HOTEL"
 }
 const userSlice = createSlice({
     name : "user" , 

@@ -2,38 +2,7 @@ import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/custom-hooks";
 
 export default function Cars() {
-  const [cars, setCars] = useState([
-    {
-      id: 1,
-      make: "mercedes",
-      model: "mnk",
-      year: 2010,
-      color: "white",
-      "fuel type": "gasoil",
-      "trans type": "automatique",
-      "style type": "normal",
-    },
-    {
-      id: 2,
-      make: "mercedes",
-      model: "mnk",
-      year: 2010,
-      color: "white",
-      "fuel type": "gasoil",
-      "trans type": "automatique",
-      "style type": "normal",
-    },
-    {
-      id: 3,
-      make: "mercedes",
-      model: "mnk",
-      year: 2010,
-      color: "white",
-      "fuel type": "gasoil",
-      "trans type": "automatique",
-      "style type": "normal",
-    },
-  ]);
+  const [cars, setCars] = useState([]);
   const { isLoading, error, data } = useFetch("OFFERS-SERVICES", "/cars/");
   const renderCars = () => {
     return cars.map((car, index) => (
@@ -57,7 +26,8 @@ export default function Cars() {
       </tr>
     ));
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+  }, []);
   return (
     <table className="table custom-text-secondary text-center">
       <thead>

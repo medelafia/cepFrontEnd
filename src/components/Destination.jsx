@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import image from "../assets/hotel4.jpeg"
 export default function Destination() {
     return (
@@ -13,7 +14,8 @@ export default function Destination() {
                 </div>
                 <div className="destination-address">
                     morroco
-                </div>  
+                </div> 
+                <Link to="/offers/destination/1" className="text-secondary">show more details</Link> 
             </div>
         </div>
     )

@@ -29,7 +29,7 @@ export default function HomeLayout() {
   }
   return (
     <>
-      <div className="custom-navbar border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container position-relative">
+      <div className="custom-navbar border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container">
         <div
           onClick={toHome}
           className="text-capitalize custom-text-primary d-flex align-items-center justify-content-center"
@@ -40,31 +40,33 @@ export default function HomeLayout() {
         <ul className="d-flex align-items-center justify-content-center custom-text-secondary">
           <Link
             to="/"
-            className={`mx-2 custom-text-secondary text-decoration-none hover ${
+            className={`mx-2 custom-text-secondary text-decoration-none hover pt-3 ${
               pathname == "/" && "active"
             }`}
           >
             home
           </Link>
           <Link
-            to="/services"
-            className={`mx-2 text-decoration-none custom-text-secondary hover ${
-              pathname == "/services" && "active"
-            }`}
-          >
-            Services
-          </Link>
-          <Link
             to="/about"
-            className={`mx-2 text-decoration-none custom-text-secondary hover ${
+            className={`mx-2 text-decoration-none custom-text-secondary hover pt-3 ${
               pathname == "/about" && "active"
             }`}
           >
             About
           </Link>
+          <div class="dropdown">
+            <div class={`dropdown-toggle mx-2 text-decoration-none custom-text-secondary hover pt-3 ${pathname == "/about" && "active"}`} data-bs-toggle="dropdown">
+             services
+            </div>
+            <ul class="dropdown-menu">
+                <li><Link to="/providers">providers</Link></li>
+                <li><Link to="/providers"></Link></li>
+                <li><Link to="/providers">providers</Link></li>
+            </ul>
+          </div>
           <Link
             to="/contact"
-            className={`mx-2 text-decoration-none custom-text-secondary hover ${
+            className={`mx-2 text-decoration-none custom-text-secondary pt-3 hover${
               pathname == "/contact" && "active"
             }`}
           >
@@ -106,7 +108,49 @@ export default function HomeLayout() {
         </div>
       <LoginModal />
       <Outlet />
-      <div className="footer custom-bg-secondary">footer</div>
+      <div className="footer bg-light p-4">
+        <div>
+
+        </div>
+        <div className="row w-100">
+          <div className="col-md-3">
+            <div className="">Home</div>
+            <ul>
+              <li>home</li>
+              <li>contact</li>
+              <li>service</li>
+              <li>about</li>
+            </ul>
+          </div>
+          <div className="col-md-3">
+            <div className="">Home</div>
+            <ul>
+              <li>home</li>
+              <li>contact</li>
+              <li>service</li>
+              <li>about</li>
+            </ul>
+          </div>
+          <div className="col-md-3">
+            <div className="">Home</div>
+            <ul>
+              <li>home</li>
+              <li>contact</li>
+              <li>service</li>
+              <li>about</li>
+            </ul>
+          </div>
+          <div className="col-md-3">
+            <div className="">Home</div>
+            <ul>
+              <li>home</li>
+              <li>contact</li>
+              <li>service</li>
+              <li>about</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

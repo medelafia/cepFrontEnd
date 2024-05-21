@@ -11,9 +11,6 @@ ul li:hover {
     border-bottom: 3px solid var(--secondary-color);
     cursor: pointer;
 }
-.footer {
-    height: 300px;
-}
 .side-bar {
     min-height: 100vh ;
 }

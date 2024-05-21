@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import DashboardLayout from "./pages/layouts/DashboardLayout" ;
 import './App.css'
 import Login from "./pages/login/Login.jsx";
@@ -17,7 +16,7 @@ import Clients from './pages/dashboard/Clients';
 import Service from './pages/services/Service';
 import About from "./pages/about/About" ; 
 import Contact from "./pages/contact/Contact" ;
-import { Provider, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import FlightsPage from './pages/flights/FlightsPage';
 import HotelsPage from './pages/hotels/HotelsPage';
 import CarsPage from './pages/cars/CarsPage'
@@ -28,6 +27,12 @@ import OffersLayout from './pages/layouts/OffersLayout';
 import ErrorPage from './pages/errorsPages/ErrorPage';
 import PayementPage from './pages/payementPage/PayementPage';
 import Index from './pages/dashboard/Index';
+import AirlinePage from './pages/providers/AirlinePage';
+import HotelPage from './pages/providers/HotelPage';
+import TravelAgencyPage from './pages/providers/TravelAgencyPage';
+import CarAgencyPage from './pages/providers/CarAgencyPage';
+import RailWayOperatorPage from './pages/providers/RailWayOperatorPage';
+import DestinationPage from "./pages/destinations/DestinationPage";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -46,7 +51,15 @@ export default function App() {
                 <Route element={<CarsPage />} path="/offers/cars" />
                 <Route element={<HotelsPage />} path="/offers/organized-travel" />
                 <Route element={<HotelsPage />} path="/offers/hotels" />
-                <Route element={<DestinationsPage />} path="/offers/destinations" /> 
+                <Route element={<DestinationsPage />} path="/offers/destinations"/>
+                <Route element={<DestinationPage />} path='/offers/destination/:id'/>
+              </Route>
+              <Route path='/providers'>
+                <Route element={<AirlinePage />} path='/providers/airline/:id' />
+                <Route element={<HotelPage />}  path='/providers/hotel/:id'/> 
+                <Route element={<TravelAgencyPage />}  path='/providers/travelAgency/:id'/> 
+                <Route element={<CarAgencyPage />}  path='/providers/carAgency/:id'/> 
+                <Route element={<RailWayOperatorPage />} path="/providers/railwayOperator" /> 
               </Route>
               <Route element={<SignUp /> } path="/signUp" />
             </Route>
