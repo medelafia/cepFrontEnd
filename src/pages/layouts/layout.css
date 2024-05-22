@@ -5,7 +5,8 @@
     transform: rotate(-45deg);
 }
 .active {
-    border-bottom: 3px solid var(--secondary-color);
+    border-bottom: 3px solid var(--primary-color);
+    color : var(--primary-color);
 }
 ul li:hover {
     border-bottom: 3px solid var(--secondary-color);

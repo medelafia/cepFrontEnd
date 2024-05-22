@@ -33,6 +33,10 @@ import TravelAgencyPage from './pages/providers/TravelAgencyPage';
 import CarAgencyPage from './pages/providers/CarAgencyPage';
 import RailWayOperatorPage from './pages/providers/RailWayOperatorPage';
 import DestinationPage from "./pages/destinations/DestinationPage";
+import Profile from "./pages/profile/Profile";
+import UserInfo from "./pages/profile/UserInfo";
+import AccountInfo from "./pages/profile/AccountInfo";
+import RecommendationProfile from "./pages/profile/RecommendationProfile";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -41,6 +45,11 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomeLayout/>}>
+              <Route element={<Profile />} path="/profile">
+                <Route element={<UserInfo/>} index /> 
+                <Route element={<AccountInfo />} path="/profile/accountInfo" /> 
+                <Route element={<RecommendationProfile />} path='/profile/recommendationProfile' /> 
+              </Route> 
               <Route index element={<Home />} /> 
               <Route element={<Service />} path="/services"/>
               <Route element={<About /> } path="/about" />
