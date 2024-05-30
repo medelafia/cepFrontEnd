@@ -1,9 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react";
 
 const initialState = {
-    name : "mohamed" , 
-    accountType : "PROVIDER" , 
-    providerType : "HOTEL"
+    username : "mohamed" , 
+    accountType : "COSTUMER", 
+    providerType : "" , 
+    email : "mohamedelafia@gmail.com" , 
+    tel : "0658045721" , 
+    userInfo : {
+        firstName : "mohamed" , 
+        lastName : "el afia" , 
+        country : "morrocoo" , 
+        age : 20 ,
+        gender : "m"  
+    }
 }
 const userSlice = createSlice({
     name : "user" , 

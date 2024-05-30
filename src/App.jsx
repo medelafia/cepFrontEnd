@@ -37,6 +37,8 @@ import Profile from "./pages/profile/Profile";
 import UserInfo from "./pages/profile/UserInfo";
 import AccountInfo from "./pages/profile/AccountInfo";
 import RecommendationProfile from "./pages/profile/RecommendationProfile";
+import Setting from "./pages/dashboard/Setting";
+import PasswordInfo from "./pages/profile/PasswordInfo";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -45,10 +47,11 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomeLayout/>}>
-              <Route element={<Profile />} path="/profile">
+              <Route element={user?.accountType == "COSTUMER" ? <Profile /> : <ErrorPage status={404} /> } path="/profile">
                 <Route element={<UserInfo/>} index /> 
                 <Route element={<AccountInfo />} path="/profile/accountInfo" /> 
                 <Route element={<RecommendationProfile />} path='/profile/recommendationProfile' /> 
+                <Route element={<PasswordInfo />} path="/profile/passwordChange" />
               </Route> 
               <Route index element={<Home />} /> 
               <Route element={<Service />} path="/services"/>
@@ -73,16 +76,20 @@ export default function App() {
               <Route element={<SignUp /> } path="/signUp" />
             </Route>
             <Route path="/login" element={<Login />}/>
-            <Route path='/dashboard' element={(user?.accountType == "PROVIDER")||(user?.accountType == "ADMIN") ? <DashboardLayout /> : <ErrorPage />}>
+            <Route path='/dashboard' element={(user?.accountType == "PROVIDER")||(user?.accountType == "ADMIN") ? <DashboardLayout /> : <ErrorPage status={401}/>}>
               <Route element={<Index />} index /> 
               <Route element={user?.providerType == "AIRLINE" ? <Flights /> : <ErrorPage status={401}/>} path="/dashboard/flights" /> 
               <Route element={user?.providerType == "CAR_AGENCY" ? <Cars /> : <ErrorPage status={401} /> } path="/dashboard/cars"/>
               <Route element={user?.accountType == "ADMIN" ? <Stations /> : <ErrorPage status={401} />} path="/dashboard/stations"/>
-              <Route element={user?.accountType == "ADMIN" ? <Destinations/> : <ErrorPage /> } path="/dashboard/destinations" />
-              <Route element={user?.providerType == "HOTEL" ? <Rooms /> : <ErrorPage /> } path="/dashboard/rooms" />
-              <Route element={user?.providerType == "TRAVEL_AGENCY" ? <Travels/> : <ErrorPage />} path="/dashboard/travels" />
-              <Route element={user?.accountType == "ADMIN" ? <Providers/> : <ErrorPage />} path="/dashboard/providers" />
-              <Route element={user?.accountType == "ADMIN" ? <Clients /> : <ErrorPage />} path="/dashboard/clients" /> 
+              <Route element={user?.accountType == "ADMIN" ? <Destinations/> : <ErrorPage status={401}/> } path="/dashboard/destinations" />
+              <Route element={user?.providerType == "HOTEL" ? <Rooms /> : <ErrorPage status={401}/> } path="/dashboard/rooms" />
+              <Route element={user?.providerType == "TRAVEL_AGENCY" ? <Travels/> : <ErrorPage status={401}/>} path="/dashboard/travels" />
+              <Route element={user?.accountType == "ADMIN" ? <Providers/> : <ErrorPage status={401}/>} path="/dashboard/providers" />
+              <Route element={user?.accountType == "ADMIN" ? <Clients /> : <ErrorPage status={401}/>} path="/dashboard/clients" /> 
+              <Route element={<Setting />} path="/dashboard/settings" >
+                <Route index element={<AccountInfo /> }/> 
+                <Route path="/dashboard/settings/company" element={<RecommendationProfile />}/> 
+              </Route> 
             </Route>
             <Route path="/*" element={<ErrorPage status={404} message="page not found"/>} /> 
             <Route path="/payment" element={<PayementPage /> } />

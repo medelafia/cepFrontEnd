@@ -1,6 +1,9 @@
+import DataPage from "./DataPage";
+
 export default function Index() {
     return (
-        <div>dashboard index</div>
-
+        <div>
+            index page
+        </div>
     )
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./components.css"
+import {motion} from "framer-motion"
 export default function SearchBar() {
     const [current , setCurrent] = useState("flights")
     const beginAirport = useRef()
@@ -33,7 +34,11 @@ export default function SearchBar() {
         }
     }
     return (
-        <div className="search-bar bg-white w-100 border">
+        <motion.div className="search-bar bg-white w-100 border"
+            animate={{ x: 0 , opacity : 1  , scale : 1 }}
+            initial={{x:-100 , opacity : 0 ,scale : 0.5  }}
+            transition = {{duration : 0.7}}
+        >
             <ul className="d-flex align-items-center justify-content-center custom-text-secondary my-1">
                 <li className="mx-2 active search-bar-item" onClick={handleClick}>flights</li>
                 <li className="mx-2 search-bar-item" onClick={handleClick}>cars</li>
@@ -79,6 +84,6 @@ export default function SearchBar() {
                 }
                 <button className="custom-btn-primary btn" onClick={handleSearchClick}>search</button>
             </div>
-        </div>
+        </motion.div>
     )
 }

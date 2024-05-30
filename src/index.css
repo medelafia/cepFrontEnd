@@ -10,6 +10,7 @@
 
   --primary-font-size : 1rem ; 
   --secondary-font-size : 1.4rem ;  
+  --third-font-size : 2.5rem ; 
 
   --primary-border-raduis : 20px ; 
   --hero-title-font-size : 3rem ; 
@@ -106,4 +107,21 @@
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.profileImage {
+  border-radius: 50%; 
+  border: 1px solid var(--secondary-color);
+}
+.profileImageSmall {
+  width:  25px;
+  height: 25px;
+}
+.custom-h-100 {
+  height: 100% ;
+}
+.font-third {
+  font-size: var(--third-font-size); 
+}
+.rounded-lg {
+  border-radius: 40px;
 }

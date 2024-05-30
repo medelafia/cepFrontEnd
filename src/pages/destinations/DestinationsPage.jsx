@@ -42,10 +42,8 @@ export default function DestinationsPage() {
                     <Destination />
                     <Destination /> 
                     <Destination />
-                    <div className="col-lg-12 d-flex align-items-center justify-content-center w-100">
-                        <div className="btn custom-btn-primary mx-2">prev</div>
-                        <div className="btn custom-btn-third mx-2">1</div>
-                        <div className="btn custom-btn-primary mx-2">next</div>
+                    <div className="col-lg-12 d-flex align-items-center justify-content-center w-100 p-1">
+                        <button className="btn custom-btn-secondary">show more</button>
                     </div>
                </div> 
             </div>

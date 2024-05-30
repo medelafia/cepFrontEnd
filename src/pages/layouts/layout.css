@@ -8,12 +8,14 @@
     border-bottom: 3px solid var(--primary-color);
     color : var(--primary-color);
 }
-ul li:hover {
-    border-bottom: 3px solid var(--secondary-color);
+.custom-nav-item {
+    border-bottom: 3px solid var(--primary-color);
     cursor: pointer;
+    color: var(--primary-color);
 }
 .side-bar {
     min-height: 100vh ;
+    transition: .5s ease;
 }
 .display {
     height: calc(100vh - 60px );

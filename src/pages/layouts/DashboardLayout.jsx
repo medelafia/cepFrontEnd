@@ -8,12 +8,14 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
 import { logout } from "../../features/userSlice"
 import { userSelector } from "../../store/selectors/userSelector"
 import "./layout.css"
+import image from "../../assets/user.jpeg" ; 
 export default function DashboardLayout() {
     const {pathname} = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate( )
     const user = useSelector(userSelector)
     const [activeLayout , setActiveLayout] = useState(false) 
+    const [showSettingList , setShowSettingList] = useState(false ) ;  
     const handleClick = (e) => {
         document.querySelectorAll(".dashboard-link").forEach((link)=> {
             link.classList.remove("active-dashboard-link")
@@ -21,7 +23,7 @@ export default function DashboardLayout() {
         e.currentTarget.classList.add("active-dashboard-link")
     }
     const getCurrentDashboardPage = () => {
-        return pathname.substring(pathname.indexOf("/dashboard") + "/dashboard".length)
+        return pathname.substring(pathname.indexOf("/dashboard") + "/dashboard".length )
     }
     const logoutAndExit = () => {
         if(confirm("are you sure")) {
@@ -32,6 +34,9 @@ export default function DashboardLayout() {
     const backToHome = () => {
         navigate("/")
     }
+    const handleShowSettingClick = () => {
+        setShowSettingList(!showSettingList) ; 
+    }
     return (
         <div className="d-flex">
             <div className="side-bar border-end d-flex flex-column">
@@ -40,51 +45,71 @@ export default function DashboardLayout() {
                     {activeLayout && <span className="title">travelboot</span>}
                 </div>
                 <div className="d-flex flex-column my-5">
-                    <Link to="/dashboard">
+                    <Link to="/dashboard" className="text-decoration-none">
                         <div className={`my-1 ${getCurrentDashboardPage() == "" ? "active-dashboard-link" : "custom-text-secondary"} p-2 dashboard-link`} onClick={handleClick}>
                             <i class="fa-solid fa-house mx-2"></i>{activeLayout && "home"}
                         </div>
                     </Link>
-                    {user?.providerType == "AIRLINE" && user?.accountType == "PROVIDER" && <Link to="/dashboard/flights">
+                    {user?.providerType == "AIRLINE" && user?.accountType == "PROVIDER" && <Link to="/dashboard/flights"  className="text-decoration-none">
                         <div className={`my-1 ${getCurrentDashboardPage() == "/flights" ? "active-dashboard-link" : "custom-text-secondary"} p-2 dashboard-link`} onClick={handleClick}>
                             <i className="fa-solid fa-plane mx-2"></i>{activeLayout && "flights"}
                         </div>
                     </Link>}
-                    {user?.providerType == "CARS_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/cars">
+                    {user?.providerType == "CARS_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/cars"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/cars" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-car-rear mx-2"></i>{activeLayout && "cars"}
                         </div>
                     </Link> }
-                    {user?.providerType == "HOTEL" && user?.accountType == "PROVIDER" && <Link to="/dashboard/rooms">
+                    {user?.providerType == "HOTEL" && user?.accountType == "PROVIDER" && <Link to="/dashboard/rooms"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/rooms" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-hotel mx-2"></i>{activeLayout && "rooms"}
                         </div>
                     </Link>}
-                    {user?.accountType == "ADMIN" && <Link to="/dashboard/clients">
+                    {user?.accountType == "ADMIN" && <Link to="/dashboard/clients"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/clients" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-user mx-2"></i>{activeLayout && "clients"}
                         </div>
                     </Link> }
-                    {user?.accountType == "ADMIN" && <Link to="/dashboard/providers">
+                    {user?.accountType == "ADMIN" && <Link to="/dashboard/providers"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/providers" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-user mx-2"></i>{activeLayout && "providers"}
                         </div>
                     </Link> }
-                    {user?.accountType == "ADMIN" && <Link to="/dashboard/stations">
+                    {user?.accountType == "ADMIN" && <Link to="/dashboard/stations"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/stations" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-charging-station mx-2"></i>{activeLayout && "stations"}
                         </div>
                     </Link> }
-                    {user?.providerType == "TRAVEL_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/travels">
+                    {user?.providerType == "TRAVEL_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/travels"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/travels" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-earth-americas mx-2"></i>{activeLayout && "travels"}
                         </div>
                     </Link> }
-                    {user?.accountType == "ADMIN" && <Link to="/dashboard/destinations">
+                    {user?.accountType == "ADMIN" && <Link to="/dashboard/destinations"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/destinations" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-location-dot mx-2"></i>{activeLayout && "destinations" }
                         </div>
                     </Link>}
+                    <Link to="/dashboard/settings"  className="text-decoration-none" style={{transition : "1s ease"}}>
+                        <div className={`d-flex align-items-center justify-content-between my-1 p-2 dashboard-link ${pathname.match("settings") ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleShowSettingClick}>
+                            <div><i class="fa-solid fa-gear mx-2"></i>{activeLayout && "settings" }</div>
+                            {activeLayout && <div><i class={showSettingList ? "fa-solid fa-chevron-down" : "fa-solid fa-chevron-right"} style={{fontSize : "10px"}}></i></div> }
+                        </div>
+                        {
+                            showSettingList &&
+                            <div >
+                                <div className="bg-light d-flex align-items-center justify-content-start p-2 border-bottom">
+                                    <Link className="text-decoration-none custom-text-secondary" to="/dashboard/settings/">account </Link>
+                                </div>
+                                <div className="bg-light d-flex align-items-center justify-content-start p-2 border-bottom">
+                                    <Link className="text-decoration-none custom-text-secondary" to="/dashboard/settings/company" >company</Link>
+                                </div>
+                                <div className="bg-light d-flex align-items-center justify-content-start p-2 border-bottom">
+                                    <Link className="text-decoration-none custom-text-secondary" to="/dashboard/settings/">payment</Link> 
+                                </div> 
+                            </div>
+                        }
+                    </Link>
                 </div>
             </div>
             <div className="w-100">
@@ -94,19 +119,12 @@ export default function DashboardLayout() {
                     </div>
                     <div className="me-5 custom-text-secondary">
                         <button className="btn custom-btn custom-text-secondary" data-bs-toggle="tooltip" title="dark mode"><i class="fa-solid fa-bell mx-2"></i></button>
+                        <img className="border mx-2" src={image} alt="" style={{width :"30px"  , height : "30px" , borderRadius : "50%"}}/>
                         <button className="btn custom-btn custom-text-secondary" data-bs-toggle="tooltip" title="logout" onClick={logoutAndExit}><i class="fa-solid fa-right-from-bracket mx-2"></i></button>
                     </div>
                 </div>
                 <div className="w-100 border-top border-left display">
-                    <div className="py-3 px-5 h-75">
-                        <div className="d-flex align-items-center justify-content-between">
-                        <div className="custom-text-secondary text-capitalize">dashboard / {getCurrentDashboardPage.apply().substring(1).toLowerCase()} </div>
-                            <button className="btn custom-btn-secondary"><i class="fa-solid fa-plus mx-1"></i>add {getCurrentDashboardPage.apply().substring(1 )}</button>
-                        </div>
-                        <div className="bg-white p-3 border rounded my-2 h-100">
-                            <Outlet/> 
-                        </div>
-                    </div>
+                    <Outlet />
                 </div>
             </div>
 

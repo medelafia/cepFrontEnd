@@ -34,6 +34,8 @@ export default function HotelsPage() {
                         </div>
                     </div>
                     {result.length == 0 ? <p className="text-center custom-text-secondary">no flights</p>: renderHotels()}
+                    <div className="d-flex align-items-center justify-content-center py-2">
+                    </div>
                 </div>
             </div>
 

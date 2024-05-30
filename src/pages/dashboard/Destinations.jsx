@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/custom-hooks";
+import DataPage from "./DataPage";
 
 export default function Destinations() {
   const [destinations, setDestinations] = useState([]);
@@ -29,37 +30,6 @@ export default function Destinations() {
         })
   });
   return (
-    <table className="table custom-text-secondary text-center">
-      <thead>
-        <th>id</th>
-        <th>name</th>
-        <th>address</th>
-        <th>country</th>
-        <th>city</th>
-        <th>destination type</th>
-        <th>actions</th>
-      </thead>
-      {dataLoading ? (
-        <tr>
-          <td colSpan="7">
-            <div class="d-flex justify-content-center p-5">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-      )
-    :
-      <tbody className="text-secondary">
-        {destinations.length == 0 ? (
-          <tr>
-            <td colSpan="7">no items</td>
-          </tr>
-        ) : (
-          renderDestinations()
-        )}
-      </tbody>}
-    </table>
+    <DataPage dataColumns={["name","address" , "country" , "city" , "destination type" ]} data={destinations}/> 
   );
 }
