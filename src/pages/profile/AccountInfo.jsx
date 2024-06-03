@@ -15,7 +15,7 @@ export default function AccountInfo() {
                     <label htmlFor="password" className="text-secondary text-capitalize mb-1">password</label>
                     <div className="d-flex">
                         <input type="password" id="password" className="form-control" placeholder="password" defaultValue={"password"} disabled/>
-                        <button className="btn custom-btn-secondary ms-2"><Link to="/profile/passowrdChange"><i class="fa-solid fa-pen-to-square"></i></Link></button>
+                        <button className="btn custom-btn-secondary ms-2"><Link to="/profile/passwordChange"><i class="fa-solid fa-pen-to-square"></i></Link></button>
                     </div>
                 </div>
             </div>

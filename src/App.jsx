@@ -13,7 +13,6 @@ import Providers from './pages/dashboard/Providers'  ;
 import Travels from './pages/dashboard/Travels'  ; 
 import Destinations from './pages/dashboard/Destinations'  ;  
 import Clients from './pages/dashboard/Clients'; 
-import Service from './pages/services/Service';
 import About from "./pages/about/About" ; 
 import Contact from "./pages/contact/Contact" ;
 import { useSelector } from 'react-redux';
@@ -39,6 +38,8 @@ import AccountInfo from "./pages/profile/AccountInfo";
 import RecommendationProfile from "./pages/profile/RecommendationProfile";
 import Setting from "./pages/dashboard/Setting";
 import PasswordInfo from "./pages/profile/PasswordInfo";
+import Services from "./pages/services/Services";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -54,7 +55,7 @@ export default function App() {
                 <Route element={<PasswordInfo />} path="/profile/passwordChange" />
               </Route> 
               <Route index element={<Home />} /> 
-              <Route element={<Service />} path="/services"/>
+              <Route element={<Services />} path="/services"/>
               <Route element={<About /> } path="/about" />
               <Route element={<Contact /> } path="/contact" /> 
               <Route element={<OffersLayout />} path="/offers">
@@ -93,6 +94,7 @@ export default function App() {
             </Route>
             <Route path="/*" element={<ErrorPage status={404} message="page not found"/>} /> 
             <Route path="/payment" element={<PayementPage /> } />
+            <Route path="/forgotPassword" element={<ForgotPassword />} /> 
           </Routes>
         </BrowserRouter>
     </div>

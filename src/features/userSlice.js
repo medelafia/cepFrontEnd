@@ -3,8 +3,8 @@ import { act } from "react";
 
 const initialState = {
     username : "mohamed" , 
-    accountType : "COSTUMER", 
-    providerType : "" , 
+    accountType : "ADMIN", 
+    providerType : "ADMIN" , 
     email : "mohamedelafia@gmail.com" , 
     tel : "0658045721" , 
     userInfo : {

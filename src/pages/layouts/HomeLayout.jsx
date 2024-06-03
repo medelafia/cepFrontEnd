@@ -13,6 +13,8 @@ import {userSelector} from "../../store/selectors/userSelector" ;
 import { logout } from "../../features/userSlice";
 import LoginModal from "../../components/LoginModal";
 import UserProfile from "../../components/UserProfile";
+import Footer from "../../components/Footer";
+import Brand from "../../components/Brand";
 
 export default function HomeLayout() {
   const navigate = useNavigate();
@@ -39,17 +41,11 @@ export default function HomeLayout() {
   return (
     <>
       <div className="custom-navbar border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container">
-        <div
-          onClick={toHome}
-          className="text-capitalize custom-text-primary d-flex align-items-center justify-content-center"
-        >
-          <i className="fa-solid fa-plane plane"></i>
-          <span className="title">travelboot</span>
-        </div>
-        <ul className="d-flex align-items-center justify-content-center">
+        <Brand />
+        <ul className="d-flex align-items-center justify-content-center text-capitalize">
           <Link
             to="/"
-            className={`mx-2 text-decoration-none hover pt-3 ${
+            className={`mx-3 text-decoration-none hover pt-3 ${
               pathname == "/" ? "active" : "custom-text-secondary"
             }`}
           >
@@ -57,27 +53,27 @@ export default function HomeLayout() {
           </Link>
           <Link
             to="/about"
-            className={`mx-2 text-decoration-none hover pt-3 ${
+            className={`mx-3 text-decoration-none hover pt-3 ${
               pathname == "/about"? "active" : "custom-text-secondary"
             }`}
           >
-            About
+            why chose us? 
           </Link>
           <Link
-            to="/services"
-            className={`mx-2 text-decoration-none pt-3 hover ${
-              pathname == "/services" ? "active" : "custom-text-secondary"
+            to="/"
+            className={`mx-3 text-decoration-none hover pt-3 ${
+              pathname == "/about"? "active" : "custom-text-secondary"
             }`}
           >
-            services
+            product
           </Link>
           <Link
             to="/contact"
-            className={`mx-2 text-decoration-none pt-3 hover ${
+            className={`mx-3 text-decoration-none pt-3 hover ${
               pathname == "/contact" ? "active" : "custom-text-secondary"
             }`}
           >
-            Contact
+            Contact 
           </Link>
         </ul>
         <div className="custom-text-primary">
@@ -114,49 +110,7 @@ export default function HomeLayout() {
         </div>
       <LoginModal />
       <Outlet />
-      <div className="footer bg-light p-4">
-        <div>
-
-        </div>
-        <div className="row w-100">
-          <div className="col-md-3">
-            <div className="">Home</div>
-            <ul>
-              <li>home</li>
-              <li>contact</li>
-              <li>service</li>
-              <li>about</li>
-            </ul>
-          </div>
-          <div className="col-md-3">
-            <div className="">Home</div>
-            <ul>
-              <li>home</li>
-              <li>contact</li>
-              <li>service</li>
-              <li>about</li>
-            </ul>
-          </div>
-          <div className="col-md-3">
-            <div className="">Home</div>
-            <ul>
-              <li>home</li>
-              <li>contact</li>
-              <li>service</li>
-              <li>about</li>
-            </ul>
-          </div>
-          <div className="col-md-3">
-            <div className="">Home</div>
-            <ul>
-              <li>home</li>
-              <li>contact</li>
-              <li>service</li>
-              <li>about</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <Footer /> 
     </>
   );
 }

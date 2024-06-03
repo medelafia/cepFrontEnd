@@ -8,45 +8,38 @@ import { userSelector } from "../../store/selectors/userSelector";
 export default function Profile() {
     const {pathname} = useLocation() 
     const user = useSelector(userSelector) 
+    const getCurrentPath = () => {
+        return pathname.substring("/profile".length) ; 
+    } 
     return (
-        <div className="page p-3">
+        <div className="page p-3 bg-light">
             <div className="row">
-                <div className="col-lg-4 border-end">
-                    <div className="container d-flex align-items-center flex-column p-4">
-                        <img src={image} id="profileImage" className="border" alt="" style={{width : "150px" , height : "150px" , borderRadius : "50%"}}/>
-                        <div className="my-3 d-flex align-items-center justify-content-center flex-column">
-                            <h3>{user?.username}</h3>
-                            <div className="text-secondary">{user?.userInfo.firstName +" " +user?.userInfo.lastName}</div>
+                <div className="col-lg-4">
+                    <div className="bg-white container d-flex align-items-start flex-column my-5 py-2 rounded">
+                        <div className={`my-2 d-flex py-2 px-3 rounded-pill align-items d-flex align-items-center justify-content-start ${getCurrentPath() == "/accountInfo" && "bg-light" }`}>
+                            <i class="fa-solid fa-bell me-2"></i>
+                            <Link className="text-capitalize text-decoration-none text-dark" to="/profile/accountInfo">account</Link>
                         </div>
-                        <div className="my-2">
-
+                        <div className={`my-2 d-flex py-2 px-3 rounded-pill align-items d-flex align-items-center justify-content-start ${getCurrentPath() == "" && "bg-light" }`}>
+                            <i class="fa-regular fa-address-card me-2"></i>
+                            <Link className="text-capitalize text-decoration-none text-dark" to="/profile">personal</Link>
                         </div>
-                        <div className="my-2">
-
+                        <div className={`my-2 d-flex py-2 px-3 rounded-pill align-items d-flex align-items-center justify-content-start ${getCurrentPath() == "/recommendationProfile" && "bg-light" }`}>
+                            <i class="fa-solid fa-bell me-2"></i>
+                            <Link className="text-capitalize text-decoration-none text-dark" to="/profile/recommendationProfile">recommendation</Link>
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-8">
-                    <div className="container d-flex align-items-start flex-column w-100">
-                        <ul className="d-flex align-items-center justify-content-start border-bottom w-100">
-                            <li className={`me-3 cursor-pointer ${pathname.substring("/profile".length) == "" ? "active" : "custom-text-secondary"} `}>
-                                <Link to="/profile" className="text-decoration-none">  
-                                    user info
-                                </Link>
-                            </li>
-                            <li className={`mx-3 cursor-pointer ${pathname.substring("/profile".length) == "/accountInfo" ? "active" : "custom-text-secondary"}`}>
-                                <Link to="/profile/accountInfo" className="text-decoration-none">  
-                                    account info
-                                </Link>
-                            </li>
-                            <li className={`mx-3 cursor-pointer ${pathname.substring("/profile".length) == "/recommendationProfile" ? "active" : "custom-text-secondary"}`}>
-                                <Link to="/profile/recommendationProfile" className="text-decoration-none">  
-                                    recommendation profile
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="p-3 w-100">
+                    <header className="d-flex text-capitalize align-items-center justify-content-center flex-column">
+                        <span className="font-secondary custom-text-primary">
+                            {getCurrentPath() == "" && "Personal information" }
+                            {getCurrentPath() == "/accountInfo" && "Account information" }
+                            {getCurrentPath() == "/recommendationProfile" && "recommendation profile" }
+                        </span>
+                        <p className="text-secondary">personal information setting</p>
+                    </header>
+                    <div className="px-5 py-5 w-100 bg-white rounded">
                         <Outlet /> 
                     </div>
                 </div>

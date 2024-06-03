@@ -1,5 +1,6 @@
 import image1 from "../../../assets/marrakech.jpg" 
 import {motion} from "framer-motion"
+import TopDestination from "../../../components/TopDestination"
 export default function TopDestinations() {
     return (
         <motion.div className="top-destinations section mb-5 bg-light"
@@ -14,7 +15,7 @@ export default function TopDestinations() {
                     transition={{duration : 0.5  }}
                 > 
                     <div className="title custom-text-secondary">
-                        top destinations
+                        where's next ? 
                     </div>
                     <a href="/offers/destinations" className="custom-text-secondary text-decoration-none">show more</a>
                 </motion.div>
@@ -25,9 +26,7 @@ export default function TopDestinations() {
                         transition={{duration : 0.4  }}
                         
                     >
-                        <div className="bg-primary rounded custom-h-100">
-                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
-                        </div>
+                        <TopDestination destinationImage={image1} destinationName="dest"/>
                     </motion.div>
                     <div className="col-md-4 custom-h-100 col-sm-12">
                         <motion.div className="bg-primary rounded h-50"
@@ -35,14 +34,14 @@ export default function TopDestinations() {
                             whileInView={{translateY : 0 }}
                             transition={{duration : 0.5  }}
                         >
-                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
+                            <TopDestination destinationImage={image1} destinationName="dest"/>
                         </motion.div>
-                        <motion.div className="bg-primary rounded my-1 h-50"
+                        <motion.div className="bg-primary rounded my-1 h-50 position-relative"
                             initial={{translateY : 50 }}
                             whileInView={{translateY : 0 }}
                             transition={{duration : 0.5  }}
                         >
-                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
+                            <TopDestination destinationImage={image1} destinationName="dest"/> 
                         </motion.div>
                     </div>
                     <motion.div className="col-md-4 custom-h-100 col-sm-12"
@@ -51,7 +50,7 @@ export default function TopDestinations() {
                         transition={{duration : 0.5  }}
                     >
                         <div className="bg-primary rounded custom-h-100">
-                            <img src={image1} alt="" style={{width : "100%" , height : "100%"}} className="rounded"/>
+                            <TopDestination destinationImage={image1} destinationName="dest"/>
                         </div>
                     </motion.div>
                 </div>

@@ -21,7 +21,7 @@ export default function Section3() {
                             <motion.div className="col-sm-3 p-3 d-flex align-items-center justify-content-center text-white flex-column"
                                 whileInView={{translateY : 0 , opacity : 1}}
                                 initial={{translateY : -40 , opacity : 0 }}
-                                transition={{duration : 0.5}}
+                                transition={{duration : 0.5 , delay : 0.1}}
                             >
                                 <h1 className="custom-text-primary">+200</h1>
                                 <div>costumer</div>
@@ -37,7 +37,7 @@ export default function Section3() {
                             <motion.div className="col-sm-3 p-3 d-flex align-items-center justify-content-center text-white flex-column"
                                 whileInView={{translateY : 0 , opacity : 1}}
                                 initial={{translateY : -40 , opacity : 0 }}
-                                transition={{duration : 0.5}}
+                                transition={{duration : 0.5  , delay : 0.2}}
                             >
                                 <h1 className="custom-text-primary">+30</h1>
                                 <div>airline</div>
@@ -45,7 +45,7 @@ export default function Section3() {
                             <motion.div className="col-sm-3 p-3 d-flex align-items-center justify-content-center text-white flex-column"
                                 whileInView={{translateY : 0 , opacity : 1}}
                                 initial={{translateY : +40 , opacity : 0 }}
-                                transition={{duration : 0.5}}
+                                transition={{duration : 0.5 , delay : 0.3}}
                             >
                                 <h1 className="custom-text-primary">+40</h1>
                                 <div>car agencies</div>
@@ -54,7 +54,7 @@ export default function Section3() {
                         <motion.button className="btn custom-btn-primary w-25 my-5"
                             whileInView={{translateX : 0 , opacity : 1}}
                             initial={{translateX : -40 , opacity : 0 }}
-                            transition={{duration : 0.5}}
+                            transition={{duration : 0.5 , delay : 0.4}}
                         >
                             explore more
                         </motion.button>

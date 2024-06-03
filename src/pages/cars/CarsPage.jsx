@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Car from "../../components/Car";
 import FilterCell from "../../components/FilterCell";
+import ShowMore from "../../components/ShowMore";
 
 export default function Cars() {
     const [cars , setCars] = useState([
@@ -45,6 +46,7 @@ export default function Cars() {
                         </div>
                     </div>
                     {displayCars()}
+                    <ShowMore callBack={console.log("show more cars")}/>
                 </div>
             </div>
         </div> 

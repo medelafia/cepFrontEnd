@@ -8,7 +8,7 @@ export default function Hero() {
                 <div  className="hero-title custom-text-primary text-center text-capitalize" > 
                     explore the world by <br/>travelboot
                 </div>
-                <div className="hero-text my-4 text-center text-white text-capitalize">
+                <div className="hero-text my-4 text-center text-secondary text-capitalize">
                     Welcome to our travel management platform, where every trip is an adventure<br/> to be experienced to the fullest.
                 </div>
                 <SearchBar />

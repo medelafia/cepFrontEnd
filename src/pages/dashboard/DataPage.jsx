@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import CurrentPath from "../../components/CurrentPath";
 
-export default function DataPage({  dataColumns  , auth_delete=false , auth_update=false }) {
+export default function DataPage({  dataColumns  , fetch_cols, auth_delete=false , auth_update=false }) {
   const [currentPage , setCurrentPage] = useState(1)
   const {pathname} = useLocation() 
   const {data , isLoading , error } = useFetch(
@@ -20,10 +20,10 @@ export default function DataPage({  dataColumns  , auth_delete=false , auth_upda
     return data?.map((ele, index) => {
       return <tr>
           <td>{ele.id}</td>
-          <td>{ele.firstName}</td>
-          <td>{ele.lastName}</td>
-          <td>{ele.gender == "m" ? "male" : "female"}</td>
-          <td>{ele.email}</td>
+          <td>{ele[fetch_cols[0]]}</td>
+          <td>{ele[fetch_cols[0]]}</td>
+          <td>{ele[fetch_cols[0]] == "m" ? "male" : "female"}</td>
+          <td>{ele[fetch_cols[0]]}</td>
           <td>{ele.profileImage == null ? <img src={image} className="profileImage profileImageSmall"/> : <></>}</td>
           <td>
             {auth_delete && <button className="btn"><i class="fa-solid fa-trash text-danger"></i></button>}
@@ -44,7 +44,6 @@ export default function DataPage({  dataColumns  , auth_delete=false , auth_upda
   }
   return (
     <div className="py-3 px-5 h-75">
-      <DataFormModal /> 
       <div className="d-flex align-items-center justify-content-between">
         <CurrentPath />
         <button className="btn custom-btn-secondary" data-bs-toggle="modal" data-bs-target="#dataModal">

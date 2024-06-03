@@ -1,8 +1,8 @@
-import { handleBreakpoints } from "@mui/system";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import image from "../../assets/jamaaElFna.jpeg" ; 
+import image from "../../assets/chefchaouen.jpg" ; 
 import Hotel from "../../components/Hotel";
+import GoogleMapReact from "google-map-react"
 export default function DestinationPage() {
     const [showFullDesc , setShowFullDesc] = useState(false) ; 
     const description = "Jemaa el-Fnaa is a square and market place in Marrakesh's medina quarter \
@@ -19,13 +19,26 @@ export default function DestinationPage() {
             <img src={image} alt="" className="rounded" style={{width : "100%" , height : "500px"}}/>
             <div className="py-4">
                 <h3 className="text-capitalize custom-text-secondary">
-                    jamae el fenna id={id}
+                    jamae el fenna
                 </h3>
-                <div>
-                    <strong>Description : </strong>
-                    {showFullDesc ? description : description.substring(0 , 100).concat(" ...")}
-                    <div className="d-inline cursor-pointer text-decoration-underline text-secondary" onClick={changeShowFullDesc}>
-                        show {showFullDesc ? "less" : "more"} {showFullDesc ? <i class="fa-solid fa-chevron-up"></i>  : <i class="fa-solid fa-chevron-down"></i>} 
+                <div className="row">
+                    <div className="col-md-6">
+                        <strong>Description : </strong>
+                        {showFullDesc ? description : description.substring(0 , 100).concat(" ...")}
+                        <div className="d-inline cursor-pointer text-decoration-underline text-secondary" onClick={changeShowFullDesc}>
+                            show {showFullDesc ? "less" : "more"} {showFullDesc ? <i class="fa-solid fa-chevron-up"></i>  : <i class="fa-solid fa-chevron-down"></i>} 
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <GoogleMapReact 
+                            defaultCenter={{
+                            lat: 10.99835602,
+                            lng: 77.01502627}}
+                            yesIWantToUseGoogleMapApiInternals
+                            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+                        >
+
+                        </GoogleMapReact>
                     </div>
                 </div>
             </div>
@@ -36,15 +49,9 @@ export default function DestinationPage() {
                     <div className="cursor-pointer text-decoration-underline">see all</div>
                 </div>
                 <div className="row py-2">
-                        <div className="col-md-4">
-                            <Hotel /> 
-                        </div>
-                        <div className="col-md-4">
-                            <Hotel /> 
-                        </div>
-                        <div className="col-md-4">
-                            <Hotel /> 
-                        </div>
+                        <Hotel />
+                        <Hotel />
+                        <Hotel />
                     </div>
             </div>
         </div>

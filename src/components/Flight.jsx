@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import image from "../assets/royalAir.png";
 export default function Flight() {
   return (
     <div className="w-100 p-3 border my-2 rounded-2 d-flex align-items-center justify-content-between">
-        <div>
+        <div className="d-flex flex-column align-items-center">
             <img src={image} alt="" style={{ width: "150px", height: "80px" }} />
+            <Link to="/providers/airline/1" className="text-secondary text-capitalize">airline name</Link>
         </div>
         <div className="d-flex flex-column">
             <h5 className="text-secondary">

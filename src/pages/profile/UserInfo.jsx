@@ -22,8 +22,8 @@ export default function UserInfo() {
     }
     return (
         <div className="d-flex align-items-center justify-content-center flex-column w-100">
-            <div className="d-flex align-items-center justify-content-center flex-column position-relative" style={{width:"100px" , height : "100px" , borderRadius : "50%"}}>
-                <img className="border" id="profile" src={image} alt="" style={{width:"100%" , height : "100%" , borderRadius : "50%" , backgroundSize : "cover" }}/>
+            <div className="d-flex align-items-center justify-content-center flex-column position-relative mb-3" style={{width:"100px" , height : "100px" , borderRadius : "50%"}}>
+                <img className="border" id="profile" src={image} alt="" style={{width:"100%" , height : "100%" , borderRadius : "50%" , backgroundSize : "cover" }} ref={profileImage}/>
                 <button className="btn btn-secondary position-absolute end-0 bottom-0 d-flex align-items-center justify-content-center rounded-circle" onClick={updateProfile} style={{width : "25px" , height : "25px"}}><i style={{fontSize : "10px"}} class="fa-solid fa-pen"></i></button>
             </div>
             <div className="form-group d-flex w-100">
@@ -52,6 +52,13 @@ export default function UserInfo() {
                         <option value="f">female</option>
                     </select>
                 </div>
+            </div>
+            <div className="form-group w-100">
+                <label htmlFor="" className="text-secondary text-capitalize mb-1">country</label>
+                <select name="" id="" className="form-select">
+                    <option value="">maroc</option>
+                    <option value="">alger</option>
+                </select>
             </div>
             <div className="d-flex align-items-center justify-content-end w-100 my-3">
                 <button className="btn custom-btn-outlined-primary mx-2">reset</button>

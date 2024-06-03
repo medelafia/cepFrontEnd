@@ -34,11 +34,8 @@ export default function AirlinePage(){
                 </div>
                 <hr />
             </div>
-            <div className="my-3 rounded border p-3">
-                <div className="h4 text-capitalize custom-text-secondary">
-                    most similiar airlines
-                </div>
-                <hr />
+            <div>
+                <h1 className="text-secondary text-capitalize">users reviews</h1>
             </div>
         </div>
     )

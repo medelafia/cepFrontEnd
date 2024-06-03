@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import FacebookLogin from "react-facebook-login";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../features/userSlice";
 
 export default function LoginModal() {
@@ -41,7 +41,8 @@ export default function LoginModal() {
       }
     }
     const onSuccesGoogleLogin = (cred) => {
-      const details = jwtDecode(cred.credential) 
+      const details = jwtDecode(cred.credential)
+      console.log(details)
       fetch("http://localhost:8089/accounts/loginByGoogle" , {
           method : "POST" , 
           headers: {
@@ -57,7 +58,7 @@ export default function LoginModal() {
             alert("accounts not found you have to registre") ;
           }
           if(res.ok){
-            return res.json() 
+            return console.log(res.json())
           }
           return null })
         .then(data =>{
@@ -84,6 +85,9 @@ export default function LoginModal() {
                     </div>
                     <div className="form-group my-3">
                         <input type="password" className="form-control" placeholder="enter your password" ref={password}/> 
+                        <div className="d-flex justify-content-end">
+                          <Link to="/forgotPassword">forgot password</Link>
+                        </div>
                     </div>
                     <div className="form-group my-1 d-flex">
                         <input type="checkbox" className="form-check" id="remember-me"/>

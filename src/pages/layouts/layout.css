@@ -5,7 +5,6 @@
     transform: rotate(-45deg);
 }
 .active {
-    border-bottom: 3px solid var(--primary-color);
     color : var(--primary-color);
 }
 .custom-nav-item {
@@ -33,6 +32,5 @@
     color: var(--primary-color);
 }
 .hover:hover {
-    border-bottom: 3px solid var(--secondary-color);
     color: var(--secondary-color);
 }
