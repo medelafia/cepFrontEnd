@@ -4,7 +4,7 @@ import { act } from "react";
 const initialState = {
     username : "mohamed" , 
     accountType : "ADMIN", 
-    providerType : "ADMIN" , 
+    providerType : "AIRLINE" , 
     email : "mohamedelafia@gmail.com" , 
     tel : "0658045721" , 
     userInfo : {
@@ -12,7 +12,7 @@ const initialState = {
         lastName : "el afia" , 
         country : "morrocoo" , 
         age : 20 ,
-        gender : "m"  
+        gender : "m" 
     }
 }
 const userSlice = createSlice({

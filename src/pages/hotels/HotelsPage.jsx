@@ -1,12 +1,16 @@
 import { useState } from "react"
+import { useParams } from "react-router-dom"
 import Hotel from "../../components/Hotel"
 import ShowMore from "../../components/ShowMore"
+import "./hotels.css"
 
 export default function HotelsPage() {
     const [result , setResult] = useState(["hotel 1", "hotel2" , "hotel 3" , "hotel 4" , "hotel 5" , "hotel 6"])
     const renderHotels = () => {
         return result.map((hotel,index) => <Hotel />)
     }
+    const { search } = useParams() ; 
+    console.log(search)
     const findNearby = () => {
         navigator.geolocation.getCurrentPosition(
             (pos)=> {
@@ -18,35 +22,40 @@ export default function HotelsPage() {
             }
         )
     }
+    const [showFilter , setShowFilter] = useState(false)
     return (
         <div className="w-100 page">
-            <div className="w-100 p-3 d-flex align-items-center" style={{backgroundImage : "" , width : "100%" ,  height : "30vh"}}>
-                <input type="text" placeholder="enter a hotel name or destination" className="form-control w-25 mx-1"/>
+            <div className="hero-hotel">
+                
+            </div>
+            <div className="w-100 p-3 d-flex align-items-center">
+                <input defaultValue={search} type="text" placeholder="enter a hotel name or destination" className="form-control w-25 mx-1"/>
                 <button className="btn custom-btn-secondary mx-1">search now</button>
                 <span className="text-secondary mx-4">or</span>
                 <button className="btn btn-outline-dark" onClick={findNearby}>find nearby</button>
             </div>
             <div className="w-100 row">
-                <div className="col-md-4 p-5">
-                    <div data-bs-toggle="collapse" data-bs-target="#demo" className="d-flex align-items-center justify-content-center">
-                        <span className="me-5">hotel stars</span><i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div id="demo" class="collapse show">
-                        <li>hdhd</li>
-                        <li>djd</li>
-                    </div>
-                </div>
-                <div className="col-md-8">
+                <div className="col-md-12">
                     <div className="w-100 d-flex align-items-center justify-content-between">
                         <div>100 results</div>
                         <div className="d-flex">
-                            <div>sort by</div>
-                            <select name="" id="" className="form-select">
-                                <option value="">recommended</option>
-                                <option value="">price</option>
+                            <button className="btn border mx-2 d-flex align-items-center" onClick={()=>{setShowFilter(!showFilter)}}>
+                                <i class="fa-solid fa-filter me-2"></i>
+                                <span>filter</span>
+                            </button>
+                            <select name="" id="sort" className="form-select">
+                                <option>recommended</option>
+                                <option>min price</option>
                             </select>
                         </div>
                     </div>
+                    { showFilter && 
+                        <div className="d-flex align-items-center justify-content-between my-2">
+                            <select name="" id="" className="form-select me-2"></select>
+                            <select name="" id="" className="form-select mx-1"></select>
+                            <select name="" id="" className="form-select ms-2"></select>
+                        </div>
+                    }
                     <div className="my-4 row">
                         {result.length == 0 ? <p className="text-center custom-text-secondary">no flights</p>: renderHotels()}
                     </div>

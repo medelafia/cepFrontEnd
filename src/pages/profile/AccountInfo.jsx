@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { userSelector } from "../../store/selectors/userSelector"
 
-export default function AccountInfo() {
+export default function AccountInfo({changePasswordPath}) {
     const user = useSelector(userSelector)
     return (
         <div className="d-flex align-items-start justify-content-center flex-column w-100">
@@ -15,7 +15,7 @@ export default function AccountInfo() {
                     <label htmlFor="password" className="text-secondary text-capitalize mb-1">password</label>
                     <div className="d-flex">
                         <input type="password" id="password" className="form-control" placeholder="password" defaultValue={"password"} disabled/>
-                        <button className="btn custom-btn-secondary ms-2"><Link to="/profile/passwordChange"><i class="fa-solid fa-pen-to-square"></i></Link></button>
+                        <button className="btn custom-btn-secondary ms-2"><Link to={changePasswordPath} className="text-white"><i class="fa-solid fa-pen-to-square"></i></Link></button>
                     </div>
                 </div>
             </div>

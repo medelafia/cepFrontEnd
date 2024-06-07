@@ -6,6 +6,7 @@ import ShowMore from "../../components/ShowMore";
 
 export default function FlightsPage() {
   const [result, setResult] = useState(["1", ""]);
+  const [showFilter , setShowFilter] = useState(false)
   const renderFlights = () => {
     return result.map((flight, index) => <Flight />);
   };
@@ -13,7 +14,7 @@ export default function FlightsPage() {
   return (
     <div className="w-100 page">
       <div className="w-100 row">
-        <div className="col-md-4 p-4 border rounded">
+        <div className="col-md-4 col-sm-12 p-4 border rounded">
             <div className="text-capitalize h4 custom-text-primary">find your flight now !</div>
             <div className="d-flex border-bottom">
                 <div className={`me-3 cursor-pointer ${flightType == "round" && "active"}`} onClick={()=>{setFlightType("round")}}>
@@ -65,7 +66,29 @@ export default function FlightsPage() {
             </button>
           </form>
         </div>
-        <div className="col-md-8 py-3">
+        <div className="col-md-8 col-sm-12 py-3">
+          <div className="d-flex align-items-center justify-content-between">
+            <div>
+              12 flights
+            </div>
+            <div className="d-flex">
+              <button className="btn border mx-2 d-flex align-items-center" onClick={()=>setShowFilter(!showFilter)}>
+                <i class="fa-solid fa-filter me-2"></i>
+                <span>filter</span>
+              </button>
+              <select name="" id="sort" className="form-select">
+                                <option>recommended</option>
+                                <option>min price</option>
+              </select>
+            </div>
+          </div> 
+          { showFilter && 
+                        <div className="d-flex align-items-center justify-content-between my-2">
+                            <select name="" id="" className="form-select me-2"></select>
+                            <select name="" id="" className="form-select mx-1"></select>
+                            <select name="" id="" className="form-select ms-2"></select>
+                        </div>
+                    }
           {result.length == 0 ? (
             <p className="text-center custom-text-secondary">no flights</p>
           ) : (

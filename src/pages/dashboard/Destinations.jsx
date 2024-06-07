@@ -4,32 +4,14 @@ import DataPage from "./DataPage";
 
 export default function Destinations() {
   const [destinations, setDestinations] = useState([]);
-  const [dataLoading, setDataLoading] = useState(false);
-  const renderDestinations = () => {
-    return destinations.map((destination, index) => (
-      <tr>
-        <td></td>
-      </tr>
-    ));
-  };
-  useEffect(() => {
-    setDataLoading(true);
-    fetch("http://localhost:8888/DESTINATIONS-SERVICES/destinations/")
-        .then(res => {
-            console.log(res.status)
-            if(res.status != 200) {
-                 
-                setDataLoading(false) ; 
-            }else {
-                return res.json()
-            }
-        })
-        .then(data => {
-            setDestinations(data) ; 
-            setDataLoading(false) 
-        })
-  });
+  const cols = ["name" , "country" , "city" , "destinationType"]
+  const fetchColumns = ["name" , "country" , "city" , "destinationType"] 
+  useEffect(()=>{
+    fetch("http://localhost:8089/destinations/")
+    .then(res => res.json())
+    .then(data => setDestinations(data))
+  } , [] )
   return (
-    <DataPage dataColumns={["name","address" , "country" , "city" , "destination type" ]} data={destinations}/> 
+    <DataPage data={destinations} dataColumns={cols}  dataAddingPath="/dashboard/addDestination" fetchColumns={fetchColumns}/>
   );
 }

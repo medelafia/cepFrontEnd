@@ -1,14 +1,17 @@
 import HotelsSlider from "../../../components/HotelsSlider";
-
+import vid from "../../../assets/vid.mp4" ; 
+import {motion} from "framer-motion"
 export default function Section4() {
     return (
-        <div className="page bg-light p-5">
-            <div className="custom-container d-flex flex-column">
-                <h1 className="title">top hotels</h1>
-                <div className="">
-                    <HotelsSlider />
-                </div>
-            </div>
+        <div className="page">
+            <motion.div className="custom-container d-flex flex-column"
+                initial={{opacity : 0 , translateX : -20 }}
+                whileInView = {{opacity : 1 , translateX : 0 }}
+            >
+                <video className="custom-rounded" controls autoPlay="autoPlay">
+                    <source src={vid} type="video/mp4"/>
+                </video>
+            </motion.div>
         </div>
     )
 }

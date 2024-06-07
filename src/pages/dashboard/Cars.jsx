@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/custom-hooks";
+import DataPage from "./DataPage";
 
 export default function Cars() {
   const [cars, setCars] = useState([]);
@@ -29,27 +30,6 @@ export default function Cars() {
   useEffect(() => {
   }, []);
   return (
-    <table className="table custom-text-secondary text-center">
-      <thead>
-        <th>id</th>
-        <th>make</th>
-        <th>model</th>
-        <th>year</th>
-        <th>color</th>
-        <th>fuel type</th>
-        <th>trans type</th>
-        <th>style type</th>
-        <th>actions</th>
-      </thead>
-      <tbody className="text-secondary">
-        {cars.length == 0 ? (
-          <tr>
-            <td colSpan="9">no items</td>
-          </tr>
-        ) : (
-          renderCars()
-        )}
-      </tbody>
-    </table>
+    <DataPage/>
   );
 }

@@ -66,7 +66,7 @@ export default function LoginModal() {
         } )
     }
   return (
-    <div className="modal rounded-5" id="loginModal">
+    <div className="modal custom-rounded" id="loginModal">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="p-4 d-flex align-items-center justify-content-end">
@@ -76,7 +76,7 @@ export default function LoginModal() {
               data-bs-dismiss="modal"
             ></button>
           </div>
-          <h1 className="custom-text-primary text-capitalize text-center title">login</h1>
+          <h1 className="custom-text-primary text-capitalize text-center font-secondary">login</h1>
           <div className="modal-body">
           <div className="login-section d-flex align-items-center flex-column p-3 position-relative justify-content-center">
                 <form className="w-75 mb-3" >
@@ -86,7 +86,7 @@ export default function LoginModal() {
                     <div className="form-group my-3">
                         <input type="password" className="form-control" placeholder="enter your password" ref={password}/> 
                         <div className="d-flex justify-content-end">
-                          <Link to="/forgotPassword">forgot password</Link>
+                          <Link onClick={()=>{document.querySelector(".btn-close").click()}} to="/forgotPassword">forgot password</Link>
                         </div>
                     </div>
                     <div className="form-group my-1 d-flex">

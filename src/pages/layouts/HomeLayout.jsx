@@ -15,6 +15,10 @@ import LoginModal from "../../components/LoginModal";
 import UserProfile from "../../components/UserProfile";
 import Footer from "../../components/Footer";
 import Brand from "../../components/Brand";
+import Products from "../../components/Products";
+import Alert from "../../components/Alert";
+import { useRef } from "react";
+import ReviewModal from "../../components/ReviewModal";
 
 export default function HomeLayout() {
   const navigate = useNavigate();
@@ -22,6 +26,8 @@ export default function HomeLayout() {
   const user = useSelector(userSelector) ; 
   const dispatch = useDispatch() ; 
   const [showUserProfile , setShowUserProfile] = useState(false) ; 
+  const [showAlert ,  setShowAlert] = useState(false) ; 
+  const loginBtn = useRef() ; 
   const toHome = () => {
     navigate("/");
   };
@@ -38,14 +44,21 @@ export default function HomeLayout() {
     }
     
   }
+  const [showProduct , setShowProduct] = useState(false) ; 
+  const toogleProduct = () => {
+    setShowProduct(!showProduct) ; 
+  }
+  const showAlertToogler = (type , text) => {
+    setShowAlert(!showAlert ) ; 
+  }
   return (
-    <>
-      <div className="custom-navbar border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container">
+    <div className="position-relative">
+      <div className="custom-navbar border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container" style={{zIndex : 10 }}>
         <Brand />
-        <ul className="d-flex align-items-center justify-content-center text-capitalize">
+        <div className="d-flex align-items-center justify-content-center text-capitalize">
           <Link
             to="/"
-            className={`mx-3 text-decoration-none hover pt-3 ${
+            className={`mx-3 text-decoration-none hover ${
               pathname == "/" ? "active" : "custom-text-secondary"
             }`}
           >
@@ -53,44 +66,33 @@ export default function HomeLayout() {
           </Link>
           <Link
             to="/about"
-            className={`mx-3 text-decoration-none hover pt-3 ${
+            className={`mx-3 text-decoration-none hover ${
               pathname == "/about"? "active" : "custom-text-secondary"
             }`}
           >
             why chose us? 
           </Link>
-          <Link
-            to="/"
-            className={`mx-3 text-decoration-none hover pt-3 ${
-              pathname == "/about"? "active" : "custom-text-secondary"
-            }`}
-          >
-            product
-          </Link>
+          <button className="btn" onClick={toogleProduct}>
+            <span>product</span>
+            {!showProduct ? <i class="fa-solid fa-chevron-down"></i> : <i class="fa-solid fa-chevron-up  ms-1"></i> }
+          </button>
           <Link
             to="/contact"
-            className={`mx-3 text-decoration-none pt-3 hover ${
+            className={`mx-3 text-decoration-none hover ${
               pathname == "/contact" ? "active" : "custom-text-secondary"
             }`}
           >
             Contact 
           </Link>
-        </ul>
+        </div>
         <div className="custom-text-primary">
-          { user == null  
-            ? <button
-              className="custom-btn btn custom-text-primary rounded-pill"
-              data-bs-toggle="modal" 
-              data-bs-target="#loginModal"
-            >
-              <i className="fa-solid fa-user"></i>
-            </button>
-            : <div class="dropdown d-inline">
+              <div class="dropdown d-inline">
                 <button type="button" className="custom-btn btn custom-text-primary rounded-pill" data-bs-toggle="dropdown">
-                <img src={image} alt="" style={{width : "30px" , height : "30px" , borderRadius : "50%"}}/>
-              </button>
-              <ul class="dropdown-menu p-3 rounded-5" style={{width : "300px"}}>
-                <div className="d-flex align-items-center justify-content-center flex-column my-3">
+                  <i className="fa-solid fa-user"></i>
+                </button>
+                <ul class="dropdown-menu p-3 rounded-5" style={{width : "300px"}}>
+                {user != null ? <div>
+                  <div className="d-flex align-items-center justify-content-center flex-column my-3">
                   <img src={image} alt="" style={{width : "60px" , height : "60px" , borderRadius : "50%"}}/>
                   <span className="ms-2 text-capitalize">{user?.username}</span>
                 </div>
@@ -103,14 +105,29 @@ export default function HomeLayout() {
                   <i class="fa-solid fa-right-from-bracket"></i>
                   <span className="ms-3" onClick={userLogout}>logout</span>
                 </div>
-              </ul>
-            </div>
-          }
+                </div> : 
+                <div className="d-flex align-items-center justify-content-center flex-column w-100">
+                  <Brand className="mb-3"/> 
+                  <button className="btn custom-btn-primary my-2 w-100 rounded-pill"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#loginModal"
+                    ref={loginBtn}
+                  >login</button>
+                  <button className="btn custom-btn-outlined-primary my-2 w-100 rounded-pill"
+                    onClick={()=>navigate("/signUp")}
+                  >sign in</button>
+                </div>
+                } 
+              </ul> 
+              </div>
         </div>
         </div>
       <LoginModal />
+      <ReviewModal />
+      { showAlert && <Alert /> } 
+      {showProduct && <Products close={toogleProduct}/>}
       <Outlet />
       <Footer /> 
-    </>
+    </div>
   );
 }

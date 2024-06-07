@@ -1,10 +1,17 @@
-export default function SignAccountType() {
+import { useRef } from "react";
+
+export default function SignAccountType({onChangeCallBack}) {
+    const accountType = useRef() ; 
+    const changeLisetener = () => {
+        const accountTypeValue = accountType.current.value ; 
+        onChangeCallBack("accountType",accountTypeValue)
+    }
     return (
         <div> 
             <div className="form-group my-3">
-                <select name="" id="" className="form-select text-secondary">
-                    <option value="">costumer</option>
-                    <option value="">provider</option>
+                <select ref={accountType} name="" id="" className="form-select text-secondary" onInput={changeLisetener} onSelect={changeLisetener}>
+                    <option value="COSTUMER">costumer</option>
+                    <option value="PROVIDER">provider</option>
                 </select>
             </div>
         </div>  

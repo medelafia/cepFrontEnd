@@ -7,9 +7,10 @@ export default function SearchBar() {
     const [current , setCurrent] = useState("flights")
     const beginAirport = useRef()
     const [airports , setAirports] = useState([]) ; 
+    const hotelSearchInput = useRef() ; 
     const navigate = useNavigate()
     useEffect(()=> {
-        fetch("http://localhost:8084/airports/")
+        fetch("http://localhost:8089/gates/airports/")
         .then(res => res.json())
         .then(data => setAirports(data)) 
     } , [] )
@@ -27,7 +28,7 @@ export default function SearchBar() {
         switch(current) {
             case "flights" : navigate("/offers/flights" , {beginAirport : beginAirport.current.value}) ; 
                 break; 
-            case "hotels" : navigate("/offers/hotels" )
+            case "hotels" : navigate("/offers/hotels", {search : hotelSearchInput.current.value})
                 break ; 
             case "cars" : navigate('/offers/cars')
                 break ; 
@@ -40,13 +41,12 @@ export default function SearchBar() {
             transition = {{duration : 0.7}}
         >
             <ul className="d-flex align-items-center justify-content-center custom-text-secondary my-1">
-                <li className="mx-2 active search-bar-item" onClick={handleClick}>flights</li>
-                <li className="mx-2 search-bar-item" onClick={handleClick}>cars</li>
-                <li className="mx-2 search-bar-item" onClick={handleClick}>hotels</li>
+                <li className="mx-2 active search-bar-item cursor-pointer" onClick={handleClick}>flights</li>
+                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>cars</li>
+                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>hotels</li>
             </ul>
             <div className="p-3 d-flex align-items-center justify-content-center">
-                { 
-                    (current == "flights") ? 
+                { current == "flights" && 
                         <div className="d-flex w-100 mx-2">
                             <select name="from" ref={beginAirport} className="form-select mx-1 custom-text-secondary">
                                 {displayAirports()}
@@ -62,25 +62,25 @@ export default function SearchBar() {
                                 <option value="">business class</option>
                             </select>
                         </div>
-                        : ((current == "hotels") ?
-                            <div className="d-flex w-100">
-                                <input type="text" className="form-control mx-1 custom-text-secondary" placeholder="hotel name or destination"/> 
-                                <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="entry date"/>
-                            </div>
-                            : 
-                            <div className="d-flex w-100 mx-2">
-                                <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
-                                <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>
-                                <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="drop off"/> 
-                                <select name="" className="form-select custom-text-secondary">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                </select>
-                            </div>
-                        )
+                }
+                {current == "hotels" && 
+                    <div className="d-flex w-100">
+                        <input ref={hotelSearchInput} type="text" className="form-control mx-1 custom-text-secondary" placeholder="hotel name or destination"/> 
+                    </div>
+                }
+                { current == "cars" && 
+                    <div className="d-flex w-100 mx-2">
+                        <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
+                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>
+                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="drop off"/> 
+                        <select name="" className="form-select custom-text-secondary">
+                            <option value="">1</option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                            <option value="">4</option>
+                            <option value="">5</option>
+                        </select>
+                    </div>
                 }
                 <button className="custom-btn-primary btn" onClick={handleSearchClick}>search</button>
             </div>

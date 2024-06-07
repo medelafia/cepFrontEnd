@@ -55,7 +55,7 @@ export default function DashboardLayout() {
                             <i className="fa-solid fa-plane mx-2"></i>{activeLayout && "flights"}
                         </div>
                     </Link>}
-                    {user?.providerType == "CARS_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/cars"  className="text-decoration-none">
+                    {user?.providerType == "CAR_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/cars"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/cars" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-car-rear mx-2"></i>{activeLayout && "cars"}
                         </div>
@@ -95,20 +95,6 @@ export default function DashboardLayout() {
                             <div><i class="fa-solid fa-gear mx-2"></i>{activeLayout && "settings" }</div>
                             {activeLayout && <div><i class={showSettingList ? "fa-solid fa-chevron-down" : "fa-solid fa-chevron-right"} style={{fontSize : "10px"}}></i></div> }
                         </div>
-                        {
-                            showSettingList &&
-                            <div >
-                                <div className="bg-light d-flex align-items-center justify-content-start p-2 border-bottom">
-                                    <Link className="text-decoration-none custom-text-secondary" to="/dashboard/settings/">account </Link>
-                                </div>
-                                <div className="bg-light d-flex align-items-center justify-content-start p-2 border-bottom">
-                                    <Link className="text-decoration-none custom-text-secondary" to="/dashboard/settings/company" >company</Link>
-                                </div>
-                                <div className="bg-light d-flex align-items-center justify-content-start p-2 border-bottom">
-                                    <Link className="text-decoration-none custom-text-secondary" to="/dashboard/settings/">payment</Link> 
-                                </div> 
-                            </div>
-                        }
                     </Link>
                 </div>
             </div>

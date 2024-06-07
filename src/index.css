@@ -24,7 +24,7 @@
 }
 .custom-btn-primary {
   background-color: var(--primary-color);
-  color: var(--third-color);
+  color: white;
   border: none;
   transition: 0.5s ease;
 }
@@ -124,4 +124,12 @@
 }
 .rounded-lg {
   border-radius: 40px;
+}
+.custom-rounded  {
+  border-radius: 30px ;
+}
+@media (max-width : 500px ) {
+  :root{
+    --container-padding : 20px ;  
+  }
 }

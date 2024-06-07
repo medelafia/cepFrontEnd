@@ -1,4 +1,4 @@
-import image from "../assets/royalAirPic.jpg"
+import image from "../assets/hotel4.jpeg"
 export default function ImageSlider() {
   return (
     <div id="demo" class="carousel slide" data-bs-ride="carousel">

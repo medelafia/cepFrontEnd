@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import Rating from "./Rating"
 import image from "../assets/hotel4.jpeg"
 export default function Destination() {
     return (
@@ -16,6 +17,9 @@ export default function Destination() {
                     morroco
                 </div> 
                 <Link to="/offers/destination/1" className="text-secondary">show more details</Link> 
+                <div>
+                <Rating />
+                </div>
             </div>
         </div>
     )

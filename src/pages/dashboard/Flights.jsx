@@ -12,6 +12,6 @@ export default function Flights() {
   };
   const cols = ["price" , "number places" , "date", "begin time" , "arrived time" , "distance" , "airline name" , "flight class"]
   return (
-    <DataPage dataColumns={cols} data={flights}/>
+    <DataPage data={data} dataColumns={cols} data_adding_path="/dashboard/addFlight"/>
   );
 }

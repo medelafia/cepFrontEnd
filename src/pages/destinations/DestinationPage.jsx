@@ -45,7 +45,7 @@ export default function DestinationPage() {
             <hr />
             <div className="py-4">
                 <div className="d-flex align-items-center justify-content-between">
-                    <h3 className="text-capitalize">nearby hotels</h3>
+                    <h3 className="text-capitalize">most near hotels</h3>
                     <div className="cursor-pointer text-decoration-underline">see all</div>
                 </div>
                 <div className="row py-2">

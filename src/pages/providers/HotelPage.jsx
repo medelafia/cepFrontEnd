@@ -1,10 +1,7 @@
-import { useParams } from "react-router-dom"
+import ProviderPage from "./ProviderPage";
 
 export default function HotelPage() {
-    const {id} = useParams() 
     return (
-        <div>
-            hotel {id}
-        </div>
+        <ProviderPage />
     )
 }
