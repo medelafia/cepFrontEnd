@@ -18,7 +18,7 @@ export default function Section3() {
                             travel to any corner around the world
                         </motion.h1>
                         <div className="row w-100 d-flex align-items-center justify-content-between">
-                            <motion.div className="col-sm-3 p-3 d-flex align-items-center justify-content-center text-white flex-column"
+                            <motion.div className="col-lg-3 col-sm-6 p-3 d-flex align-items-center justify-content-center text-white flex-column"
                                 whileInView={{translateY : 0 , opacity : 1}}
                                 initial={{translateY : -40 , opacity : 0 }}
                                 transition={{duration : 0.5 , delay : 0.1}}
@@ -26,7 +26,7 @@ export default function Section3() {
                                 <h1 className="custom-text-primary">+200</h1>
                                 <div>costumer</div>
                             </motion.div>
-                            <motion.div className="col-sm-3 p-3 d-flex align-items-center justify-content-center text-white flex-column"
+                            <motion.div className="col-lg-3 col-sm-6 p-3 d-flex align-items-center justify-content-center text-white flex-column"
                                 whileInView={{translateY : 0 , opacity : 1}}
                                 initial={{translateY : +40 , opacity : 0 }}
                                 transition={{duration : 0.5}}
@@ -34,7 +34,7 @@ export default function Section3() {
                                 <h1 className="custom-text-primary">+20</h1>
                                 <div>hotel</div>
                             </motion.div>
-                            <motion.div className="col-sm-3 p-3 d-flex align-items-center justify-content-center text-white flex-column"
+                            <motion.div className="col-lg-3 col-sm-6 p-3 d-flex align-items-center justify-content-center text-white flex-column"
                                 whileInView={{translateY : 0 , opacity : 1}}
                                 initial={{translateY : -40 , opacity : 0 }}
                                 transition={{duration : 0.5  , delay : 0.2}}
@@ -42,7 +42,7 @@ export default function Section3() {
                                 <h1 className="custom-text-primary">+30</h1>
                                 <div>airline</div>
                             </motion.div>
-                            <motion.div className="col-sm-3 p-3 d-flex align-items-center justify-content-center text-white flex-column"
+                            <motion.div className="col-lg-3 col-sm-6 p-3 d-flex align-items-center justify-content-center text-white flex-column"
                                 whileInView={{translateY : 0 , opacity : 1}}
                                 initial={{translateY : +40 , opacity : 0 }}
                                 transition={{duration : 0.5 , delay : 0.3}}

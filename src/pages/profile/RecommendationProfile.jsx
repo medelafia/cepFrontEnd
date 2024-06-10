@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useRef } from "react";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/selectors/userSelector";
 
 export default function RecommendationProfile() {
   const activateRecommendationSysRef = useRef();
-  const [showForm, setShowForm] = useState(false);
+  const user = useSelector(userSelector) 
+  const [showForm, setShowForm] = useState(user?.recommendationProfileActivation);
   const handleActivateRec = () => {
     setShowForm(!showForm);
   };
@@ -17,6 +20,7 @@ export default function RecommendationProfile() {
           id="activateRecommendationSys"
           ref={activateRecommendationSysRef}
           onChange={handleActivateRec}
+          checked={user?.recommendationProfileActivation}
         />
         <label
           className="text-capitalize ms-2"

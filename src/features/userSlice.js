@@ -1,20 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { act } from "react";
 
-const initialState = {
-    username : "mohamed" , 
-    accountType : "ADMIN", 
-    providerType : "AIRLINE" , 
-    email : "mohamedelafia@gmail.com" , 
-    tel : "0658045721" , 
-    userInfo : {
-        firstName : "mohamed" , 
-        lastName : "el afia" , 
-        country : "morrocoo" , 
-        age : 20 ,
-        gender : "m" 
-    }
-}
+const initialState = localStorage.getItem("user") != undefined ?  JSON.parse(localStorage.getItem("user")) :  null
+console.log(initialState)
 const userSlice = createSlice({
     name : "user" , 
     initialState ,
@@ -23,7 +11,9 @@ const userSlice = createSlice({
             return null
         } , 
         login : (state , action) => {
-            state = action.payload ; 
+            console.log(action)
+            state = action.payload.data ; 
+            if(action.payload.rememberMe) localStorage.setItem("user" , JSON.stringify(state)) ;
             return state 
         }
     }

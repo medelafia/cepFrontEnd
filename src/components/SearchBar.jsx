@@ -15,7 +15,13 @@ export default function SearchBar() {
         .then(data => setAirports(data)) 
     } , [] )
     const handleClick = (e) => {
-        setCurrent(e.currentTarget.innerText.toLowerCase())
+        const innerText = e.currentTarget.innerText ; 
+        if(innerText) {
+            setCurrent(innerText.split(" ").join("")) 
+            console.log(current) 
+        }else {
+            setCurrent(innerText.toLowerCase())
+        }        
         document.querySelectorAll(".search-bar-item").forEach(li => {
             li.classList.remove("active")
         })
@@ -32,6 +38,9 @@ export default function SearchBar() {
                 break ; 
             case "cars" : navigate('/offers/cars')
                 break ; 
+            case "trainTravels" : navigate("/offers/trainTravels") 
+                break ; 
+            case "organizedTravels" : navigate("/offers/organizedTravels")
         }
     }
     return (
@@ -44,6 +53,8 @@ export default function SearchBar() {
                 <li className="mx-2 active search-bar-item cursor-pointer" onClick={handleClick}>flights</li>
                 <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>cars</li>
                 <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>hotels</li>
+                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>train travels</li>
+                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>organized travels</li>
             </ul>
             <div className="p-3 d-flex align-items-center justify-content-center">
                 { current == "flights" && 
@@ -53,7 +64,7 @@ export default function SearchBar() {
                             </select> 
                             <select name="from" id="" className="form-select mx-1 custom-text-secondary">
                                 {displayAirports()}
-                            </select> 
+                            </select>  
                             <input type="date" className="form-control mx-1 custom-text-secondary"/> 
                             <select name="" className="form-select custom-text-secondary">
                                 <option value="">economy</option>
@@ -69,6 +80,35 @@ export default function SearchBar() {
                     </div>
                 }
                 { current == "cars" && 
+                    <div className="d-flex w-100 mx-2">
+                        <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
+                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>
+                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="drop off"/> 
+                        <select name="" className="form-select custom-text-secondary">
+                            <option value="">1</option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                            <option value="">4</option>
+                            <option value="">5</option>
+                        </select>
+                    </div>
+                }{
+                    current == "traintravels" && 
+                    <div className="d-flex w-100 mx-2">
+                        <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
+                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>
+                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="drop off"/> 
+                        <select name="" className="form-select custom-text-secondary">
+                            <option value="">1</option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                            <option value="">4</option>
+                            <option value="">5</option>
+                        </select>
+                    </div>
+                }
+                {
+                    current == "organizedtravels" &&
                     <div className="d-flex w-100 mx-2">
                         <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
                         <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>

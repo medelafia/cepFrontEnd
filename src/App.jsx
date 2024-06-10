@@ -47,6 +47,7 @@ import ProvidersLayout from "./pages/providers/ProvidersLayout";
 import AddGate from "./pages/addDataPages/AddGate";
 import PaymentSetting from "./components/PaymentSetting";
 import AddDestination from "./pages/addDataPages/AddDestination";
+import ResetPassword from "./pages/forgotPassword/ResetPassword";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -57,9 +58,9 @@ export default function App() {
             <Route path="/" element={<HomeLayout/>}>
               <Route element={user?.accountType == "COSTUMER" ? <Profile /> : <ErrorPage status={404} /> } path="/profile">
                 <Route element={<UserInfo/>} index /> 
-                <Route element={<AccountInfo />} path="/profile/accountInfo" /> 
+                <Route element={<AccountInfo changePasswordPath="/profile/changePassword"/>} path="/profile/accountInfo" /> 
                 <Route element={<RecommendationProfile />} path='/profile/recommendationProfile' /> 
-                <Route element={<PasswordInfo />} path="/profile/passwordChange" />
+                <Route element={<PasswordInfo />} path="/profile/changePassword" />
               </Route> 
               <Route index element={<Home />} /> 
               <Route element={<Services />} path="/services"/>
@@ -109,6 +110,7 @@ export default function App() {
             <Route path="/*" element={<ErrorPage status={404} message="page not found"/>} /> 
             <Route path="/payment" element={<PayementPage /> } />
             <Route path="/forgotPassword" element={<ForgotPassword />} /> 
+            <Route path="/resetPassword/:id" element={<ResetPassword />} />
           </Routes>
         </BrowserRouter>
     </div>

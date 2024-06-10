@@ -1,6 +1,9 @@
 import { useRef } from "react";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/selectors/userSelector";
 
 export default function PasswordInfo() {
+    const user = useSelector(userSelector)
     const currentPassword = useRef() 
     const newPassword = useRef() 
     const confirmNewPassword = useRef() 
@@ -11,7 +14,18 @@ export default function PasswordInfo() {
         const confirmPasswordValue = confirmNewPassword.current.value ; 
         if(currentPasswordValue.trim()!="" && newPasswordValue.trim() != "" && confirmPasswordValue.trim() != "") {
             if(newPasswordValue === confirmPasswordValue) {
-                fetch("")
+                fetch("http://localhost:8089/accounts/changePassword" , {
+                    method : "POST" , 
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body : JSON.stringify({
+                        username : user.username , 
+                        currentPassword : currentPasswordValue , 
+                        newPassword : newPasswordValue 
+                    })
+                })
             }
         }else {
             

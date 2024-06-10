@@ -10,6 +10,7 @@ import { login } from "../features/userSlice";
 export default function LoginModal() {
     const username = useRef() ; 
     const password = useRef() ; 
+    const rememberMeRef = useRef()
     const [errors , setErrors] = useState({})
     const dispatch = useDispatch() 
     const signIn = (e) => {
@@ -29,8 +30,10 @@ export default function LoginModal() {
           })
         })
         .then(res => {
-          if(!res.ok){
-            throw new Error("invalid username or password") ; 
+          if(res.status == 404) {
+            alert("you are not registed")
+          }else if(res.status == 401) {
+            alert("your password is incorrect")
           }
           return res.json() 
         })
@@ -43,15 +46,11 @@ export default function LoginModal() {
     const onSuccesGoogleLogin = (cred) => {
       const details = jwtDecode(cred.credential)
       console.log(details)
-      fetch("http://localhost:8089/accounts/loginByGoogle" , {
+      const formData = new FormData()
+      formData.append("email" , details.email )
+      fetch("http://localhost:8089/accounts/loginByEmail" , {
           method : "POST" , 
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-          body : JSON.stringify({
-            email : details.email
-          })
+          body : formData
         })
         .then(res => {
           if(res.status == 404){
@@ -62,7 +61,7 @@ export default function LoginModal() {
           }
           return null })
         .then(data =>{
-          dispatch(login(data))
+          dispatch(login({data : data , rememberMe : rememberMeRef.current.checked }))
         } )
     }
   return (
@@ -90,7 +89,7 @@ export default function LoginModal() {
                         </div>
                     </div>
                     <div className="form-group my-1 d-flex">
-                        <input type="checkbox" className="form-check" id="remember-me"/>
+                        <input type="checkbox" className="form-check" id="remember-me" ref={rememberMeRef}/>
                         <label htmlFor="remember-me" className="text-lowercase mx-1">remember me</label>
                     </div>
                     <button className="custom-btn-secondary btn my-1 w-100" type="submit" onClick={signIn}>Sign In</button>
@@ -99,7 +98,7 @@ export default function LoginModal() {
                 <div className="d-flex align-items-center justify-content-center flex-column">
                     <GoogleLogin className="sign" 
                       onSuccess={onSuccesGoogleLogin}
-                      onError={console.log("login failed")}/>
+                      />
                 </div>
             </div>
           </div>
