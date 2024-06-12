@@ -10,7 +10,7 @@ export default function SignAccountInfo({currentInfo , onChangeFunct , next}) {
   const emailRef = useRef() 
   const passwordRef = useRef() 
   const nbPhoneRef = useRef() 
-  const accountTypeRef = useRef() 
+  const accountTypeRef = useRef("costumer") 
   const googleSignUpSuccess = (cred) => {
     const details = jwtDecode(cred.credential)
     onChangeFunct("username" , details.email.substring(0 , details.email.indexOf("@")))    
@@ -20,9 +20,20 @@ export default function SignAccountInfo({currentInfo , onChangeFunct , next}) {
     next()
   }
   return (
-
     <div>
-      <div className="form-group my-3 d-flex align-items-center justify-content-between">
+      <div className="form-group my-3">
+        <label htmlFor="">account type : </label>
+        <select name="" id="" className="form-select text-secondary"
+          ref={accountTypeRef}
+          onChange={()=>{onChangeFunct("accountType" , accountTypeRef.current.value)}} 
+          defaultChecked={currentInfo.accoubtType}
+        >
+          <option value="costumer">costumer</option>
+          <option value="provider">provider</option>
+        </select>
+      </div>
+      <div className="form-group my-3">
+        <label htmlFor="">username : </label>
         <input
           type="text"
           className="form-control"
@@ -34,7 +45,8 @@ export default function SignAccountInfo({currentInfo , onChangeFunct , next}) {
         />
       </div>
       <div className="form-group my-3 d-flex align-items-center justify-content-between">
-        <div className="form-group me-1">
+        <div className="form-group me-1 w-50">
+          <label htmlFor=""> password : </label>
           <input
             type="text"
             className="form-control"
@@ -42,7 +54,8 @@ export default function SignAccountInfo({currentInfo , onChangeFunct , next}) {
             placeholder="enter the password"
           />
         </div>
-        <div className="form-group ms-1">
+        <div className="form-group ms-1 w-50">
+          <label htmlFor="">confirm your password : </label>
           <input
             type="text"
             className="form-control"
@@ -52,6 +65,7 @@ export default function SignAccountInfo({currentInfo , onChangeFunct , next}) {
         </div>
       </div>
       <div className="form-group my-3">
+        <label htmlFor=""> email : </label>
         <input
           type="email"
           className="form-control"
@@ -82,23 +96,16 @@ export default function SignAccountInfo({currentInfo , onChangeFunct , next}) {
           defaultValue={currentInfo.tel}
         />
       </div>
-      <div className="form-group my-3">
-        <select name="" id="" className="form-select text-secondary"
-          ref={accountTypeRef}
-          onChange={()=>{onChangeFunct("accountType" , accountTypeRef.current.value)}} 
-          defaultChecked={currentInfo.accoubtType}
-        >
-          <option value="costumer">costumer</option>
-          <option value="provider">provider</option>
-        </select>
-      </div>
-      <div className="d-flex align-items-center">
-        <hr />
+      <div className="d-flex align-items-center justify-content-center">
         <span>or</span>
-        <hr />
       </div>
-      <div className="d-flex align-items-center justify-content-center flex-column">
-            <GoogleLogin onSuccess={googleSignUpSuccess} onError={console.log("invalid data")} /> 
+      <div className="d-flex align-items-center justify-content-center w-100">
+            <button className="btn btn-outline-dark me-2 rounded-circle">
+              <i class="fa-brands fa-google"></i> 
+            </button>
+            <button className="btn custom-btn-outlined-primary ms-2 rounded-circle">
+              <i class="fa-brands fa-facebook"></i>
+            </button>
         </div>
     </div>
   );

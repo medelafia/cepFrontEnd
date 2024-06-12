@@ -1,6 +1,7 @@
 import { useRadioGroup } from "@mui/material";
 import { dark } from "@mui/material/styles/createPalette";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AddDataHeader from "../../components/AddDataHeader";
 import CurrentPath from "../../components/CurrentPath";
 
@@ -10,6 +11,7 @@ export default function AddGate() {
     const gateTypeListener = () => {
         setGateType(gateTypeRef.current.value)
     }
+    const navigate = useNavigate()
     const nameRef = useRef() ; 
     const addressRef = useRef() ; 
     const cityRef = useRef()
@@ -50,7 +52,10 @@ export default function AddGate() {
                 'Content-Type': 'application/json'
                 },
             body : JSON.stringify(fetchOptions)
-        }).then(res => res.json()) 
+        }).then(res => {
+            navigate("/dashboard/gates")
+            return res.json()
+        }) 
         .then(data => console.log(data)) 
 
     }

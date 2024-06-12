@@ -23,8 +23,8 @@ export default function Setting(){
                     </SettingRouting>
                 </div>
                 <div className="col-lg-8">
-                    <h5 className="text-center bold font-secondary">
-                        account setting
+                    <h5 className="text-center bold font-secondary text-capitalize">
+                        {active.slice(0 , active.indexOf("Settings")) + " settings"}
                     </h5>
                     <div className="p-3">
                         <Outlet />

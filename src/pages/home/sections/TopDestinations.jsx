@@ -28,23 +28,14 @@ export default function TopDestinations() {
                     >
                         <TopDestination destinationImage={image1} destinationName="dest"/>
                     </motion.div>
-                    <div className="col-md-4 custom-h-100 col-sm-12">
-                        <motion.div className="bg-primary rounded h-50"
+                    <motion.div className="col-md-4 rounded"
                             initial={{translateY : -50 }}
                             whileInView={{translateY : 0 }}
                             transition={{duration : 0.5  }}
                         >
                             <TopDestination destinationImage={image1} destinationName="dest"/>
-                        </motion.div>
-                        <motion.div className="bg-primary rounded my-1 h-50 position-relative"
-                            initial={{translateY : 50 }}
-                            whileInView={{translateY : 0 }}
-                            transition={{duration : 0.5  }}
-                        >
-                            <TopDestination destinationImage={image1} destinationName="dest"/> 
-                        </motion.div>
-                    </div>
-                    <motion.div className="col-md-4 custom-h-100 col-sm-12"
+                    </motion.div>
+                    <motion.div className="col-md-4 col-sm-12"
                         initial={{translateX : 50 }}
                         whileInView={{translateX : 0 }}
                         transition={{duration : 0.5  }}

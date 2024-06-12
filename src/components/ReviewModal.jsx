@@ -1,7 +1,8 @@
+import { RateReview } from "@mui/icons-material";
 import { useRef } from "react";
 import Rating from "./Rating";
 
-export default function ReviewModal() {
+export default function ReviewModal({ providerId}) {
   const reviewTitleRef = useRef() 
   const reviewContentRef = useRef() 
   const reviewScoreRef = useRef() 
@@ -10,7 +11,15 @@ export default function ReviewModal() {
     const reviewTitleValue = reviewTitleRef.current.value 
     const reviewContentValue = reviewContentRef.current.value 
     const reviewScoreValue = reviewScoreRef.current.value 
-    
+    fetch("http://localhost:8090/", {
+      method : "POST" , 
+      body : JSON.stringify({
+        title : reviewTitleValue , 
+        content : reviewContentValue , 
+        providerId : providerId 
+      })
+     })
+    .then()
   }
     return(
     <div className="modal rounded-lg p-5" id="reviewModal">

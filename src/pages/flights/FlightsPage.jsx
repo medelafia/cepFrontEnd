@@ -5,7 +5,7 @@ import Flight from "../../components/Flight";
 import ShowMore from "../../components/ShowMore";
 
 export default function FlightsPage() {
-  const [result, setResult] = useState(["1", ""]);
+  const [result, setResult] = useState(["1", "" , "" , "" , ""]);
   const [showFilter , setShowFilter] = useState(false)
   const renderFlights = () => {
     return result.map((flight, index) => <Flight />);

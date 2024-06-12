@@ -40,9 +40,25 @@ export default function Cars() {
                     </div>
                     { showFilter && 
                         <div className="d-flex align-items-center justify-content-between my-2">
-                            <select name="" id="" className="form-select me-2"></select>
-                            <select name="" id="" className="form-select mx-1"></select>
-                            <select name="" id="" className="form-select ms-2"></select>
+                            <div className="form-group">
+                                <label htmlFor="">car type</label>
+                                <select name="" id="" className="form-select me-2">
+                                    <option value="">suv</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">trans type</label>
+                                <select name="" id="" className="form-select me-2">
+                                    <option value="">manuel</option>
+                                    <option value="">automatique</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">car type</label>
+                                <select name="" id="" className="form-select me-2">
+                                    <option value="">suv</option>
+                                </select>
+                            </div>
                         </div>
                     }
                     <div className="row">

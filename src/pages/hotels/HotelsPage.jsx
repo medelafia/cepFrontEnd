@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Hotel from "../../components/Hotel"
 import ShowMore from "../../components/ShowMore"
@@ -9,8 +9,7 @@ export default function HotelsPage() {
     const renderHotels = () => {
         return result.map((hotel,index) => <Hotel />)
     }
-    const { search } = useParams() ; 
-    console.log(search)
+    const { search } = useParams() ;
     const findNearby = () => {
         navigator.geolocation.getCurrentPosition(
             (pos)=> {
@@ -23,6 +22,9 @@ export default function HotelsPage() {
         )
     }
     const [showFilter , setShowFilter] = useState(false)
+    useEffect(()=>{
+        console.log(search)
+    } , [search] )
     return (
         <div className="w-100 page">
             <div className="hero-hotel">

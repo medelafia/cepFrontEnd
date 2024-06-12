@@ -15,6 +15,6 @@ export default function Flights() {
   })
   const fetchColumns = ["price" , "nbOfPlaces" , "startTime" , "endTime" , "distance" , "flightClass"]
   return (
-    <DataPage data={flights} fetchColumns={fetchColumns} dataColumns={cols} dataAddingPath="/dashboard/addFlight" />
+    <DataPage  dataAddingPath="/dashboard/addFlight" />
   );
 }

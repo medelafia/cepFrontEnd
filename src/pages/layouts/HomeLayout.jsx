@@ -55,7 +55,7 @@ export default function HomeLayout() {
     <div className="position-relative">
       <div className="custom-navbar border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container" style={{zIndex : 10 }}>
         <Brand />
-        <div className="d-flex flex-lg-row flex-sm-column align-items-center justify-content-center text-capitalize">
+        <div className="d-lg-flex d-sm-none flex-lg-row align-items-center justify-content-center text-capitalize">
           <Link
             to="/"
             className={`mx-3 text-decoration-none hover ${
@@ -120,6 +120,8 @@ export default function HomeLayout() {
                 } 
               </ul> 
               </div>
+              <button className="btn ms-1 custom-text-primary rounded-circle"><i class="fa-solid fa-lightbulb"></i></button>
+              <button className="btn ms-1 custom-text-primary rounded-circle" onClick={()=>{navigate("/card")}}><i class="fa-solid fa-cart-shopping"></i></button>
         </div>
         </div>
       <LoginModal />

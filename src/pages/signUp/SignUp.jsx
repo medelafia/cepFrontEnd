@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import SignCompanyInfo from "../../components/SignCompanyInfo";
 import SignStep from "../../components/SignStep";
-import SignUserInfo from "../../components/SignUserInfo"
+import SignCostumerInfo from "../../components/SignCostumerInfo"
 import SignAccountInfo  from "../../components/SignAccountInfo";
+import image from "../../assets/signUpImage.jpeg"
 
 export default function SignUp() {
     const [step , setStep] = useState(1) ;
@@ -10,9 +11,6 @@ export default function SignUp() {
     const [stepsStatus , setStepsStatus] = useState(["done" ,"none" , "none" , "none"]) 
     const next = () => {
         if(step < steps.length) {
-            switch(step){
-                case 1 : updateItem("accountType")
-            }
             setStep(step + 1)
         }
 
@@ -46,18 +44,17 @@ export default function SignUp() {
         console.log(info)
     } , [info])
     return (
-        <div className="page d-flex justify-content-center flex row"> 
-            <div className="bg-light d-sm-none col-lg-6 d-flex flex-column p-5" style={{height : "90vh"}}>
-                <h1 className="title custom-text-primary font-third text-capitalize">travelboot registration</h1>
-                <div className="mt-5 ms-2">
-                    {stepsRendering()}
-                </div>
+        <div className="d-flex justify-content-center flex row w-100" style={{ height : "100vh"}}> 
+            <div className="bg-light col-lg-6 d-flex flex-column h-100">
+                <img src={image} alt="" className="h-100 w-100"/>
             </div>
-            <div  className="p-5 col-lg-6 col-sm-12">
-                <h5 className="text-capitalize text-center mb-5 text-secondary"><strong className="custom-text-primary">step {step}: </strong>{steps[step - 1]}</h5>
+            <div  className="px-5 col-lg-6 col-sm-12">
+                <h1 className="title custom-text-primary my-5 font-third text-capitalize text-center">travelboot registration</h1>
+                <h5 className="text-capitalize text-center text-secondary"><strong className="custom-text-primary">step {step}: </strong>{steps[step - 1]}</h5>
 
                 {step == 1 && <SignAccountInfo currentInfo={info} onChangeFunct={updateItem} next={next}/> }
-                { step == 2 && (info.accountType == "costumer" ? <SignUserInfo /> : <SignCompanyInfo /> )}
+                { step == 2 && info.accountType == "costumer" && <SignCostumerInfo /> }
+                { step == 2 && info.accountType == "provider" && <SignCompanyInfo /> }
                 <div className="d-flex align-items-center justify-content-end my-3">
                     <button className="btn custom-btn-outlined-primary me-2" onClick={prev}>prev</button>
                     <button className="btn custom-btn-primary ms-2" onClick={next}>next</button>

@@ -10,13 +10,18 @@ export default function Stations() {
         .then(res => res.json())
         .then(data => setStations(data))
     } , [])
-    const cols = ["name" , "address" , "country" , "city" , "long" , "lat" , "email" , "phone" ,  "type"] 
-    const fetch_keys = ["name" , "address" ,"country" , "city" , "lng" ,"lat","emailContact" ,"nbPhoneContact"]
+    const columns = [{field :"name" , headerName : "name"} ,
+    {field : "address" , headerName : "address"}  ,
+    {field : "country" , headerName : "country" } ,
+    {field : "city" , headerName :"city"  } ,
+    {field :  "lng" , headerName : "longitue" }, 
+    { field : "lat" , headerName : "latitude" },
+    {field : "emailContact" , headerName : "email"} , 
+    {field : "nbPhoneContact" , headerName : "contact number"}] 
     return (
         <DataPage 
-            dataColumns={cols}
-            data={stations}
-            fetchColumns={fetch_keys}
+            columns={columns}
+            rows={stations} 
             dataAddingPath="/dashboard/addGate"
             deletePath="http://localhost:8089/gates/"
             />

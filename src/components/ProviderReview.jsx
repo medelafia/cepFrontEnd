@@ -1,8 +1,8 @@
 import Rating from "./Rating";
 
-export default function ProviderReview() {
+export default function ProviderReview({tit}) {
     return (
-        <div className="col-sm-12 col-md-6 col-lg-4">
+        <div className="col-sm-12 col-md-6 col-lg-4 my-2">
             <div className="custom-rounded border p-3 container">
             <Rating />
             <div>
@@ -10,7 +10,7 @@ export default function ProviderReview() {
             </div>
             <div className="d-flex align-items-center justify-content-between ">
                 <div>
-                    @user
+                    @user {tit}
                 </div>
                 <div>
                     22/10/2022

@@ -13,6 +13,13 @@ export default function LoginModal() {
     const rememberMeRef = useRef()
     const [errors , setErrors] = useState({})
     const dispatch = useDispatch() 
+    const [loginSuccess , setLoginSuccess] = useState(false) 
+    const showSuccessLogin = () => {
+      setLoginSuccess(true) 
+      setTimeout(()=>{
+        document.querySelector(".btn-close").click() ;
+      } , 2000)
+    }
     const signIn = (e) => {
       e.preventDefault()
       const usernameValue = username.current.value 
@@ -38,8 +45,8 @@ export default function LoginModal() {
           return res.json() 
         })
         .then(data =>{
-          console.log(data)
-          dispatch(login(data))  
+          dispatch(login(data))
+          showSuccessLogin() 
         } )
       }
     }
@@ -61,13 +68,15 @@ export default function LoginModal() {
           }
           return null })
         .then(data =>{
-          dispatch(login({data : data , rememberMe : rememberMeRef.current.checked }))
+          dispatch(login(data))
+          showSuccessLogin()
         } )
     }
   return (
     <div className="modal custom-rounded" id="loginModal">
       <div className="modal-dialog">
-        <div className="modal-content">
+      { loginSuccess == false ?
+        <div className="modal-content"> 
           <div className="p-4 d-flex align-items-center justify-content-end">
             <button
               type="button"
@@ -102,8 +111,24 @@ export default function LoginModal() {
                 </div>
             </div>
           </div>
+          </div>
+          : 
+            <div className="modal-content d-flex flex-column justify-content-center align-items-center">
+              <div className="p-4 d-flex align-items-center justify-content-end">
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <h3>welcome mr {username.current.value}</h3>
+                login success
+              </div>
+            </div>
+          }
         </div>
       </div>
-    </div>
   );
 }

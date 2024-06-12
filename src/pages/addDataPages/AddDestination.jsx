@@ -43,9 +43,6 @@ export default function AddDetination() {
             }
         })
     }
-    const renderCaountries =  async () => {
-
-    }
     return (
         <div className="p-5">
             <CurrentPath />
@@ -59,7 +56,7 @@ export default function AddDetination() {
                     <div className="form-group me-1 w-50">
                         <label htmlFor="">country</label>
                         <select name="" className="form-select" id="" ref={countryRef}>
-                            {renderCountries()}
+                            <option value="maroc">maroc</option>
                         </select>
                     </div>
                     <div className="form-group ms-1 w-50">

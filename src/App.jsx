@@ -1,6 +1,5 @@
 import DashboardLayout from "./pages/layouts/DashboardLayout" ;
 import './App.css'
-import Login from "./pages/login/Login.jsx";
 import Home from "./pages/home/Home.jsx"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { BrowserRouter, Routes,Route} from 'react-router-dom';
@@ -26,11 +25,6 @@ import OffersLayout from './pages/layouts/OffersLayout';
 import ErrorPage from './pages/errorsPages/ErrorPage';
 import PayementPage from './pages/payementPage/PayementPage';
 import Index from './pages/dashboard/Index';
-import AirlinePage from './pages/providers/AirlinePage';
-import HotelPage from './pages/providers/HotelPage';
-import TravelAgencyPage from './pages/providers/TravelAgencyPage';
-import CarAgencyPage from './pages/providers/CarAgencyPage';
-import RailWayOperatorPage from './pages/providers/RailWayOperatorPage';
 import DestinationPage from "./pages/destinations/DestinationPage";
 import Profile from "./pages/profile/Profile";
 import UserInfo from "./pages/profile/UserInfo";
@@ -43,11 +37,20 @@ import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import AddFlight from "./pages/addDataPages/AddFlight";
 import AddCar from "./pages/addDataPages/AddCar";
 import AddRoom from "./pages/addDataPages/AddRoom";
-import ProvidersLayout from "./pages/providers/ProvidersLayout";
 import AddGate from "./pages/addDataPages/AddGate";
 import PaymentSetting from "./components/PaymentSetting";
 import AddDestination from "./pages/addDataPages/AddDestination";
 import ResetPassword from "./pages/forgotPassword/ResetPassword";
+import CompanySetting from "./components/CompanySetting";
+import TrainTravels from "./pages/trainTravels/TrainTravels";
+import OrganizedTravels from "./pages/organizedTravel/OrganizedTravels";
+import ProviderPage from "./pages/providers/ProviderPage";
+import Airlines from "./pages/providers/Airlines";
+import ProvidersLayout from "./pages/providers/ProvidersLayouts";
+import CarAgencies from "./pages/providers/CarAgencies";
+import TravelAgencies from "./pages/providers/TravelAgencies";
+import RailwaysOperators from "./pages/providers/RailwaysOperators";
+import Card from "./pages/panier/Card";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -65,6 +68,7 @@ export default function App() {
               <Route index element={<Home />} /> 
               <Route element={<Services />} path="/services"/>
               <Route element={<About /> } path="/about" />
+              <Route element={<Card />} path="/card" />
               <Route element={<Contact /> } path="/contact" /> 
               <Route element={<OffersLayout />} path="/offers">
                 <Route element={<FlightsPage />} path="/offers/flights" />
@@ -74,17 +78,18 @@ export default function App() {
                 <Route element={<HotelsPage />} path="/offers/hotels" />
                 <Route element={<DestinationsPage />} path="/offers/destinations"/>
                 <Route element={<DestinationPage />} path='/offers/destination/:id'/>
+                <Route element={<TrainTravels />} path="/offers/trainTravels/" /> 
+                <Route element={<OrganizedTravels />} path="/offers/travels"  /> 
               </Route>
-              <Route path='/providers'>
-                <Route element={<AirlinePage />} path='/providers/airline/:id' />
-                <Route element={<HotelPage />}  path='/providers/hotel/:id'/> 
-                <Route element={<TravelAgencyPage />}  path='/providers/travelAgency/:id'/> 
-                <Route element={<CarAgencyPage />}  path='/providers/carAgency/:id'/> 
-                <Route element={<RailWayOperatorPage />} path="/providers/railwayOperator" /> 
+              <Route path="/providers" element={<ProvidersLayout />}>
+                <Route path="/providers/airlines" element={<Airlines />} />
+                <Route element={<ProviderPage />} path="/providers/provider/:id" />
+                <Route path="/providers/car-agencies" element={<CarAgencies /> } />
+                <Route path="/providers/travel-agencies" element={<TravelAgencies /> } />
+                <Route path="/providers/railways-operators" element={<RailwaysOperators />} />
               </Route>
-              <Route element={<SignUp /> } path="/signUp" />
             </Route>
-            <Route path="/login" element={<Login />}/>
+            <Route element={<SignUp /> } path="/signUp" />
             <Route path='/dashboard' element={(user?.accountType == "PROVIDER")||(user?.accountType == "ADMIN") ? <DashboardLayout /> : <ErrorPage status={401}/>}>
               <Route element={<Index />} index /> 
               <Route element={user?.providerType == "AIRLINE" ? <Flights /> : <ErrorPage status={401}/>} path="/dashboard/flights" /> 
@@ -97,7 +102,7 @@ export default function App() {
               <Route element={user?.accountType == "ADMIN" ? <Clients /> : <ErrorPage status={401}/>} path="/dashboard/clients" /> 
               <Route element={<Setting />} path="/dashboard/settings" >
                 <Route index element={<AccountInfo changePasswordPath="/dashboard/settings/changePassword"/> }/> 
-                <Route path="/dashboard/settings/company" element={<RecommendationProfile />}/> 
+                <Route path="/dashboard/settings/company" element={<CompanySetting />}/> 
                 <Route path="/dashboard/settings/payment" element={<PaymentSetting />} /> 
                 <Route path="/dashboard/settings/changePassword" element={<PasswordInfo />}/> 
               </Route> 

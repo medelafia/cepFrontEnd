@@ -9,9 +9,16 @@ export default function Clients() {
     .then(res => res.json()) 
     .then(data => setClients(data))
   })
-  const cols = ["first name" , "last name" , "gender" , "age"] ; 
-  const colsFetch = ["firstName" , "lastName" , "gender" , "age"] 
+  const columns = [ {field : "id" , headerName : "id"} ,
+                    {field : "firstName" , headerName : "First Name"} , 
+                    {field : "lastName" , headerName : "Last Name"} , 
+                    {field : "gender" , headerName : "Gender"} , 
+                    {field : "age" , headerName : "Age"} , 
+                  ]
+  const rows = [
+    {id : 1 , firstName : "mohamed " , lastName : "el afia" , gender : "male"  , age : 20}
+  ]
   return (
-    <DataPage data={clients} dataColumns={cols} fetchColumns={colsFetch} /> 
+    <DataPage columns={columns} rows={clients}/> 
   );
 }

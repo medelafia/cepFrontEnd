@@ -5,7 +5,7 @@ export default function Flight() {
     <div className="w-100 p-3 border my-2 rounded-2 d-flex align-items-center justify-content-between">
         <div className="d-flex flex-column align-items-center">
             <img src={image} alt="" style={{ width: "150px", height: "80px" }} />
-            <Link to="/providers/airline/1" className="text-secondary text-capitalize">airline name</Link>
+            <Link to="/providers/provider/1" className="text-secondary text-capitalize">airline name</Link>
         </div>
         <div className="d-flex flex-column">
             <h5 className="text-secondary">
@@ -19,7 +19,7 @@ export default function Flight() {
         </div>
         <div className="d-flex flex-column">
             <div className="mb-2 text-center h5">200$</div>
-            <button className="btn custom-btn-secondary">view deal</button>
+            <button className="btn custom-btn-secondary">book now</button>
         </div>
     </div>
   );

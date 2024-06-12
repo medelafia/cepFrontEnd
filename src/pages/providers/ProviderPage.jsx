@@ -5,12 +5,20 @@ import ReviewsSlider from "../../components/ReviewsSlider"
 import ImageSlider from "../../components/ImageSlider"
 import CurrentPath from "../../components/CurrentPath";
 import Rating from "../../components/Rating";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+
 export default function ProviderPage(){
     const [reviews , setReviews] = useState(['jjfj', "kkkd" , "hfhf" , "jfjjf" , "hhhd" ]) 
-    return (
-        <div className="page">
-            <div className="custom-container py-5">
-                <CurrentPath className="my-3"/> 
+    const { id } = useParams() 
+    const [ provider , setProvider ] = useState() 
+    useEffect(()=>{
+        fetch("http://localhost:8089/provider/" + id )
+        .then(res => res.json()) 
+        .then(data => setProvider(data))
+    } , [] )
+    return (<>
+        <CurrentPath className="my-3"/> 
                 <motion.div className="bg-light custom-rounded overflow-hidden" style={{minHeight : "500px"}}
                     initial={{opacity : 0 , translateX : -100}}
                     animate ={{opacity : 1 , translateX : 0 }}
@@ -26,11 +34,11 @@ export default function ProviderPage(){
                                 whileInView={{ opacity : 1 , translateX : 0 }}
                                 transition={{duration :0.4 }}
                             >
-                                <h1 className="bold">hotel name</h1>
+                                <h1 className="bold">{provider?.name}</h1>
                                 <div className="ps-3">
-                                    <div><i class="fa-solid fa-location-dot me-2"></i><span className="text-decoration-underline">chefchaouen,morroco</span></div>
-                                    <div><i class="fa-solid fa-location-dot me-2"></i><span className="text-decoration-underline">provider@gmail.com</span></div>
-                                    <div><i class="fa-solid fa-phone me-2"></i><span className="text-decoration-underline">0658945721</span></div>
+                                    { provider?.address !=null && <div><i class="fa-solid fa-location-dot me-2"></i><span className="text-decoration-underline">{provider?.address}</span></div> }
+                                    { provider?.email != null && <div><i class="fa-solid fa-location-dot me-2"></i><span className="text-decoration-underline">{provider?.email}</span></div> }
+                                    { provider?.tel && <div><i class="fa-solid fa-phone me-2"></i><span className="text-decoration-underline">{ provider?.tel } </span></div> }
                                 </div>
                             </motion.div>
                             <LongText text="    Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nemo est velit iste consequuntur deserunt aliquam labore inventore laboriosam, minima maxime in quisquam placeat dolore voluptatem tenetur odio animi architecto!"/>
@@ -51,9 +59,8 @@ export default function ProviderPage(){
                             <span>write review</span>
                         </button>
                     </div>
-                    <ReviewsSlider reviews={reviews}/> 
+                    <ReviewsSlider reviews={provider?.reviews}/> 
                 </div>
-            </div>
-        </div>
+    </>
     )
 }

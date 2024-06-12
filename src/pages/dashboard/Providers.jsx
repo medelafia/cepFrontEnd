@@ -4,15 +4,18 @@ import DataPage from "./DataPage";
 
 export default function Providers() {
   const [providers, setProviders] = useState([]);
-  const cols = ["company name" , "provider type" , "country" ]
-  const fetchCols = ["companyName" , "providerType" , "country"]
   useEffect(()=>{
-      fetch("http://localhost:8089/accounts/providers/")
+      fetch("http://localhost:8089/providers/")
       .then(res => res.json())
       .then(data => setProviders(data))
   } , [])
+  const columns = [
+    {field: "companyName" , headerName : "company name" } ,
+    {field: "providerType" , headerName : "provider type"} ,
+    {field: "country" , headerName :"country" } 
+  ]
   return (
     
-    <DataPage dataColumns={cols} fetchColumns={fetchCols} data={providers}/>
+    <DataPage columns={columns} rows={providers}/>
   );
 }
