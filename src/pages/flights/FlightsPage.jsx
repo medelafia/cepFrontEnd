@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Flight from "../../components/Flight";
+import Flight from "./componants/Flight";
 import ShowMore from "../../components/ShowMore";
+import { useFetch } from "../../hooks/custom-hooks";
+import FlightSkeleton from "./componants/FlightSkeleton";
+import InternalError from "../../components/InternalError";
 
 export default function FlightsPage() {
-  const [result, setResult] = useState(["1", "" , "" , "" , ""]);
   const [showFilter , setShowFilter] = useState(false)
+  const { data , isLoading , error } = useFetch("http://localhost:8089/flights") 
   const renderFlights = () => {
-    return result.map((flight, index) => <Flight />);
+    return data.map((flight, index) => <Flight />);
   };
   const [flightType , setFlightType] = useState("round") 
   return (
@@ -54,7 +57,7 @@ export default function FlightsPage() {
                     )
                 }
                 <div className="form-group my-1 w-100">
-                    <label htmlFor="" className="from-label">depart date :</label>
+                    <label htmlFor="" className="from-label">flight class :</label>
                     <select name="" id="" className="form-select rounded-pill">
                         <option value="">premieum</option>
                         <option value="">busniss</option>
@@ -67,7 +70,19 @@ export default function FlightsPage() {
           </form>
         </div>
         <div className="col-md-8 col-sm-12 py-3">
-          <div className="d-flex align-items-center justify-content-between">
+          { isLoading ? 
+          <>
+            <FlightSkeleton />
+            <FlightSkeleton />
+            <FlightSkeleton />
+            <FlightSkeleton />
+          </>
+          : 
+          ( error ? 
+            <InternalError />
+            : 
+            <>
+              <div className="d-flex align-items-center justify-content-between">
             <div>
               12 flights
             </div>
@@ -77,24 +92,16 @@ export default function FlightsPage() {
                 <span>filter</span>
               </button>
               <select name="" id="sort" className="form-select">
-                                <option>recommended</option>
-                                <option>min price</option>
+                <option>recommended</option>
+                <option>min price</option>
               </select>
             </div>
-          </div> 
-          { showFilter && 
-                        <div className="d-flex align-items-center justify-content-between my-2">
-                            <select name="" id="" className="form-select me-2"></select>
-                            <select name="" id="" className="form-select mx-1"></select>
-                            <select name="" id="" className="form-select ms-2"></select>
-                        </div>
-                    }
-          {result.length == 0 ? (
-            <p className="text-center custom-text-secondary">no flights</p>
-          ) : (
-            renderFlights()
-          )}
+            </div> 
           <ShowMore />
+            </>
+
+          )
+          }
         </div>
       </div>
     </div>

@@ -1,20 +1,37 @@
+import { FormControl, InputLabel, TextField } from "@mui/material";
+import InternalError from "../../components/InternalError";
+import LoadingComponent from "../../components/LoadingComponent";
 import OrganizesTravel from "../../components/OrganizedTravel";
 import ShowMore from "../../components/ShowMore"
+import { useFetch } from "../../hooks/custom-hooks";
 export default function OrganizedTravels() {
+    const { data , error , isLoading } = useFetch("http://localhost:8089/organizedTravel")
+    const renderTravels = () => {
+        return data?.map((travel , index) => <OrganizesTravel />)
+    }
     return (
         <div>
-            <header>
-                kckf
+            <header className="d-flex align-items-center">
+                <TextField label="destination name" className="me-2" fullWidth/> 
+                <TextField  className="me-2" type="date" fullWidth/>
+                <button className="btn btn-dark">search</button>
             </header>
-            <div className="row">
-                <OrganizesTravel />
-                <OrganizesTravel />
-                <OrganizesTravel />
-                <OrganizesTravel />
-                <OrganizesTravel />
-                <OrganizesTravel />
-            </div>
-            <ShowMore /> 
+            {
+                isLoading ? 
+                    <LoadingComponent /> 
+                : 
+                (
+                    error ? 
+                    <div className="my-5">
+                        <InternalError /> 
+                    </div>
+                    : 
+                    <>
+                        <header></header>
+                    </>
+                )
+
+            }
         </div>
     )
 }

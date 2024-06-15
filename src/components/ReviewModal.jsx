@@ -1,17 +1,17 @@
-import { RateReview } from "@mui/icons-material";
+import { CollectionsBookmark, RateReview } from "@mui/icons-material";
+import { Rating } from "@mui/material"; 
+import { useState } from "react";
 import { useRef } from "react";
-import Rating from "./Rating";
-
 export default function ReviewModal({ providerId}) {
   const reviewTitleRef = useRef() 
   const reviewContentRef = useRef() 
-  const reviewScoreRef = useRef() 
-  const submitHandling = (e) => {
+  const [reviewScore , setReviewScore] = useState(0)
+  const postReview = (e) => {
     e.preventDefault() 
     const reviewTitleValue = reviewTitleRef.current.value 
     const reviewContentValue = reviewContentRef.current.value 
-    const reviewScoreValue = reviewScoreRef.current.value 
-    fetch("http://localhost:8090/", {
+
+    /*fetch("http://localhost:8090/", {
       method : "POST" , 
       body : JSON.stringify({
         title : reviewTitleValue , 
@@ -19,7 +19,7 @@ export default function ReviewModal({ providerId}) {
         providerId : providerId 
       })
      })
-    .then()
+    .then()*/
   }
     return(
     <div className="modal rounded-lg p-5" id="reviewModal">
@@ -34,9 +34,9 @@ export default function ReviewModal({ providerId}) {
           </div>
           <h1 className="custom-text-primary text-capitalize text-center font-secondary">write review</h1>
           <div className="modal-body d-flex justify-content-center">
-               <form className="w-75 mb-3" >
-                    <div className="form-group my-2">
-                        <Rating />
+               <form className="w-75 mb-3">
+                    <div className="form-group my-2 d-flex align-items-center justify-content-center">
+                        <Rating onChange={(e , newScore)=>setReviewScore(newScore)}/>
                     </div>
                     <div className="form-group my-2">
                       <label htmlFor="" className="text-secondary ms-2">title</label>
@@ -48,7 +48,7 @@ export default function ReviewModal({ providerId}) {
 
                         </textarea>
                     </div>
-                    <button className="btn custom-btn-outlined-primary w-100 my-3 rounded-pill">post review</button>
+                    <button onClick={postReview} className="btn custom-btn-outlined-primary w-100 my-3 rounded-pill">post review</button>
                 </form>
           </div>
         </div>

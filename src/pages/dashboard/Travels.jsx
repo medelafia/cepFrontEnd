@@ -1,34 +1,29 @@
+import { useSelect } from "@mui/base";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/selectors/userSelector";
+import DataPage from "./DataPage";
 
 export default function Travels() {
-  const [travels, setTravels] = useState([]);
-  const renderTravels = () => {
-    return travels.map((travel, index) => (
-      <tr>
-        <td></td>
-      </tr>
-    ));
-  };
+  const user = useSelector(userSelector) 
+  const columns = [
+    { field :  "id" , headerName : "ID" } , 
+    { field :  "price", headerName : "price"} , 
+    { field :  "distance", headerName : "distance"} , 
+    { field :  "date", headerName : "date"} , 
+    { field : "startTime" , headerName : "start time"} , 
+    { field : "endTime" , headerName : "end time"} , 
+    { field : "nbOfPlaces" , headerName : "nbOfPlaces"} ,
+    { field : "nbOfStops" , headerName : "Stops"} , 
+    { field : "reservedPlaces" , headerName : "reserved"} , 
+    { field : "nbDays" , headerName : "days"} , 
+    { field : "country" , headerName : "country"} , 
+    { field : "city" , headerName : "city"} , 
+    { field : "includeTrans" , headerName : "include Transort"} , 
+    { field : "includeHotel" , headerName : "include hotel"} , 
+  ]
   return (
-    <table className="table custom-text-secondary text-center">
-      <thead>
-        <th>id</th>
-        <th>name</th>
-        <th>address</th>
-        <th>country</th>
-        <th>city</th>
-        <th>destination type</th>
-        <th>actions</th>
-      </thead>
-      <tbody className="text-secondary">
-        {travels.length == 0 ? (
-          <tr>
-            <td colSpan="7">no items</td>
-          </tr>
-        ) : (
-          renderTravels()
-        )}
-      </tbody>
-    </table>
+    <DataPage dataUrl={"http://localhost:8089/travelAgencies/"+user.id+"/organizedTravels"} columns={columns} />
   );
 }
+ 

@@ -1,35 +1,27 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useFetch } from "../../hooks/custom-hooks";
+import { userSelector } from "../../store/selectors/userSelector";
 import DataPage from "./DataPage";
 
 export default function Cars() {
-  const [cars, setCars] = useState([]);
-  const { isLoading, error, data } = useFetch("OFFERS-SERVICES", "/cars/");
-  const renderCars = () => {
-    return cars.map((car, index) => (
-      <tr key={index}>
-        <td>{car.id}</td>
-        <td>{car.make}</td>
-        <td>{car.model}</td>
-        <td>{car.year}</td>
-        <td>{car.color}</td>
-        <td>{car["fuel type"]}</td>
-        <td>{car["trans type"]}</td>
-        <td>{car["style type"]}</td>
-        <td>
-          <button className="btn text-danger">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-          <button className="btn text-success">
-            <i class="fa-solid fa-pen-to-square"></i>
-          </button>
-        </td>
-      </tr>
-    ));
-  };
-  useEffect(() => {
-  }, []);
+  const user = useSelector(userSelector); 
+  const columns = [
+    { field : "id" , headerName : "ID" } , 
+    { field : "price" , headerName : "price"} , 
+    { field : "make" , headerName : "make" } , 
+    { field : "model" , headerName : "model"} , 
+    { field : "fuelType" , headerName : "fuel" } , 
+    { field : "transType" , headerName : "trans"} , 
+    { field : "styleType" , headerName : "style" } , 
+    { field : "numberOfSeats" , headerName : "seats"} , 
+    { field : "numberOfDoors" , headerName : "doors"} , 
+    { field : "numberOfSuitcases" , headerName : "suit cases"} , 
+    { field : "airConditioning" , headerName : "air conditioning"} , 
+    { field : "free cancelation" , headerName : "free cancelation"} , 
+    { field : "available" , headerName : "available" } 
+  ]
   return (
-    <DataPage/>
+    <DataPage columns={columns} dataUrl={"http://localhost:8089/carsAgencies/"+user.id+"/cars"}/>
   );
 }

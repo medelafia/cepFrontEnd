@@ -12,13 +12,15 @@ import "./layout.css";
 import {userSelector} from "../../store/selectors/userSelector" ; 
 import { logout } from "../../features/userSlice";
 import LoginModal from "../../components/LoginModal";
-import UserProfile from "../../components/UserProfile";
 import Footer from "../../components/Footer";
 import Brand from "../../components/Brand";
 import Products from "../../components/Products";
-import Alert from "../../components/Alert";
+import CustomAlert from "../../components/CustomAlert";
 import { useRef } from "react";
 import ReviewModal from "../../components/ReviewModal";
+import { pageSelector } from "../../store/selectors/pageSelector";
+import { hideAlert, showConfirm } from "../../features/pageSlice";
+import CustomConfirm from "../../components/CustomConfim";
 
 export default function HomeLayout() {
   const navigate = useNavigate();
@@ -26,15 +28,10 @@ export default function HomeLayout() {
   const user = useSelector(userSelector) ; 
   const dispatch = useDispatch() ; 
   const [showUserProfile , setShowUserProfile] = useState(false) ; 
-  const [showAlert ,  setShowAlert] = useState(false) ; 
   const loginBtn = useRef() ; 
-  const toHome = () => {
-    navigate("/");
-  };
+  const page = useSelector(pageSelector) 
   const userLogout = () => {
-    if(confirm("are you sure?")) {
-      dispatch(logout()) 
-    }
+    dispatch(showConfirm({title : "logout" , content : "are you sure" , callBack : ()=>{dispatch(logout())}}))
   }
   const navigateToProfile = () => {
     if(user?.accountType == "COSTUMER") {
@@ -47,9 +44,6 @@ export default function HomeLayout() {
   const [showProduct , setShowProduct] = useState(false) ; 
   const toogleProduct = () => {
     setShowProduct(!showProduct) ; 
-  }
-  const showAlertToogler = (type , text) => {
-    setShowAlert(!showAlert ) ; 
   }
   return (
     <div className="position-relative">
@@ -121,12 +115,16 @@ export default function HomeLayout() {
               </ul> 
               </div>
               <button className="btn ms-1 custom-text-primary rounded-circle"><i class="fa-solid fa-lightbulb"></i></button>
-              <button className="btn ms-1 custom-text-primary rounded-circle" onClick={()=>{navigate("/card")}}><i class="fa-solid fa-cart-shopping"></i></button>
+              { 
+                user?.accountType == "COSTUMER" && <button className="btn ms-1 custom-text-primary rounded-circle" onClick={()=>{navigate("/card")}}><i class="fa-solid fa-cart-shopping"></i></button>
+        
+              }
         </div>
         </div>
       <LoginModal />
       <ReviewModal />
-      { showAlert && <Alert /> } 
+      <CustomConfirm />
+      <CustomAlert open={page?.alert.showAlert} alertType={page?.alert.alertType} text={page?.alert.alertText}/>
       {showProduct && <Products close={toogleProduct}/>}
       <Outlet />
       <Footer /> 

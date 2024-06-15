@@ -9,6 +9,7 @@ import { logout } from "../../features/userSlice"
 import { userSelector } from "../../store/selectors/userSelector"
 import "./layout.css"
 import image from "../../assets/user.jpeg" ; 
+import CustomAlert from "../../components/CustomAlert"
 export default function DashboardLayout() {
     const {pathname} = useLocation()
     const dispatch = useDispatch()
@@ -98,7 +99,7 @@ export default function DashboardLayout() {
                     </Link>
                 </div>
             </div>
-            <div className="w-100">
+            <div className="w-100 position-relative">
                 <div className="w-100 bg-white custom-navbar d-flex align-items-center justify-content-between">
                     <div className="mx-4 font-secondary custom-text-secondary">
                         <button className="btn custom-btn text-secondary" onClick={()=>{setActiveLayout(!activeLayout)}}><i class="fa-solid fa-bars"></i></button>

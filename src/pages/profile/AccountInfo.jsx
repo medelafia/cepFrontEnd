@@ -1,9 +1,12 @@
 import { TextField } from "@mui/material"
+import { useReducedMotion } from "framer-motion"
+import { useRef } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { userSelector } from "../../store/selectors/userSelector"
 
 export default function AccountInfo({changePasswordPath}) {
+    const username = useRef() 
     const user = useSelector(userSelector)
     return (
         <div className="d-flex align-items-start justify-content-center flex-column w-100">

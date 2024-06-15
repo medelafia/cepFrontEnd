@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-export default function SignCompanyInfo() {
+export default function SignCompanyInfo({onChangeFunction}) {
+    const providerTypeRef = useRef() 
     const [providerType , setProviderType] = useState(null) ; 
     return(
         <div>
@@ -10,16 +11,16 @@ export default function SignCompanyInfo() {
             </div>
             <div className="form-group my-2">
                 <label htmlFor="">choose the type of company</label>
-                <select name="" id="" className="form-select">
-                    <option value="hotel">hotel</option>
-                    <option value="airline">airline</option>
-                    <option value="carAgency">car agency</option>
-                    <option value="travelAgency">travel agency</option>
-                    <option value="railwayOperator">railway operator</option>
+                <select name="" id="" className="form-select" ref={providerTypeRef} onChange={() => onChangeFunction("providerType" , providerTypeRef.current.value)}>
+                    <option value="HOTEL">hotel</option>
+                    <option value="AIRLINE">airline</option>
+                    <option value="CAR_AGENCY">car agency</option>
+                    <option value="TRAVEL_AGENCY">travel agency</option>
+                    <option value="RAILWAY_OPERATOR">railway operator</option>
                 </select>
             </div>
             { 
-                providerType == "airline" && (
+                providerType == "hotel" && (
                     <div>
                         <label htmlFor="">hotel address : </label>
                         <input type="text" className="form-control"/>

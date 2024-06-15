@@ -7,6 +7,7 @@ import CurrentPath from "../../components/CurrentPath";
 import Rating from "../../components/Rating";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Hotel from '../../components/Hotel'
 
 export default function ProviderPage(){
     const [reviews , setReviews] = useState(['jjfj', "kkkd" , "hfhf" , "jfjjf" , "hhhd" ]) 
@@ -50,6 +51,16 @@ export default function ProviderPage(){
                 </motion.div>
                 <div className="my-4">
                     <div className="d-flex align-items-center justify-content-between my-2">
+                        <h3 className="custom-text-primary text-capitalize">deals</h3>
+                    </div>
+                    <div className="row">
+                        <Hotel />
+                        <Hotel />
+                        <Hotel />
+                    </div>
+                </div>
+                <div className="my-4">
+                    <div className="d-flex align-items-center justify-content-between my-2">
                         <h3 className="custom-text-primary">users reviews</h3>
                         <button className="btn btn-outline-dark rounded-pill px-3"
                             data-bs-toggle="modal" 
@@ -59,7 +70,14 @@ export default function ProviderPage(){
                             <span>write review</span>
                         </button>
                     </div>
-                    <ReviewsSlider reviews={provider?.reviews}/> 
+                    {   provider?.reviews == null ?
+                        <div className="d-flex align-items-center my-3 justify-content-center">
+                            <strong className="text-capitalize h4">no reviews</strong>  
+                        </div>
+                        : 
+                        <ReviewsSlider reviews={provider?.reviews}/> 
+                    }
+
                 </div>
     </>
     )

@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState =  {
+    id : 3 , 
     username : "mohamed" , 
     email : "email@gmail.com" , 
     accountType : "ADMIN" , 
-    providerType : "CAR_AGENCY"
+    providerType : "TRAVEL_AGENCY"
 }
 const userSlice = createSlice({
     name : "user" , 
@@ -14,7 +15,8 @@ const userSlice = createSlice({
             return null
         } , 
         login : (state , action) => {
-            state = action.payload.data ; 
+            console.log(action.payload)
+            state = action.payload ; 
             return state 
         }
     }

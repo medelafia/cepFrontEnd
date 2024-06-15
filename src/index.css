@@ -128,11 +128,17 @@
 .custom-rounded  {
   border-radius: 30px ;
 }
+
+.custom-border-bottom {
+  border-bottom: 3px solid var(--secondary-color);
+}
 @media (max-width : 500px ) {
   :root{
     --container-padding :  20px ;  
   }
-}
-.custom-border-bottom {
-  border-bottom: 3px solid var(--secondary-color);
+} 
+@media (max-width : 80 ) {
+  :root {
+    --container-padding : 40px ; 
+  }
 }

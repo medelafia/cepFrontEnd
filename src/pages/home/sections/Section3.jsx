@@ -1,7 +1,9 @@
 import image from "../../../assets/login.jpg"
 import {motion} from "framer-motion" ;
+import { useNavigate } from "react-router-dom";
 
 export default function Section3() {
+    const navigate = useNavigate() 
     return (
         <motion.div className="section section3 mt-5"
             initial ={{translateX : -50 , opacity : 0}}
@@ -55,6 +57,7 @@ export default function Section3() {
                             whileInView={{translateX : 0 , opacity : 1}}
                             initial={{translateX : -40 , opacity : 0 }}
                             transition={{duration : 0.5 , delay : 0.4}}
+                            onClick={()=>{navigate("/providers/airlines")}}
                         >
                             explore more
                         </motion.button>

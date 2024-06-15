@@ -5,16 +5,20 @@ import { userSelector } from "../../store/selectors/userSelector";
 import DataPage from "./DataPage";
 
 export default function Flights() {
-  const [flights, setFlights] = useState([]);
   const user = useSelector(userSelector)
-  const cols = ["price" , "number places" , "date", "begin time" , "arrived time" , "distance" , "flight class"]
-  useEffect(()=>{
-    fetch("http://localhost:8089/flights/"+user.id )
-    .then(res => res.json())
-    .then(data => setFlights(data)) 
-  })
-  const fetchColumns = ["price" , "nbOfPlaces" , "startTime" , "endTime" , "distance" , "flightClass"]
+  const columns = [
+    {field : "price", headerName : "price"} , 
+    {field : "distance", headerName :"Distance" } , 
+    {field : "date", headerName : "date"} , 
+    {field : "nbOfPlaces", headerName : "number of places"} , 
+    {field : "nbOfStops", headerName : "numbers of stops"} , 
+    {field : "from", headerName : "from"} ,  
+    {field : "to" , headerName : "to"}, 
+    {field : "reservedPlaces" , headerName : "reserved places"} , 
+    { field : "startTime" , headerName : "start time"} , 
+    {field : "endTime" , headerName : "end time"}
+  ]
   return (
-    <DataPage  dataAddingPath="/dashboard/addFlight" />
+    <DataPage dataUrl={"http://localhost:8089/"+ user.id + "/flights"} columns={columns} dataAddingPath="/dashboard/addFlight" />
   );
 }

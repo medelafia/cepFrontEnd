@@ -1,17 +1,20 @@
 import { useState } from "react"
+import { useSelector } from "react-redux"
 import { useFetch } from "../../hooks/custom-hooks"  
+import { userSelector } from "../../store/selectors/userSelector"
 import DataPage from "./DataPage"
 
 export default function Rooms() {
-    const {isLoading , error , data} = useFetch("OFFERS-SERVICES", "/rooms/")
-    const [rooms , setRooms] = useState([]) 
-    const renderRooms = () => {
-        return rooms.map((room , index) => {
-            <tr><td></td></tr>
-        })
-    }
-    const cols = ["col1" , "col 2" , "col 3"]
+    const user = useSelector(userSelector)
+   const columns = [
+    {field : "id" , headerName : "ID" } , 
+    {field : "nbOfRooms" , headerName : "Rooms" } , 
+    {field : "roomType" , headerName : "room type" } , 
+    {field : "nbOfAdults" , headerName : "Adults" } , 
+    {field : "nbOfChild" , headerName : "Child" }  , 
+    {field : "available" , headerName : "available"}
+   ]
     return (
-        <DataPage dataColumns={cols} data={rooms}/>
+        <DataPage columns={columns} dataUrl={"http://localhost:8089/hotels/"+user.id+"/rooms"}/>
     )
 }

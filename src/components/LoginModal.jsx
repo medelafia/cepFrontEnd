@@ -6,6 +6,7 @@ import FacebookLogin from "react-facebook-login";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../features/userSlice";
+import {showAlert , hideAlert, ALERT_TYPE} from "../features/pageSlice"
 
 export default function LoginModal() {
     const username = useRef() ; 
@@ -13,14 +14,22 @@ export default function LoginModal() {
     const rememberMeRef = useRef()
     const [errors , setErrors] = useState({})
     const dispatch = useDispatch() 
-    const [loginSuccess , setLoginSuccess] = useState(false) 
-    const showSuccessLogin = () => {
-      setLoginSuccess(true) 
-      setTimeout(()=>{
-        document.querySelector(".btn-close").click() ;
-      } , 2000)
+    const closeLoginModal = () => {
+      document.querySelector(".btn-close").click()
     }
-    const signIn = (e) => {
+    const verifierLogin = (res) => {
+      closeLoginModal() ; 
+      switch(res.status) {
+        case 200 :  dispatch(showAlert({showAlert : true , alertText : "login success" , alertType : ALERT_TYPE.SUCCESS }))
+            dispatch(login(res.json()))
+            break ; 
+        case 404 : dispatch(showAlert({showAlert : true , alertText : "you have not registred" , alertType : ALERT_TYPE.ERROR }))
+            break  ; 
+        case 401 : dispatch(showAlert({showAlert : true , alertText : "your password is incorrect" , alertType : ALERT_TYPE.ERROR }))
+            break ; 
+      }
+    }
+    const login = (e) => {
       e.preventDefault()
       const usernameValue = username.current.value 
       const passwordValue = password.current.value ;   
@@ -36,46 +45,22 @@ export default function LoginModal() {
             password : passwordValue 
           })
         })
-        .then(res => {
-          if(res.status == 404) {
-            alert("you are not registed")
-          }else if(res.status == 401) {
-            alert("your password is incorrect")
-          }
-          return res.json() 
-        })
-        .then(data =>{
-          dispatch(login(data))
-          showSuccessLogin() 
-        } )
+        .then(res => verifierLogin(res))
       }
     }
     const onSuccesGoogleLogin = (cred) => {
       const details = jwtDecode(cred.credential)
-      console.log(details)
       const formData = new FormData()
       formData.append("email" , details.email )
       fetch("http://localhost:8089/accounts/loginByEmail" , {
           method : "POST" , 
           body : formData
         })
-        .then(res => {
-          if(res.status == 404){
-            alert("accounts not found you have to registre") ;
-          }
-          if(res.ok){
-            return console.log(res.json())
-          }
-          return null })
-        .then(data =>{
-          dispatch(login(data))
-          showSuccessLogin()
-        } )
+        .then(res => verifierLogin(res)) 
     }
   return (
     <div className="modal custom-rounded" id="loginModal">
       <div className="modal-dialog">
-      { loginSuccess == false ?
         <div className="modal-content"> 
           <div className="p-4 d-flex align-items-center justify-content-end">
             <button
@@ -94,14 +79,14 @@ export default function LoginModal() {
                     <div className="form-group my-3">
                         <input type="password" className="form-control" placeholder="enter your password" ref={password}/> 
                         <div className="d-flex justify-content-end">
-                          <Link onClick={()=>{document.querySelector(".btn-close").click()}} to="/forgotPassword">forgot password</Link>
+                          <Link onClick={closeLoginModal} to="/forgotPassword">forgot password</Link>
                         </div>
                     </div>
                     <div className="form-group my-1 d-flex">
                         <input type="checkbox" className="form-check" id="remember-me" ref={rememberMeRef}/>
                         <label htmlFor="remember-me" className="text-lowercase mx-1">remember me</label>
                     </div>
-                    <button className="custom-btn-secondary btn my-1 w-100" type="submit" onClick={signIn}>Sign In</button>
+                    <button className="custom-btn-secondary btn my-1 w-100" type="submit" onClick={login}>Sign In</button>
                     <div className="text-center my-2">dont have account?<a className="text-primary" href="/signUp">create account</a></div> 
                 </form>
                 <div className="d-flex align-items-center justify-content-center flex-column">
@@ -112,22 +97,6 @@ export default function LoginModal() {
             </div>
           </div>
           </div>
-          : 
-            <div className="modal-content d-flex flex-column justify-content-center align-items-center">
-              <div className="p-4 d-flex align-items-center justify-content-end">
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                ></button>
-              </div>
-              <i class="fa-solid fa-circle-check"></i>
-              <div>
-                <h3>welcome mr {username.current.value}</h3>
-                login success
-              </div>
-            </div>
-          }
         </div>
       </div>
   );

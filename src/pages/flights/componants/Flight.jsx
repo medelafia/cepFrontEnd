@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import image from "../assets/royalAir.png";
+import image from "../../../assets/royalAir.png";
 export default function Flight() {
   return (
     <div className="w-100 p-3 border my-2 rounded-2 d-flex align-items-center justify-content-between">

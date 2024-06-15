@@ -1,70 +1,89 @@
+import { FormControl, InputLabel, MenuItem, NativeSelect, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import Car from "../../components/Car";
+import DefaultSkelton from "../../components/DefaultSkeltom";
 import FilterCell from "../../components/FilterCell";
+import InternalError from "../../components/InternalError";
 import ShowMore from "../../components/ShowMore";
+import {useFetch} from "../../hooks/custom-hooks"
 
 export default function Cars() {
-    const [cars , setCars] = useState([
-        {name : "toyota" , type : "manuel"} , 
-        {name : "toyota" , type : "manuel"} , 
-        {name : "toyota" , type : "manuel"} , 
-        {name : "toyota" , type : "manuel"} , 
-        {name : "toyota" , type : "manuel"} 
-    ])
-    const displayCars = () => {
-        return cars.map((car , index) => <Car key={index}/>)
+    const { data , isLoading , error } = useFetch("http://localhost:8089/cars/")
+    const airports = useFetch("http://localhost:8089/gates/airports/")
+    const airportRendering = () => {
+        return airports.data?.map((airport , index ) => <MenuItem value={airport.id}>{airport.id} ({airport.name})</MenuItem>)
     }
-    useEffect(()=>{
-        console.log(displayCars)
-    } , []) 
+    const displayCars = () => {
+        return data.map((car , index) => <Car key={index} car={car}/>)
+    }
     const [showFilter , setShowFilter ] = useState(false) ; 
     return (  
         <div className="page p-2">
             <div className="w-100"> 
-
             </div>
             <div className="row w-100">
                 <div className="col-sm-12">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <div className="text-capitalize">{cars.length} car</div>
-                        <div className="d-flex align-items-center">
-                            <button className="btn border mx-2 d-flex align-items-center" onClick={()=>{setShowFilter(!showFilter)}}>
-                                <i class="fa-solid fa-filter me-2"></i>
-                                <span>filter</span>
-                            </button>
-                            <select name="" id="sort" className="form-select">
-                                <option>recommended</option>
-                                <option>min price</option>
-                            </select>
-                        </div>
-                    </div>
-                    { showFilter && 
-                        <div className="d-flex align-items-center justify-content-between my-2">
-                            <div className="form-group">
-                                <label htmlFor="">car type</label>
-                                <select name="" id="" className="form-select me-2">
-                                    <option value="">suv</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="">trans type</label>
-                                <select name="" id="" className="form-select me-2">
-                                    <option value="">manuel</option>
-                                    <option value="">automatique</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="">car type</label>
-                                <select name="" id="" className="form-select me-2">
-                                    <option value="">suv</option>
-                                </select>
-                            </div>
-                        </div>
-                    }
+                    { isLoading ? 
                     <div className="row">
-                        {displayCars()}
+                        <DefaultSkelton />
+                        <DefaultSkelton />
+                        <DefaultSkelton />
+                        <DefaultSkelton />
+                        <DefaultSkelton />
+                        <DefaultSkelton />
                     </div>
-                    <ShowMore callBack={console.log("show more cars")}/>
+                    :
+                    ( error ? 
+                        <InternalError />
+                        :
+                    <>
+                        <div className="d-flex mb-2">
+                            <FormControl fullWidth className="me-2">
+                                <InputLabel>airport</InputLabel>
+                                <Select>
+                                    { 
+                                        airportRendering()
+                                    }
+                                </Select>
+                            </FormControl>
+                            <FormControl fullWidth className="me-2">
+                                <InputLabel>number of travelers</InputLabel>
+                                <Select>
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                </Select> 
+                            </FormControl>
+                            <button className="btn btn-dark" >search </button>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between mt-2">
+                            <div className="text-capitalize">{data?.length} car</div>
+                            <div className="d-flex align-items-center w-25">
+                                <FormControl fullWidth className="ms-2">
+                                    <InputLabel>sort by</InputLabel>
+                                    <Select>
+                                        <MenuItem value="price">price</MenuItem>
+                                        <MenuItem value="recommended">recommanded</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-4">
+                                <div className="">
+                                    
+                                </div>
+                            </div>
+                            <div className="col-md-8 row">
+                                { displayCars() }
+                                <ShowMore callBack={console.log("show more cars")}/>
+                            </div>
+                        </div>
+                    </> ) }
+
                 </div>
             </div>
         </div> 

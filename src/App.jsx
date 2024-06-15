@@ -51,6 +51,9 @@ import CarAgencies from "./pages/providers/CarAgencies";
 import TravelAgencies from "./pages/providers/TravelAgencies";
 import RailwaysOperators from "./pages/providers/RailwaysOperators";
 import Card from "./pages/panier/Card";
+import AddTravel from "./pages/addDataPages/AddTravel";
+import CustomAlert from "./components/CustomAlert";
+import { ALERT_TYPE } from "./features/pageSlice";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -68,7 +71,7 @@ export default function App() {
               <Route index element={<Home />} /> 
               <Route element={<Services />} path="/services"/>
               <Route element={<About /> } path="/about" />
-              <Route element={<Card />} path="/card" />
+              <Route element={user?.accountType == "COSTUMER" ? <Card /> : <ErrorPage status={401} />} path="/card" />
               <Route element={<Contact /> } path="/contact" /> 
               <Route element={<OffersLayout />} path="/offers">
                 <Route element={<FlightsPage />} path="/offers/flights" />
@@ -111,6 +114,7 @@ export default function App() {
               <Route element={user?.providerType == "HOTEL" ? <AddRoom /> : <ErrorPage status={401} />} path="/dashboard/addRoom" /> 
               <Route element={user?.accountType == "ADMIN" ? <AddGate /> : <ErrorPage status={401} />} path="/dashboard/addGate" />
               <Route element={user?.accountType == "ADMIN" ? <AddDestination /> : <ErrorPage status={401}/>} path="/dashboard/addDestination" />
+              <Route element={user?.accountType == "PROVIDER" && user?.providerType == "TRAVEL_AGENCY" ? <AddTravel /> : <ErrorPage status={401}/>} path="/dashboard/addTravel" />
             </Route>
             <Route path="/*" element={<ErrorPage status={404} message="page not found"/>} /> 
             <Route path="/payment" element={<PayementPage /> } />
