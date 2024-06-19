@@ -14,6 +14,6 @@ export default function Stations() {
     {field : "emailContact" , headerName : "email"} , 
     {field : "nbPhoneContact" , headerName : "contact number"}] 
     return (
-        <DataPage columns={columns} dataUrl="http://localhost:8089/gates/" dataAddingPath="/dashboard/addGate"/>
+        <DataPage columns={columns} dataUrl="http://localhost:8089/gates/" deletePath="http://localhost:8089/gates/" dataAddingPath="/dashboard/addGate"/>
     )
 }

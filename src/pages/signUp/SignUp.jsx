@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react"
 import SignCompanyInfo from "../../components/SignCompanyInfo";
 import SignCostumerInfo from "../../components/SignCostumerInfo"
 import SignAccountInfo  from "../../components/SignAccountInfo";
-import image from "../../assets/signUpImage.jpeg"
 import { useDispatch } from "react-redux";
 import {login} from "../../features/userSlice"
 import { Step, StepLabel, Stepper } from "@mui/material";
@@ -33,7 +32,7 @@ export default function SignUp() {
         if(step < steps.length) {
             setStep(step + 1)
         }else {
-            fetch("http://localhost:8089/".concat(info.accountType.toLowerCase()).concat("/register").concat(info?.accountType == "PROVIDER" ? "/" + info?.providerType : "") , {
+            fetch("http://localhost:8089/".concat(info.accountType.toLowerCase()).concat("/register").concat(info?.accountType == "PROVIDER" ? "/".concat(info?.providerType) : "") , {
                 method : "POST" ,
                 headers: {
                     'Accept': 'application/json',
@@ -54,6 +53,21 @@ export default function SignUp() {
     useEffect( ()=> {
         console.log(info)
     } , [info])
+    const register = () => {
+        fetch("http://localhost:8089/"+info.accountType.toLowerCase()+"/register" , {
+            method : "post"  , 
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },  
+            body : JSON.stringify(info)
+        })
+        .then(res => {
+            if(res.status == 200){
+                
+            } 
+        })
+    }
     return (
         <div className="row w-100" style={{ height : "100vh"}}> 
             <div className="col-lg-4 bg-dark h-100">
@@ -79,7 +93,7 @@ export default function SignUp() {
                         </div>
                     :
                     <>
-                    {step == 0 && <SignAccountInfo currentInfo={info} onChangeFunct={updateItem} next={next}/> }
+                    {step == 0 && <SignAccountInfo currentInfo={info} onChangeFunction={updateItem} next={next}/> }
                     { step == 1 && info.accountType == "COSTUMER" && <SignCostumerInfo onChangeFunction={updateItem}/> }
                     { step == 1 && info.accountType == "PROVIDER" && <SignCompanyInfo onChangeFunction={updateItem}/> }
                     { step != 2 ? <div className="d-flex align-items-center justify-content-end my-3">
@@ -89,7 +103,10 @@ export default function SignUp() {
                     :  
                     <div className="d-flex align-items-center justify-content-center flex-column">
                         <h3 className="text-capitalize">confirm your information</h3>
-                        <button className="btn custom-btn-primary mt-3 px-5">confirm</button>
+                        <div className="d-flex align-items-center justify-content-between my-5">
+                            <button className="btn custom-btn-outlined-primary  px-5 me-3" onClick={prev}>prev</button>
+                            <button className="btn custom-btn-primary px-5 ms-3" onClick={register}>confirm</button>
+                        </div>
                     </div>
                     }
                     </>

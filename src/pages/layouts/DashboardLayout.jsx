@@ -10,6 +10,7 @@ import { userSelector } from "../../store/selectors/userSelector"
 import "./layout.css"
 import image from "../../assets/user.jpeg" ; 
 import CustomAlert from "../../components/CustomAlert"
+import Swal from "sweetalert2"
 export default function DashboardLayout() {
     const {pathname} = useLocation()
     const dispatch = useDispatch()
@@ -27,10 +28,16 @@ export default function DashboardLayout() {
         return pathname.substring(pathname.indexOf("/dashboard") + "/dashboard".length )
     }
     const logoutAndExit = () => {
-        if(confirm("are you sure")) {
-            navigate("/") 
-            dispatch(logout())
-        }
+        Swal.fire({
+            title: "do you want to logout ?",
+            showCancelButton: true,
+            confirmButtonText: "yes",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                navigate("/") 
+                dispatch(logout())
+            }
+          })
     }
     const backToHome = () => {
         navigate("/")

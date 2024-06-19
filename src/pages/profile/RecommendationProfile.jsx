@@ -1,3 +1,5 @@
+import { SignalCellularNullOutlined } from "@mui/icons-material";
+import { Checkbox, FormControlLabel, FormGroup, Slider } from "@mui/material";
 import { useState } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
@@ -5,11 +7,37 @@ import { userSelector } from "../../store/selectors/userSelector";
 
 export default function RecommendationProfile() {
   const activateRecommendationSysRef = useRef();
-  const user = useSelector(userSelector) 
-  const [showForm, setShowForm] = useState(user?.recommendationProfileActivation);
+  const [budget , setBudget] = useState([10 , 20])
+  const user = useSelector(userSelector);
+  const [  prefferedDesinations , setPrefferedDesinations ]  = useState(["dest1" , "dst2" , "dest3" , "dst4" , "dest5" , "dst6" , "dest7" , "dst7"]) 
+  const [ prefferedDesinationsTypes , setPrefferedDesinationsTypes] = useState(["CULTURAL"])
+  const [showForm, setShowForm] = useState(
+    user?.recommendationProfileActivation
+  );
   const handleActivateRec = () => {
     setShowForm(!showForm);
   };
+  const deleteFromPrefferedList = (name) => {
+    setPrefferedDesinations(prev => prev.filter(element => element != name))
+  }
+  const renderPrefferedDestinations = () => {
+    return prefferedDesinations.map((des , index) =>
+      <div className="rounded d-flex align-items-center justify-content-between border my-2 mx-1 ps-3">
+        <span className="text-capitalize">{des}</span>
+        <button className="btn ms-3"
+          onClick={(e)=>deleteFromPrefferedList(e.currentTarget.getAttribute("data-target"))}
+          data-target={des}
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    )
+  }
+  const renderPrefferedDestinationsTypes = () => {
+    return prefferedDesinationsTypes.map((desType , index ) => 
+        <FormControlLabel control={<Checkbox />} label={desType} />
+    )
+  }
   return (
     <div className="d-flex align-items-start justify-content-center flex-column w-100">
       <div className="form-group d-flex align-items-center justify-content-start">
@@ -34,15 +62,23 @@ export default function RecommendationProfile() {
           <div class="card">
             <div class="card-header">
               <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
-                Collapsible Group Item #1
+                budget
               </a>
             </div>
             <div
               id="collapseOne"
               class="collapse show"
               data-bs-parent="#accordion"
+              className="px-5"
             >
-              <div class="card-body">Lorem ipsum..</div>
+              <Slider
+                getAriaLabel={() => "Minimum distance"}
+                value={budget}
+                onChange={(e,newValue)=>setBudget(newValue)}
+                valueLabelDisplay="auto"
+                getAriaValueText={null}
+                disableSwap
+              />
             </div>
           </div>
 
@@ -53,11 +89,14 @@ export default function RecommendationProfile() {
                 data-bs-toggle="collapse"
                 href="#collapseTwo"
               >
-                Collapsible Group Item #2
+                Preferred Destinations
               </a>
             </div>
             <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
-              <div class="card-body">Lorem ipsum..</div>
+              <div class="card-body d-flex flex-wrap">
+                {renderPrefferedDestinations()} 
+                <button className="btn btn-dark my-2">+</button> 
+              </div>
             </div>
           </div>
 
@@ -68,7 +107,7 @@ export default function RecommendationProfile() {
                 data-bs-toggle="collapse"
                 href="#collapseThree"
               >
-                Collapsible Group Item #3
+                preffered destinations types
               </a>
             </div>
             <div
@@ -76,12 +115,16 @@ export default function RecommendationProfile() {
               class="collapse"
               data-bs-parent="#accordion"
             >
-              <div class="card-body">Lorem ipsum..</div>
+              <div class="card-body px-5">
+                <FormGroup>
+                  {renderPrefferedDestinationsTypes()}
+                </FormGroup>
+              </div>
             </div>
           </div>
           <div className="d-flex align-items-center justify-content-end mt-3">
-                <button className="btn btn-outline-dark me-2">reset</button>
-                <button className="btn custom-btn-secondary ms-2">save</button>
+            <button className="btn btn-outline-dark me-2">reset</button>
+            <button className="btn custom-btn-secondary ms-2">save</button>
           </div>
         </div>
       )}

@@ -1,5 +1,5 @@
+import { Rating } from "@mui/material"
 import { Link } from "react-router-dom"
-import Rating from "./Rating"
 import image from "../assets/hotel4.jpeg"
 export default function Destination({destination}) {
     return (
@@ -11,8 +11,8 @@ export default function Destination({destination}) {
                 <div className="destination-title d-flex justify-content-between">
                     <h4 className="my-2 text-capitalize">{destination?.name}</h4>
                     <div className="d-flex align-items-end  flex-column ">
-                        <Rating />
-                        <div>200 review</div>
+                        <Rating defaultValue={destination?.score} />
+                        <div>{destination?.nbReviews} review</div>
                     </div>
                 </div>
                 <div className="destination-address">

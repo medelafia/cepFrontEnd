@@ -35,7 +35,7 @@ export default function DestinationPage() {
                     </div> 
                     <div className="col-md-6 mt-2">
                         <div>
-                            {description}
+                            {destination?.description}
                         </div>
                     </div>
                     <div className="col-md-6">

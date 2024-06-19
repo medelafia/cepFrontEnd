@@ -21,6 +21,7 @@ import ReviewModal from "../../components/ReviewModal";
 import { pageSelector } from "../../store/selectors/pageSelector";
 import { hideAlert, showConfirm } from "../../features/pageSlice";
 import CustomConfirm from "../../components/CustomConfim";
+import Swal from "sweetalert2";
 
 export default function HomeLayout() {
   const navigate = useNavigate();
@@ -31,7 +32,15 @@ export default function HomeLayout() {
   const loginBtn = useRef() ; 
   const page = useSelector(pageSelector) 
   const userLogout = () => {
-    dispatch(showConfirm({title : "logout" , content : "are you sure" , callBack : ()=>{dispatch(logout())}}))
+    Swal.fire({
+      title: "do you want to logout ?",
+      showCancelButton: true,
+      confirmButtonText: "yes",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        dispatch(logout())
+      }
+    })
   }
   const navigateToProfile = () => {
     if(user?.accountType == "COSTUMER") {

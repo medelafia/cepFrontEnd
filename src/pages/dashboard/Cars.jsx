@@ -18,10 +18,10 @@ export default function Cars() {
     { field : "numberOfDoors" , headerName : "doors"} , 
     { field : "numberOfSuitcases" , headerName : "suit cases"} , 
     { field : "airConditioning" , headerName : "air conditioning"} , 
-    { field : "free cancelation" , headerName : "free cancelation"} , 
+    { field : "freeCancelation" , headerName : "free cancelation"} , 
     { field : "available" , headerName : "available" } 
   ]
   return (
-    <DataPage columns={columns} dataUrl={"http://localhost:8089/carsAgencies/"+user.id+"/cars"}/>
+    <DataPage columns={columns} dataUrl={"http://localhost:8089/carsAgencies/"+user.id+"/cars"} dataAddingPath="/dashboard/AddCar"/>
   );
 }

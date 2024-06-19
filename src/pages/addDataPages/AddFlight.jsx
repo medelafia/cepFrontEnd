@@ -1,3 +1,5 @@
+import { FormControlContext } from "@mui/base";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { setAutoFreeze } from "immer";
 import { useState } from "react"
 import AddDataHeader from "../../components/AddDataHeader";
@@ -6,6 +8,8 @@ import StopAirport from "../../components/StopAirport";
 
 export default function AddFlight() {
     const [stopAirports , setStopAirports ]  = useState(0 ) ; 
+    const [ flightType , setFlightType ] = useState("roundTrip")
+
     const addStopAirport = (e) => {
         e.preventDefault()
         document.getElementById("stopAirports").append(<StopAirport />)
@@ -15,60 +19,45 @@ export default function AddFlight() {
             <CurrentPath />
             <AddDataHeader title={"add flight"} /> 
             <form action="" className="my-5">
-                <div className="form-group my-1">
-                    <label htmlFor="">flight type</label>
-                    <select name="" id="" className="form-select">
-                        <option value="">round trip</option>
-                        <option value="">one way</option>
-                    </select>
+                <div className="form-group my-2">
+                    <FormControl fullWidth>
+                        <InputLabel>flight type</InputLabel>
+                        <Select onChange={(e)=>setFlightType(e.target.value)}>
+                            <MenuItem value="roundTrip">round trip</MenuItem>
+                            <MenuItem value="oneWay">one way</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
-                <div className="form-group my-1 d-flex w-100">
-                    <div className="form-group w-50 me-1">
-                        <label htmlFor="">start airport : </label>
-                        <select name="" id="" className="form-select">
-                            <option value="">jdjd</option>
-                        </select>
-                    </div>
-                    <div className="form-group w-50 ms-1">
-                        <label htmlFor="">start data : </label>
-                        <input type="date" placeholder="enter the number of places"  className="form-control"/>
-                    </div>
+                <div className="form-group my-2 d-flex w-100">
+                    <FormControl fullWidth className="me-1">
+                        <InputLabel>start airport</InputLabel>
+                        <Select onChange={(e)=>setFlightType(e.target.value)}>
+                            <MenuItem value="roundTrip">round trip</MenuItem>
+                            <MenuItem value="oneWay">one way</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl  fullWidth className="ms-1">
+                        <InputLabel>arrived airport</InputLabel>
+                        <Select onChange={(e)=>setFlightType(e.target.value)}>
+                            <MenuItem value="roundTrip">round trip</MenuItem>
+                            <MenuItem value="oneWay">one way</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
-                <div className="form-group my-1 d-flex w-100">
-                    <div className="form-group w-50 me-1">
-                        <label htmlFor="">arrived airport : </label>
-                        <select name="" id="" className="form-select">
-                            <option value="">jdjd</option>
-                        </select>
-                    </div>
-                    <div className="form-group w-50 ms-1">
-                        <label htmlFor="">arrived date :</label>
-                        <input type="date" placeholder="enter the number of places"  className="form-control"/>
-                    </div>
+                <div className="form-group my-2 d-flex w-100">
+                    <TextField label="start date" type="date" fullWidth className="me-1"/>
+                    <TextField label="arrived date" type="date" fullWidth className="ms-1"/>
                 </div>
-                <div className="form-group my-2 w-100 ">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <label htmlFor="">stop airports</label>
-                        <button className="btn btn-dark" onClick={addStopAirport}>+</button>
-                    </div>
-                    <div className="w-100 border rounded p-2 my-1" id="stopAirports"> 
-                        {stopAirports == 0 ? 
-                            <div className="text-secondary text-center">no items </div>
-                            :
-                            <h1>FKJF</h1>
-                        } 
-                    </div>   
+                <div className="form-group my-2 d-flex w-100">
+                    <TextField label="start date" type="time" fullWidth className="me-1"/>
+                    <TextField label="arriced date" type="time" fullWidth className="ms-1"/>
                 </div>
-
-                <div className="form-group d-flex w-100 my-1">
-                    <div className="form-group w-50 me-1">
-                        <label htmlFor="">price :</label>
-                        <input type="text" placeholder="enter the price" name="" id="" className="form-control"/>
-                    </div>
-                    <div className="form-group w-50 ms-1">
-                        <label htmlFor="">number of places : </label>
-                        <input type="text" placeholder="enter the number of places"  className="form-control"/>
-                    </div>
+                <div className="form-group my-2 w-100 d-flex">
+                    <TextField label="number of stops" type="number" className="me-1" fullWidth/> 
+                    <TextField label="number of seats" type="number" className="mx-1" fullWidth/> 
+                    <TextField label="price" className="mx-1" fullWidth/> 
+                    <TextField label="reserved places" type="number" className="mx-1" fullWidth/> 
+                    <TextField label="distance" type="number" className="ms-1" fullWidth/> 
                 </div>
                 <button className="btn custom-btn-primary my-4 w-100">save now</button>
             </form>

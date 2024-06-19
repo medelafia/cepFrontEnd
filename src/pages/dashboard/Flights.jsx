@@ -19,6 +19,6 @@ export default function Flights() {
     {field : "endTime" , headerName : "end time"}
   ]
   return (
-    <DataPage dataUrl={"http://localhost:8089/"+ user.id + "/flights"} columns={columns} dataAddingPath="/dashboard/addFlight" />
+    <DataPage dataUrl={"http://localhost:8089/airlines/"+ user.id + "/flights"} columns={columns} dataAddingPath="/dashboard/addFlight" />
   );
 }

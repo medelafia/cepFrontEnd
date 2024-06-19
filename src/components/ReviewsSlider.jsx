@@ -5,7 +5,7 @@ export default function ReviewsSlider({reviews = []}) {
     const [start , setStart ] = useState(0) 
     const [end , setEnd ] =useState(start + 3) 
     const renderReviews = () => {
-        return reviews.map((review , index) => <ProviderReview tit={review}/> )
+        return reviews?.map((review , index) => <ProviderReview review={review}/> )
     }
     return (
         <div className="my-4"> 
@@ -16,7 +16,7 @@ export default function ReviewsSlider({reviews = []}) {
                 <button className="btn btn-outline-dark rounded-circle me-2" disabled={start - 1 < 0} onClick={()=>{setStart(prev => prev - 1)}}>
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <button className="btn btn-outline-dark rounded-circle ms-2" disabled={start + 3 > reviews.length} onClick={()=>{setStart(prev => prev + 1)}}>
+                <button className="btn btn-outline-dark rounded-circle ms-2" disabled={start + 1 > reviews.length} onClick={()=>{setStart(prev => prev + 1)}}>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>

@@ -1,20 +1,23 @@
 import usePagination from "@mui/material/usePagination/usePagination"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import Swal from "sweetalert2"
 import LoadingComponent from "../../components/LoadingComponent"
 
 export default function ResetPassword() {
     const {id} = useParams() 
     const [isLoding , setIsLoading] = useState(true) 
     const [ userId , setUserId] = useState(null)
-    const [ erreur , setErreur ] = useState(null )
+    const [ erreur , setErreur ] = useState(null)
     useEffect(()=>{
         fetch("http://localhost:8089/accounts/verifierResetSession/"+id , {
             method : "POST" 
         }).then( res =>{
             setIsLoading(false) ;
             if(res.status == 200 ) {
-                console.log(res.body())
+                Swal.fire({
+                    icon : ""
+                })
             }else if(res.status == 404 ) {
                 setErreur("session not found")
             } 

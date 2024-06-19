@@ -10,6 +10,6 @@ export default function Providers() {
   ]
   return (
     
-    <DataPage columns={columns} dataUrl="http://localhost:8089/providers/" />
+    <DataPage columns={columns} dataUrl="http://localhost:8089/provider/" />
   );
 }

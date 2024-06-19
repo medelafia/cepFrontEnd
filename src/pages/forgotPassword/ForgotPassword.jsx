@@ -1,8 +1,11 @@
+import { NavigateNextRounded } from "@mui/icons-material";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function ForgotPassword() {
     const emailRef = useRef() 
+    const navigate = useNavigate()
     const changePassword = () => {
         const emailValue = emailRef.current.value 
         if(emailValue.trim() != "") {
@@ -15,11 +18,18 @@ export default function ForgotPassword() {
             })
             .then(res => {
                 if (res.status == 200) {
-                    alert("check your email")
+                    Swal.fire({
+                        icon : "success" ,
+                        title : "reset link is sended , check your email" ,
+                        timer : 2000 
+                    })
+                    navigate("/")
                 }else if(res.status == 404){
-                    alert("your account not found") 
-                }else {
-                    alert("erreur") 
+                    Swal.fire({
+                        icon : "error" ,
+                        title : "your email not found , register" ,
+                        timer : 2000 
+                    })
                 }
             })
         }

@@ -4,15 +4,15 @@ import LongText from "../../components/LongText"
 import ReviewsSlider from "../../components/ReviewsSlider"
 import ImageSlider from "../../components/ImageSlider"
 import CurrentPath from "../../components/CurrentPath";
-import Rating from "../../components/Rating";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import Hotel from '../../components/Hotel'
+import { Rating } from "@mui/material";
 
 export default function ProviderPage(){
     const [reviews , setReviews] = useState(['jjfj', "kkkd" , "hfhf" , "jfjjf" , "hhhd" ]) 
     const { id } = useParams() 
-    const [ provider , setProvider ] = useState() 
+    const [ provider , setProvider ] = useState(null) 
     useEffect(()=>{
         fetch("http://localhost:8089/provider/" + id )
         .then(res => res.json()) 
@@ -45,7 +45,7 @@ export default function ProviderPage(){
                             <LongText text="    Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nemo est velit iste consequuntur deserunt aliquam labore inventore laboriosam, minima maxime in quisquam placeat dolore voluptatem tenetur odio animi architecto!"/>
                         </div>
                         <div className="d-flex my-3 col-lg-6 flex-column align-items-center justify-content-center ">
-                            <Rating />
+                            <Rating defaultValue={provider?.score} />
                         </div>
                     </div>
                 </motion.div>
@@ -70,7 +70,7 @@ export default function ProviderPage(){
                             <span>write review</span>
                         </button>
                     </div>
-                    {   provider?.reviews == null ?
+                    {   provider?.reviews.length == 0 ?
                         <div className="d-flex align-items-center my-3 justify-content-center">
                             <strong className="text-capitalize h4">no reviews</strong>  
                         </div>

@@ -1,6 +1,8 @@
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import AddDataHeader from "../../components/AddDataHeader";
 import CurrentPath from "../../components/CurrentPath";
 import { useFetch } from "../../hooks/custom-hooks";
@@ -38,7 +40,13 @@ export default function AddDetination() {
             })
         } )
         .then(res => {
-            if(res.ok) {
+            if( res.status == 200 ) {
+                Swal.fire({
+                    icon : "success" , 
+                    timer : 2000 , 
+                    title : "success" , 
+                    text : "the destination added successfuly"
+                })
                 navigate("/dashboard/destinations")
             }
         })
@@ -47,39 +55,39 @@ export default function AddDetination() {
         <div className="p-5">
             <CurrentPath />
             <AddDataHeader title={"add flight"} /> 
-            <form>
+            <form className="mt-4">
                 <div className="form-group my-2">
-                    <label htmlFor="">name of destination</label>
-                    <input type="text" placeholder="enter the name of destination" className="form-control" ref={nameRef}/>
+                    <TextField label="the name of destination" fullWidth inputRef={nameRef}/> 
                 </div>
                 <div className="form-group d-flex my-2 w-100">
-                    <div className="form-group me-1 w-50">
-                        <label htmlFor="">country</label>
-                        <select name="" className="form-select" id="" ref={countryRef}>
-                            <option value="maroc">maroc</option>
-                        </select>
-                    </div>
-                    <div className="form-group ms-1 w-50">
-                        <label htmlFor="">city</label>
-                        <select name="" className="form-select" id="" ref={cityRef}>
-                            <option value=""></option>
-                            <option value="rabat">rabat</option>
-                        </select>
-                    </div>
+                    <FormControl fullWidth className="me-1">
+                        <InputLabel >country </InputLabel>
+                        <Select inputRef={countryRef}>
+                            <MenuItem value="morroco">morroco</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth className="ms-1">
+                        <InputLabel >city </InputLabel>
+                        <Select inputRef={cityRef}>
+                            <MenuItem value="newyork">newyork</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
                 <div className="form-group my-2">
-                    <label htmlFor="">description : </label>
-                    <input ref={descriptionRef} type="text" placeholder="enter a desciption of this destination" className="form-control" />
+                    <TextField label="the description of destination" inputRef={descriptionRef} fullWidth rows={10}/> 
                 </div>
                 <div className="form-group my-2">
-                    <label htmlFor="">destination type : </label>
-                    <select ref={destinationTypeRef} name="" className="form-select" placeholder="select the type of destination" id="">
-                        <option value="BEACH_AREAS">BEACH AREAS</option>
-                        <option value="NATURAL_AREAS">NATURAL AREAS</option>
-                        <option value="TOWNS_AND_CITIES">TOWNS AND CITIES</option>
-                        <option value="WINTER_SPORT_AREAS">WINTER SPORT AREAS</option>
-                        <option value="CULTURAL_AREAS">CULTURAL AREAS</option>
-                    </select>
+                    <FormControl fullWidth className="me-1">
+                        <InputLabel >dsetination type</InputLabel>
+                        <Select inputRef={destinationTypeRef}>
+                            <MenuItem value="BEACH_AREAS">beach areas</MenuItem>
+                            <MenuItem value="NATURAL_AREAS">natural areas</MenuItem>
+                            <MenuItem value="TOWNS_AND_CITIES">towns and cities</MenuItem>
+                            <MenuItem value="WINTER_SPORT_AREAS">winter sport areas</MenuItem>
+                            <MenuItem value="CULTURAL_AREAS">cultural areas</MenuItem>
+                        </Select>
+                    </FormControl>
+
                 </div>
                 <button className="btn custom-btn-primary w-100 my-3" onClick={onSubmitListener}>save now</button>
             </form>

@@ -25,11 +25,6 @@ const pageSlice = createSlice({
             return state
         } , 
         hideALert : (state , action) => {
-            state.alert = {
-                showAlert : false , 
-                alertType : null , 
-                alertText : null 
-            }
             return intialState 
         } , 
         showConfirm : (state , action) => {

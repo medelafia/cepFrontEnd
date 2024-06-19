@@ -10,6 +10,6 @@ export default function Clients() {
                     {field : "age" , headerName : "Age"} , 
                   ]
   return (
-    <DataPage dataUrl="http://localhost:8089/accounts/costumers/" columns={columns} /> 
+    <DataPage dataUrl="http://localhost:8089/costumer/" columns={columns} /> 
   );
 }

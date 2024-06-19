@@ -1,4 +1,4 @@
-import { Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, NativeSelect, TextField } from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, NativeSelect, Select, TextField } from "@mui/material";
 import { useRef } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import {userSelector} from "../../store/selectors/userSelector"
 import AddDataHeader from "../../components/AddDataHeader";
 import CurrentPath from "../../components/CurrentPath";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function AddCar() {
     const [ step , setStep ] = useState(1) ; 
@@ -23,6 +24,7 @@ export default function AddCar() {
     const freeCancRef = useRef() 
     const user = useSelector(userSelector)
     const navigate = useNavigate()
+    const availableRef = useRef() 
     const addCar = (e) => {
         e.preventDefault()
         const makeValue = makeRef.current.value 
@@ -36,6 +38,7 @@ export default function AddCar() {
         const suitCasesValue = suitCasesRef.current.value 
         const airCondValue  = airCondRef.current.checked
         const freeCancelValue = freeCancRef.current.checked
+        const availableValue = availableRef.current.checked
         console.log(priceValue )
         fetch("http://localhost:8089/carsAgencies/"+user.id , {
             method : "POST" ,
@@ -55,12 +58,27 @@ export default function AddCar() {
                 numberOfSuitcases : suitCasesValue , 
                 airConditioning : airCondValue  , 
                 freeCancelation : freeCancelValue  , 
-                available : false 
+                available : availableValue
             })
         })
         .then(res => {
-            if( res .status == 200) navigate("/dashboard/cars")
-        })  
+            if( res .status == 200) {
+                Swal.fire({
+                    icon : "success" , 
+                    timer : 2000 , 
+                    title : "success" , 
+                    text : "the car created successfully"
+                })
+                navigate("/dashboard/cars")
+            }
+        }).catch(err => {
+            Swal.fire({
+                icon : "error" , 
+                timer : 2000 , 
+                title : "cannot create car" , 
+                text : err
+            })
+        })
     }
 return (
     <div>
@@ -69,72 +87,64 @@ return (
             <AddDataHeader title="add car"/>
             <form >
                 <div className="my-3 d-flex justify-content-between">
-                    <TextField variant="standard" className="me-1" label="car make" fullWidth  inputRef={makeRef} />
-                    <TextField variant="standard" className="ms-1" label="car model" fullWidth  inputRef={modelRef}/>
+                    <TextField  className="me-1" label="car make" fullWidth  inputRef={makeRef} required/>
+                    <TextField  className="ms-1" label="car model" fullWidth  inputRef={modelRef} required/>
                 </div>
                 <div className="my-3">
-                    <TextField variant="standard" className="me-1" label="price" fullWidth  inputRef={priceRef}/>
+                    <TextField  className="me-1" label="price" fullWidth  inputRef={priceRef} required/>
                 </div>
                 <div className="form-group my-3 d-flex justify-content-between">
                     <FormControl fullWidth className="me-1">
-                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        <InputLabel  htmlFor="uncontrolled-native">
                             fuel 
                         </InputLabel>
-                        <NativeSelect
+                        <Select
                             defaultValue={30}
-                            inputProps={{
-                                name: 'age',
-                                id: 'uncontrolled-native',
-                            }}
+                            required
                             inputRef={fuelTypeRef}
                         >
-                            <option value="DIESEL">DIESEL</option>
-                            <option value="GASOLINE">GASOLINE</option>
-                        </NativeSelect>
+                            <MenuItem value="DIESEL">DIESEL</MenuItem>
+                            <MenuItem value="GASOLINE">GASOLINE</MenuItem>
+                        </Select>
                     </FormControl>
                     <FormControl fullWidth className="mx-1">
-                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        <InputLabel  htmlFor="uncontrolled-native">
                             transmission
                         </InputLabel>
-                        <NativeSelect
+                        <Select
+                            required
                             defaultValue={30}
-                            inputProps={{
-                                name: 'age',
-                                id: 'uncontrolled-native',
-                            }}
                             inputRef={transmissionRef}
                         >
-                            <option value="MANUEL">MANUEL</option>
-                            <option value="AUTOMATIC">AUTOMATIC</option>
-                        </NativeSelect>
+                            <MenuItem value="MANUEL">MANUEL</MenuItem>
+                            <MenuItem value="AUTOMATIC">AUTOMATIC</MenuItem>
+                        </Select>
                     </FormControl>
                     <FormControl fullWidth className="ms-1">
-                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        <InputLabel  htmlFor="uncontrolled-native">
                             style
                         </InputLabel>
-                        <NativeSelect
+                        <Select
+                            required
                             defaultValue={30}
-                            inputProps={{
-                                name: 'age',
-                                id: 'uncontrolled-native',
-                            }}
                             inputRef={styleRef}
                         >
-                            <option value="COUPE">coupe</option>
-                            <option value="SUV">suv</option>
-                            <option value="SEDAN">sedan</option>
-                        </NativeSelect>
+                            <MenuItem value="COUPE">coupe</MenuItem>
+                            <MenuItem value="SUV">suv</MenuItem>
+                            <MenuItem value="SEDAN">sedan</MenuItem>
+                        </Select>
                     </FormControl>
                 </div>
-                <div className="form-group my-3 d-flex justify-content-between">
-                    <TextField type="number" variant="standard" label="seats" className="me-1"  inputRef={seatsRef}/>
-                    <TextField type="number" variant="standard" label="doors" className="mx-1" inputRef={doorsRef}/>
-                    <TextField type="number" variant="standard" label="suit cases" className="ms-1" inputRef={suitCasesRef}/>
+                <div className="form-group my-3 d-flex">
+                    <TextField required type="number" fullWidth  label="seats" className="me-1"  inputRef={seatsRef}/>
+                    <TextField required type="number"  fullWidth label="doors" className="mx-1" inputRef={doorsRef}/>
+                    <TextField required type="number"  fullWidth label="suit cases" className="ms-1" inputRef={suitCasesRef}/>
                 </div>
                 <div className="form-group my-3">
                     <FormGroup>
                         <FormControlLabel control={<Checkbox inputRef={airCondRef}/>} label="air conditioning" />
                         <FormControlLabel control={<Checkbox inputRef={freeCancRef}/>} label="free cancellation" />
+                        <FormControlLabel control={<Checkbox inputRef={availableRef}/>} label="available now" />
                     </FormGroup>
                 </div>
                 <button className="w-100 btn custom-btn-primary" onClick={addCar}>save</button>

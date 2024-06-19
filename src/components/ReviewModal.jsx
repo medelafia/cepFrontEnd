@@ -5,12 +5,11 @@ import { useRef } from "react";
 export default function ReviewModal({ providerId}) {
   const reviewTitleRef = useRef() 
   const reviewContentRef = useRef() 
-  const [reviewScore , setReviewScore] = useState(0)
+  const [ reviewScore , setReviewScore ] = useState(0)
   const postReview = (e) => {
     e.preventDefault() 
-    const reviewTitleValue = reviewTitleRef.current.value 
-    const reviewContentValue = reviewContentRef.current.value 
-
+    const reviewTitleValue = reviewTitleRef?.current.value
+    console.log(reviewTitleValue , reviewScore)
     /*fetch("http://localhost:8090/", {
       method : "POST" , 
       body : JSON.stringify({
@@ -36,15 +35,15 @@ export default function ReviewModal({ providerId}) {
           <div className="modal-body d-flex justify-content-center">
                <form className="w-75 mb-3">
                     <div className="form-group my-2 d-flex align-items-center justify-content-center">
-                        <Rating onChange={(e , newScore)=>setReviewScore(newScore)}/>
+                        <Rating onChange={(e , newScore) => setReviewScore(newScore)} />
                     </div>
                     <div className="form-group my-2">
                       <label htmlFor="" className="text-secondary ms-2">title</label>
-                      <input type="text" placeholder="enter the title of review" className="form-control"/>
-                    </div>
+                      <input type="text" placeholder="enter the title of review" className="form-control" ref={reviewTitleRef}/>
+                    </div> 
                     <div className="form-group my-2">
                         <label htmlFor="" className="text-secondary ms-2">review text : </label>
-                        <textarea placeholder="enter your review content review here" className="form-control" rows="6"> 
+                        <textarea placeholder="enter your review content review here" className="form-control" rows="6" onChange={(e,newValue) => console.log(newValue)}> 
 
                         </textarea>
                     </div>

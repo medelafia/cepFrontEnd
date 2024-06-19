@@ -12,7 +12,8 @@ export default function CustomConfirm() {
     }
     const onCofirm = () => {
         dispatch(page.confirm.confirmCallBack())
-        onCloseConfirm()
+        dispatch(closeCofirm()) ;  
+
     }
     return (
     <Dialog

@@ -1,45 +1,45 @@
 
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { useRef } from "react";
 
-export default function SignCostumerInfo() {
+export default function SignCostumerInfo({onChangeFunction}) {
+  const firstName = useRef() 
+  const lastName = useRef() 
+  const age = useRef() 
+  const gender = useRef() 
+  const country = useRef() 
+  const city = useRef() 
   return (
     <div className="my-3">
 
       <div className="form-group my-3 d-flex">
-        <TextField label="first name" fullWidth/> 
+        <TextField label="first name" fullWidth inputRef={firstName} onChange={()=>onChangeFunction("firstName" , lastName.current.value)}/> 
       </div>
       <div className="form-group my-3 d-flex">
-        <TextField label="last name" fullWidth/> 
+        <TextField label="last name" fullWidth inputRef={lastName} onChange={()=>onChangeFunction("lastName" , lastName.current.value)}/> 
       </div>
       <div className="form-group w-100 d-flex my-3">
-        <FormControl fullWidth className="me-1">
-          <InputLabel>age</InputLabel>
-          <Select>
-            <MenuItem></MenuItem>
-            <MenuItem></MenuItem>
-            <MenuItem></MenuItem>
-          </Select>
-        </FormControl>
+        <TextField label="age" type="number" inputRef={age}/>
         <FormControl fullWidth className="ms-1">
           <InputLabel>gender</InputLabel>
-          <Select>
-            <MenuItem>male</MenuItem>
-            <MenuItem>female</MenuItem>
+          <Select inputRef={gender} onChange={()=>onChangeFunction("gender" , gender.current.value)}>
+            <MenuItem value="male">male</MenuItem>
+            <MenuItem value="female">female</MenuItem>
           </Select>
         </FormControl>
       </div>
       <div className="form-group w-100 d-flex my-3">
         <FormControl fullWidth className="me-1">
           <InputLabel>country</InputLabel>
-          <Select>
-            <MenuItem></MenuItem>
-            <MenuItem></MenuItem>
-            <MenuItem></MenuItem>
+          <Select inputRef={country} onChange={()=>onChangeFunction("country" , country.current.value)}>
+            <MenuItem value="morocco">morroco</MenuItem>
+            <MenuItem value="spain">spain</MenuItem>
+            <MenuItem value="algerie">algerie</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth className="ms-1">
           <InputLabel>city</InputLabel>
-          <Select>
+          <Select inputRef={city}>
             <MenuItem>male</MenuItem>
             <MenuItem>female</MenuItem>
           </Select>

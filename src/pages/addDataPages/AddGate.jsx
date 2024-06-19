@@ -1,7 +1,8 @@
-import { useRadioGroup } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, useRadioGroup } from "@mui/material";
 import { dark } from "@mui/material/styles/createPalette";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import AddDataHeader from "../../components/AddDataHeader";
 import CurrentPath from "../../components/CurrentPath";
 
@@ -43,8 +44,6 @@ export default function AddGate() {
             case "trainStation" : fetchUrl = fetchPrefix + "trainStations/" ; 
                             fetchOptions["platformNb"] = Number.parseInt(nbPlatformRef.current.value)  
         }
-        console.log(fetchUrl) 
-        console.log(fetchOptions)
         fetch(fetchUrl , {
             method : "POST" , 
             headers: {
@@ -53,10 +52,16 @@ export default function AddGate() {
                 },
             body : JSON.stringify(fetchOptions)
         }).then(res => {
-            navigate("/dashboard/gates")
-            return res.json()
+            if(res.status == 200 ) {
+                Swal.fire({
+                    icon : "success" , 
+                    title : "success" , 
+                    text : "the gate added successfuly" , 
+                    timer : 2000
+                })
+                navigate("/dashboard/stations")
+            }
         }) 
-        .then(data => console.log(data)) 
 
     }
     return (
@@ -65,64 +70,58 @@ export default function AddGate() {
             <CurrentPath />
             <AddDataHeader title="add car"/>
             <form>
-                <div className="form-group my-2">
-                    <label htmlFor="">gate name : </label>
-                    <input type="text" placeholder="enter the name of gate" className="form-control" ref={nameRef}/>
-                </div>
-                <div className="form-group my-2">
-                    <label htmlFor="">address</label>
-                    <input type="text" placeholder="enter the name of gate" className="form-control" ref={addressRef}/>
+                <div className="form-group my-2 d-flex">
+                    <TextField label="gate name" className="me-1" inputRef={nameRef} />
+                    <TextField label="gate name" className="ms-1" fullWidth inputRef={addressRef} />
+                 </div>
+                <div className="form-group d-flex w-100 my-2">
+                    <FormControl fullWidth className="me-1">
+                        <InputLabel>coutry</InputLabel>
+                        <Select inputRef={countyRef}>
+                            <MenuItem value="usa">united state</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl  fullWidth className="ms-1">
+                            <InputLabel>city</InputLabel>
+                            <Select inputRef={cityRef}>
+                                <MenuItem value="newyork">new york</MenuItem>
+                            </Select>
+                    </FormControl>
                 </div>
                 <div className="form-group d-flex w-100 my-2">
-                    <div className="form-group w-50 me-2">
-                        <label htmlFor="">country : </label>
-                        <input type="text" placeholder="enter the name of gate" className="form-control" ref={countyRef}/>
-                    </div> 
-                    <div className="form-group w-50 ms-2">
-                        <label htmlFor="">city : </label>
-                        <input type="text" placeholder="enter the name of gate" className="form-control" ref={cityRef}/>
-                    </div>
-                </div>
-                <div className="form-group d-flex w-100 my-2">
-                    <div className="form-group w-50 me-2">
-                        <label htmlFor="">latitude: </label>
-                        <input type="text" placeholder="enter the name of gate" className="form-control" ref={latRef}/>
-                    </div>
-                    <div className="form-group w-50 ms-2">
-                        <label htmlFor="">longitude : </label>
-                        <input type="text" placeholder="enter the name of gate" className="form-control" ref={lngRef}/>
-                    </div>
+                    <TextField fullWidth label="latitude" className="me-1" inputRef={latRef}/>
+                    <TextField fullWidth label="longitude" className="me-1" inputRef={lngRef}/>
                 </div>
                 <div className="form-group my-2">
-                    <label htmlFor="">email contact of feedback :</label>
-                    <input type="text" placeholder="enter the name of gate" className="form-control" ref={emailRef}/>
+                    <TextField type ="email" label="email contact of feedback " inputRef={emailRef} fullWidth/> 
                 </div>
                 <div className="form-group my-2">
-                    <label htmlFor="">phone number of feedback : </label>
-                    <input type="text" placeholder="enter the name of gate" className="form-control" ref={telRef}/>
+                    <TextField type ="email" label="phone number of feedback :" inputRef={telRef} fullWidth/> 
                 </div> 
                 <div className="form-group my-2">
-                    <label htmlFor="">type : </label>
-                    <select name="" className="form-select" id="" onChange={gateTypeListener} ref={gateTypeRef}>
-                        <option value="airport">airport</option>
-                        <option value="trainStation">train station</option>
-                    </select>
+                    <FormControl  fullWidth className="ms-1">
+                            <InputLabel>gate type</InputLabel>
+                            <Select inputRef={cityRef} onChange={(e)=>setGateType(e.target.value)}>
+                                <MenuItem value="airport">airport</MenuItem>
+                                <MenuItem value="trainStation">train station</MenuItem>
+                            </Select>
+                    </FormControl>
+
                 </div>
                 { gateType == "airport" && 
                     <div className="form-group my-2">
-                        <label htmlFor="">airport type : </label>
-                        <select name="" id="" className="form-select" ref={airportTypeRef}>
-                            <option value="NATIONAL">NATIONAL</option>
-                            <option value="REGIONAL">REGIONAL</option>
-                            <option value="COMMERCIAL">COMMERCIAL</option>
-                        </select>
+                        <FormControl fullWidth>
+                        <InputLabel>airport type</InputLabel>
+                        <Select inputRef={airportTypeRef} >
+                            <MenuItem value="NATIONAL">national</MenuItem>
+                            <MenuItem value="REGIONAL">regional</MenuItem>
+                            <MenuItem value="COMMERCIAL">commercial</MenuItem>
+                        </Select>
+                        </FormControl>
                     </div>
                 }
                 {gateType == "trainStation" && 
-                    <div className="">
-                        <label htmlFor="">numbers of platformes</label>
-                        <input type="number" name="" id="" ref={nbPlatformRef} className="form-control" placeholder="enter the number of plateforme"/>
-                    </div>
+                    <TextField label="number of platfprmes" fullWidth inputRef={nbPlatformRef} type="number" />
                 }
                 <button className="btn custom-btn-primary w-100 my-3" onClick={addGate}>save </button>
             </form>
