@@ -25,7 +25,7 @@ export default function AccountInfo({changePasswordPath}) {
         const username = usernameRef.current.value 
         const emailValue = emailRef.current.value 
         if( telValue.trim() != "" && username.trim() != "" && emailValue.trim() != "") {
-            fetch("http://localhost:8089/accounts/"+ user.id +"/updateAccountInfo" , {
+            fetch("http://localhost:8089/accounts/"+ user.id +"/update" , {
                 method : "POST" , 
                 headers: {
                     'Accept': 'application/json',

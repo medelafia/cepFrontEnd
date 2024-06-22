@@ -1,6 +1,6 @@
 import { Skeleton } from "@mui/material";
 
-export default function AirlineSkeleton() {
+export default function ProviderSkeleton() {
     return (
         <div className="col-lg-3 col-md-6 my-3 col-sm-12">
             <div className="container border flex-column d-flex align-items-center justify-content-center" style={{height : "200px"}}>

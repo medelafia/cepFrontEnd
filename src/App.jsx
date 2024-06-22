@@ -45,11 +45,7 @@ import CompanySetting from "./components/CompanySetting";
 import TrainTravels from "./pages/trainTravels/TrainTravels";
 import OrganizedTravels from "./pages/organizedTravel/OrganizedTravels";
 import ProviderPage from "./pages/providers/ProviderPage";
-import Airlines from "./pages/providers/Airlines";
 import ProvidersLayout from "./pages/providers/ProvidersLayouts";
-import CarAgencies from "./pages/providers/CarAgencies";
-import TravelAgencies from "./pages/providers/TravelAgencies";
-import RailwaysOperators from "./pages/providers/RailwaysOperators";
 import Card from "./pages/panier/Card";
 import AddTravel from "./pages/addDataPages/AddTravel";
 import CustomAlert from "./components/CustomAlert";
@@ -74,33 +70,32 @@ export default function App() {
               <Route element={user?.accountType == "COSTUMER" ? <Card /> : <ErrorPage status={401} />} path="/card" />
               <Route element={<Contact /> } path="/contact" /> 
               <Route element={<OffersLayout />} path="/offers">
-                <Route element={<FlightsPage />} path="/offers/flights" />
-                <Route element={<HotelsPage />} path="/offers/hotels:search" />
-                <Route element={<CarsPage />} path="/offers/cars" />
-                <Route element={<HotelsPage />} path="/offers/organized-travel" />
+                <Route element={<FlightsPage />} path={"/offers/flights/:from/:to/:date"} />
+                <Route element={<FlightsPage />} path={"/offers/flights"} />
+                <Route element={<HotelsPage />} path="/offers/hotels/:search" />
                 <Route element={<HotelsPage />} path="/offers/hotels" />
+                <Route element={<CarsPage />} path="/offers/cars/:airport/:nbSeats" />
+                <Route element={<CarsPage />} path="/offers/cars" />
+                <Route element={<OrganizedTravels />} path="/offers/travels/:destination/:date" />
+                <Route element={<OrganizedTravels />} path="/offers/travels" />
                 <Route element={<DestinationsPage />} path="/offers/destinations"/>
                 <Route element={<DestinationPage />} path='/offers/destination/:id'/>
-                <Route element={<TrainTravels />} path="/offers/trainTravels/" /> 
-                <Route element={<OrganizedTravels />} path="/offers/travels"  /> 
+                <Route element={<TrainTravels />} path="/offers/trainTravels/:from/:to/:date" /> 
+                <Route element={<TrainTravels />} path="/offers/trainTravels" /> 
               </Route>
               <Route path="/providers" element={<ProvidersLayout />}>
-                <Route path="/providers/airlines" element={<Airlines />} />
-                <Route element={<ProviderPage />} path="/providers/provider/:id" />
-                <Route path="/providers/car-agencies" element={<CarAgencies /> } />
-                <Route path="/providers/travel-agencies" element={<TravelAgencies /> } />
-                <Route path="/providers/railways-operators" element={<RailwaysOperators />} />
+                <Route element={<ProviderPage /> } path="/providers/provider/:id" />
               </Route>
             </Route>
             <Route element={<SignUp /> } path="/signUp" />
             <Route path='/dashboard' element={(user?.accountType == "PROVIDER")||(user?.accountType == "ADMIN") ? <DashboardLayout /> : <ErrorPage status={401}/>}>
               <Route element={<Index />} index /> 
               <Route element={user?.providerType == "AIRLINE" ? <Flights /> : <ErrorPage status={401}/>} path="/dashboard/flights" /> 
-              <Route element={user?.providerType == "CAR_AGENCY" ? <Cars /> : <ErrorPage status={401} /> } path="/dashboard/cars"/>
+              <Route element={user?.providerType == "CARS_AGENCY" ? <Cars /> : <ErrorPage status={401} /> } path="/dashboard/cars"/>
               <Route element={user?.accountType == "ADMIN" ? <Stations /> : <ErrorPage status={401} />} path="/dashboard/stations"/>
               <Route element={user?.accountType == "ADMIN" ? <Destinations/> : <ErrorPage status={401}/> } path="/dashboard/destinations" />
               <Route element={user?.providerType == "HOTEL" ? <Rooms /> : <ErrorPage status={401}/> } path="/dashboard/rooms" />
-              <Route element={user?.providerType == "TRAVEL_AGENCY" ? <Travels/> : <ErrorPage status={401}/>} path="/dashboard/travels" />
+              <Route element={user?.providerType == "TRAVELS_AGENCY" ? <Travels/> : <ErrorPage status={401}/>} path="/dashboard/travels" />
               <Route element={user?.accountType == "ADMIN" ? <Providers/> : <ErrorPage status={401}/>} path="/dashboard/providers" />
               <Route element={user?.accountType == "ADMIN" ? <Clients /> : <ErrorPage status={401}/>} path="/dashboard/clients" /> 
               <Route element={<Setting />} path="/dashboard/settings" >
@@ -110,11 +105,11 @@ export default function App() {
                 <Route path="/dashboard/settings/changePassword" element={<PasswordInfo />}/> 
               </Route> 
               <Route element={user?.providerType == "AIRLINE" ? <AddFlight /> : <ErrorPage status={401} /> } path="/dashboard/addFlight" /> 
-              <Route element={user?.providerType == "CAR_AGENCY" ? <AddCar /> : <ErrorPage status={401} />} path="/dashboard/addCar" /> 
+              <Route element={user?.providerType == "CARS_AGENCY" ? <AddCar /> : <ErrorPage status={401} />} path="/dashboard/addCar" /> 
               <Route element={user?.providerType == "HOTEL" ? <AddRoom /> : <ErrorPage status={401} />} path="/dashboard/addRoom" /> 
               <Route element={user?.accountType == "ADMIN" ? <AddGate /> : <ErrorPage status={401} />} path="/dashboard/addGate" />
               <Route element={user?.accountType == "ADMIN" ? <AddDestination /> : <ErrorPage status={401}/>} path="/dashboard/addDestination" />
-              <Route element={user?.accountType == "PROVIDER" && user?.providerType == "TRAVEL_AGENCY" ? <AddTravel /> : <ErrorPage status={401}/>} path="/dashboard/addTravel" />
+              <Route element={user?.providerType == "TRAVELS_AGENCY" ? <AddTravel /> : <ErrorPage status={401}/>} path="/dashboard/addTravel" />
             </Route>
             <Route path="/*" element={<ErrorPage status={404} message="page not found"/>} /> 
             <Route path="/payment" element={<PayementPage /> } />

@@ -25,7 +25,7 @@ export default function Section3() {
                                 initial={{translateY : -40 , opacity : 0 }}
                                 transition={{duration : 0.5 , delay : 0.1}}
                             >
-                                <h1 className="custom-text-primary">+200</h1>
+                                <motion.h1 className="custom-text-primary">+200</motion.h1>
                                 <div>costumer</div>
                             </motion.div>
                             <motion.div className="col-lg-3 col-sm-6 p-3 d-flex align-items-center justify-content-center text-white flex-column"

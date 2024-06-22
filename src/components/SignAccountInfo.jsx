@@ -60,10 +60,10 @@ export default function SignAccountInfo({currentInfo , onChangeFunction , next})
       </div>
       <div className="form-group my-3 d-flex ">
         <TextField label="username" defaultValue={currentInfo.username} fullWidth className="ms-1" inputRef={usernameRef} onChange={()=>onChangeFunction("username" , usernameRef.current.value)}  error={ errors.username != null} helperText={errors?.username}/>
-        <TextField label="email" defaultValue={currentInfo.lastName} fullWidth className="ms-1" inputRef={emailRef} onChange={()=>onChangeFunction("email" , emailRef.current.value)}  error={ errors.email != null} />
+        <TextField label="email" defaultValue={currentInfo.email} fullWidth className="ms-1" inputRef={emailRef} onChange={()=>onChangeFunction("email" , emailRef.current.value)}  error={ errors.email != null} />
       </div>
       <div className="form-group my-3 d-flex ">
-        <TextField type="password" label="password" inputRef={passwordRef} onChange={()=>onChangeFunction("password" , passwordRef.current.value)} fullWidth className="ms-1" error={ errors?.password != null} />
+        <TextField type="password" defaultValue={currentInfo.password} label="password" inputRef={passwordRef} onChange={()=>onChangeFunction("password" , passwordRef.current.value)} fullWidth className="ms-1" error={ errors?.password != null} />
         <TextField type="password" label="confirm password" fullWidth className="ms-1" error={ errors.passwordConfirmation != null}/>
       </div>
       <div className="form-group my-3 d-flex align-items-center">
@@ -73,7 +73,7 @@ export default function SignAccountInfo({currentInfo , onChangeFunction , next})
 
           </Select>
         </FormControl>
-        <TextField fullWidth label="number phone" className="ms-2"  inputRef={nbPhoneRef} onChange={()=>onChangeFunction("tel" , nbPhoneRef.current.value)} error={ errors.tel != null}/>
+        <TextField fullWidth label="number phone" className="ms-2" defaultValue={currentInfo.tel}  inputRef={nbPhoneRef} onChange={()=>onChangeFunction("tel" , nbPhoneRef.current.value)} error={ errors.tel != null}/>
       </div>
       <div className="d-flex align-items-center justify-content-center">
         <span>or</span>

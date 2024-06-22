@@ -19,10 +19,11 @@ export default function LoginModal() {
     const closeLoginModal = () => {
       document.querySelector(".btn-close").click()
     }
+    const navigate = useNavigate()
     const verifierLogin = (res) => {
       switch(res.status) {
         case 200 : return res.json() ; 
-        case 404 : setErrors("your are not registred")
+        case 404 : setErrors("you are not registred") ; 
           return null 
         case 401 : setErrors("incorrect password")
           return null 
@@ -31,6 +32,7 @@ export default function LoginModal() {
     const loginSuccess = (userInfo ) => {
       dispatch(login(userInfo))
       closeLoginModal() ;   
+      if(userInfo.accountType ==( "PROVIDER" || "ADMIN")) navigate("/dashboard/")
       Swal.fire({
         timer : 2000 , 
         text : "the login successful" , 
@@ -63,15 +65,17 @@ export default function LoginModal() {
     const onSuccesGoogleLogin = (cred) => {
       const details = jwtDecode(cred.credential)
       const formData = new FormData()
-      console.log(cred.details)
       formData.append("email" , details.email )
       fetch("http://localhost:8089/accounts/loginByEmail" , {
           method : "POST" , 
           body : formData
         })
-        .then(res => verifierLogin(res.status)) 
+        .then(res => verifierLogin(res)) 
         .then(data => {
-          if( data != null ) loginSuccess(data)
+          console.log(data)
+          if( data != null ) {
+            loginSuccess(data)
+          }
         })
     }
   return (

@@ -6,14 +6,26 @@ import ShowMore from "../../components/ShowMore";
 import { useFetch } from "../../hooks/custom-hooks";
 import FlightSkeleton from "./componants/FlightSkeleton";
 import InternalError from "../../components/InternalError";
+import NoItems from "../../components/NoItems";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 export default function FlightsPage() {
   const [showFilter , setShowFilter] = useState(false)
-  const { data , isLoading , error } = useFetch("http://localhost:8089/flights") 
+  const [ nbElements , setNbElements ] = useState(8) 
+  const { data , isLoading , error } = useFetch("http://localhost:8089/flights/") 
   const renderFlights = () => {
     return data.map((flight, index) => <Flight />);
   };
   const [flightType , setFlightType] = useState("round") 
+  const [ airports , setAirports ] = useState([])
+  useEffect(()=> {
+    fetch("http://localhost:8089/gates/airports/")
+    .then(res => res.json())
+    .then(data => setAirports(data))
+  } , [])
+  const renderAirports = () => {
+    return airports?.map((airport , index) => <MenuItem value={airport.id}>{airport.id} ({airport.name})</MenuItem>)
+  }
   return (
     <div className="w-100 page">
       <div className="w-100 row">
@@ -28,41 +40,37 @@ export default function FlightsPage() {
                 </div>
             </div>
             <form className="w-100 d-flex align-items-center no-wrap justify-content-around p-3 flex-column">
-                <div className="form-group my-1 w-100">
-                    <label htmlFor="" className="from-label" >from :</label>
-                    <select name="" id="" className="form-select rounded-pill">
-                        <option value="">airport 1 </option>
-                        <option value="">airport 1 </option>
-                        <option value="">airport 1</option>
-                    </select>
+                <div className="form-group my-2 w-100">
+                  <FormControl fullWidth>
+                      <InputLabel>from</InputLabel>
+                      <Select>
+                      </Select>
+                    </FormControl>
                 </div>
-                <div className="form-group my-1 w-100">
-                    <label htmlFor="" className="from-label">to :</label>
-                    <select name="" id="" className="form-select rounded-pill">
-                        <option value="">airport 1 </option>
-                        <option value="">airport 1 </option>
-                        <option value="">airport 1</option>
-                    </select>
+                <div className="form-group my-2 w-100">
+                    <FormControl fullWidth>
+                      <InputLabel>to</InputLabel>
+                      <Select>
+                      </Select>
+                    </FormControl>
                 </div>
-                <div className="form-group my-1 w-100">
-                    <label htmlFor="" className="from-label">depart date :</label>
-                    <input type="date" className="rounded-pill form-control " id="" placeholder="depart"/>
+                <div className="form-group my-2 w-100">
+                    <TextField label="dep date" type="date" fullWidth focused/> 
                 </div>
                 {
                     flightType == "round" && (
-                    <div className="form-group my-1 w-100">
-                        <label htmlFor="" className="from-label">return date :</label>
-                        <input type="date" className="rounded-pill form-control " id="" placeholder="depart"/>
+                    <div className="form-group my-2 w-100">
+                      <TextField label="return date" type="date" fullWidth focused/> 
                     </div>
                     )
                 }
-                <div className="form-group my-1 w-100">
+                { /*<div className="form-group my-1 w-100">
                     <label htmlFor="" className="from-label">flight class :</label>
                     <select name="" id="" className="form-select rounded-pill">
                         <option value="">premieum</option>
                         <option value="">busniss</option>
                     </select>
-                </div>
+              </div>*/}
                 
             <button className="btn custom-btn-primary rounded-pill my-3 w-100 ">
               search
@@ -84,7 +92,7 @@ export default function FlightsPage() {
             <>
               <div className="d-flex align-items-center justify-content-between">
             <div>
-              12 flights
+              {data?.length} flights
             </div>
             <div className="d-flex">
               <button className="btn border mx-2 d-flex align-items-center" onClick={()=>setShowFilter(!showFilter)}>
@@ -97,7 +105,14 @@ export default function FlightsPage() {
               </select>
             </div>
             </div> 
-          <ShowMore />
+            {
+              data?.length > 0 ? 
+              <>
+                {renderFlights()}
+                { data?.length > nbElements && <ShowMore /> }
+              </>
+              : <NoItems />
+            }
             </>
 
           )

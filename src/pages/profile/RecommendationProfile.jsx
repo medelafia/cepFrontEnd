@@ -16,6 +16,7 @@ export default function RecommendationProfile() {
   );
   const handleActivateRec = () => {
     setShowForm(!showForm);
+
   };
   const deleteFromPrefferedList = (name) => {
     setPrefferedDesinations(prev => prev.filter(element => element != name))
@@ -48,7 +49,7 @@ export default function RecommendationProfile() {
           id="activateRecommendationSys"
           ref={activateRecommendationSysRef}
           onChange={handleActivateRec}
-          checked={user?.recommendationProfileActivation}
+          defaultChecked={user?.recommendationProfileActivation}
         />
         <label
           className="text-capitalize ms-2"
@@ -57,7 +58,7 @@ export default function RecommendationProfile() {
           activate recommendation system
         </label>
       </div>
-      {showForm && (
+      {!showForm && (
         <div id="accordion" className="w-100 my-3">
           <div class="card">
             <div class="card-header">

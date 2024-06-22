@@ -104,9 +104,8 @@ export default function HomeLayout() {
                   <span>manage your account</span>
                 </button>
                 <hr />
-                <div className="d-flex align-items-center justify-content-start p-1 text-secondary cursor-pointer">
-                  <i class="fa-solid fa-right-from-bracket"></i>
-                  <span className="ms-3" onClick={userLogout}>logout</span>
+                <div className="d-flex align-items-center justify-content-start text-secondary cursor-pointer">
+                  <button className="ms-3 btn text-secondary" onClick={userLogout}><i class="fa-solid fa-right-from-bracket me-2"></i>logout</button>
                 </div>
                 </div> : 
                 <div className="d-flex align-items-center justify-content-center flex-column w-100">

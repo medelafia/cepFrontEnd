@@ -5,11 +5,14 @@ import SignAccountInfo  from "../../components/SignAccountInfo";
 import { useDispatch } from "react-redux";
 import {login} from "../../features/userSlice"
 import { Step, StepLabel, Stepper } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function SignUp() {
     const [step , setStep] = useState(0) ;
     const steps = ["account info" , "user info" , "confirmation"]
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const intialState = {
         username : null , 
         password : null , 
@@ -31,30 +34,28 @@ export default function SignUp() {
     const next = () => {
         if(step < steps.length) {
             setStep(step + 1)
-        }else {
-            fetch("http://localhost:8089/".concat(info.accountType.toLowerCase()).concat("/register").concat(info?.accountType == "PROVIDER" ? "/".concat(info?.providerType) : "") , {
-                method : "POST" ,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body : JSON.stringify(info) 
-            })
-            .then(res => res.json())
-            .then(data => {
-                setAccountCreated(true)
-                dispatch(login(data)) 
-            })
         }
     }
     const prev = () =>{
         if(step >= 1) setStep(step - 1)
     }
-    useEffect( ()=> {
-        console.log(info)
-    } , [info])
     const register = () => {
-        fetch("http://localhost:8089/"+info.accountType.toLowerCase()+"/register" , {
+        let provider ; 
+        if(info.accountType == "PROVIDER") {
+            switch(info.providerType) {
+                case "AIRLINE" : provider = "airline" 
+                    break ; 
+                case "CAR_AGENCY" : provider = "carAgency" 
+                    break ;
+                case "TRAVEL_AGENCY" : provider = "travelAgency" 
+                    break ;
+                case "HOTEL" : provider = "hotel" 
+                    break ;
+                case "RAILWAY_OPERATOR" : provider = "railwaysOperator" 
+                    break ;
+            }
+        }
+        fetch("http://localhost:8089/"+info.accountType.toLowerCase()+"/register".concat(info.accountType == "PROVIDER" ? "/" + provider : "") , {
             method : "post"  , 
             headers: {
                 'Accept': 'application/json',
@@ -64,9 +65,25 @@ export default function SignUp() {
         })
         .then(res => {
             if(res.status == 200){
-                
-            } 
+                return res.json()
+            } else {
+                Swal.fire({
+                    icon : "error" , 
+                    title : "error in the account creation" , 
+                    timer : 2000 , 
+                }) 
+            }
         })
+        .then(data => {
+            if(data != null ){ 
+            Swal.fire({
+                icon : "success" , 
+                title : "the account created successfully" , 
+                timer : 2000 , 
+            }) 
+            navigate("/") 
+            dispatch(login(data))
+        }} )
     }
     return (
         <div className="row w-100" style={{ height : "100vh"}}> 
@@ -94,7 +111,7 @@ export default function SignUp() {
                     :
                     <>
                     {step == 0 && <SignAccountInfo currentInfo={info} onChangeFunction={updateItem} next={next}/> }
-                    { step == 1 && info.accountType == "COSTUMER" && <SignCostumerInfo onChangeFunction={updateItem}/> }
+                    { step == 1 && info.accountType == "COSTUMER" && <SignCostumerInfo currentInfo={info} onChangeFunction={updateItem}/> }
                     { step == 1 && info.accountType == "PROVIDER" && <SignCompanyInfo onChangeFunction={updateItem}/> }
                     { step != 2 ? <div className="d-flex align-items-center justify-content-end my-3">
                         <button className="btn custom-btn-outlined-primary me-2 px-4" onClick={prev}>prev</button>

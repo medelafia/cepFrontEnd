@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import image from "../../assets/chefchaouen.jpg" ; 
 import Hotel from "../../components/Hotel";
-import GoogleMapReact from "google-map-react"
+import MapComponants from "../../components/MapComponants";
 import ReviewsSlider from "../../components/ReviewsSlider";
 export default function DestinationPage() {
     const [showFullDesc , setShowFullDesc] = useState(false) ; 
@@ -39,15 +39,7 @@ export default function DestinationPage() {
                         </div>
                     </div>
                     <div className="col-md-6">
-                        <GoogleMapReact 
-                            defaultCenter={{
-                            lat: 10.99835602,
-                            lng: 77.01502627}}
-                            yesIWantToUseGoogleMapApiInternals
-                            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-                        >
-
-                        </GoogleMapReact>
+                        <MapComponants />
                     </div>
                 </div>
             </div>

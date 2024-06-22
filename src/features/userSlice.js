@@ -5,7 +5,7 @@ const initialState =  {
     username : "mohamed" , 
     email : "email@gmail.com" , 
     accountType : "PROVIDER" , 
-    providerType : "CAR_AGENCY" , 
+    providerType : "TRAVELS_AGENCY" , 
     profileImage : {
         url : "http://res.cloudinary.com/dl0zud05l/image/upload/v1718730001/db3dgdhqfybcgrvgof83.jpg"
     }
@@ -22,7 +22,10 @@ const userSlice = createSlice({
             return state  
         } , 
         update : (state , action ) => {
-            state[action.payload.item] = action.payload.value 
+            action.payload.forEach(elem => {
+                state[elem.item] = elem.value   
+            })
+            console.log(state)
             return state 
         }
     }

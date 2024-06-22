@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, InputLabel, MenuItem, Select, Skeleton } from "@mui/material";
+import { FormControl, FormGroup, InputLabel, MenuItem, Select, Skeleton, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useFetcher } from "react-router-dom";
@@ -22,8 +22,8 @@ export default function DestinationsPage() {
     return(
         <div className="page">
             <div className="w-100 d-flex">
-                <input type="text" placeholder="enter the destination name or description" className="form-control mx-1"/>
-                <button className="btn custom-btn-secondary mx-1 w-25">search now</button>
+                <TextField label="the name or the description of destination" fullWidth/> 
+                <button className="btn custom-btn-secondary ms-1 px-3"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div className="row w-100">
                <div className="col-lg-12 row py-3">

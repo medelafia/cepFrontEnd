@@ -13,7 +13,7 @@ export default function SignCompanyInfo({ onChangeFunction }) {
   return (
     <div>
       <div className="form-group my-2">
-        <TextField label="company name" fullWidth onChange={(e) => onChangeFunction("companyName" , e.target.value)}/>
+        <TextField label="company name" fullWidth onChange={(e) => onChangeFunction("CompanyName" , e.target.value)}/>
       </div>
       <div className="form-group my-2">
         <FormControl fullWidth>
@@ -26,10 +26,10 @@ export default function SignCompanyInfo({ onChangeFunction }) {
                 }
             }
           >
-            <MenuItem value="HOTEL">hotel</MenuItem>
-            <MenuItem value="AIRLINE">airline</MenuItem>
-            <MenuItem value="CAR_AGENCY">car agency</MenuItem>
-            <MenuItem value="TRAVEL_AGENCY">travel agency</MenuItem>
+            <MenuItem value="hotel">hotel</MenuItem>
+            <MenuItem value="airline">airline</MenuItem>
+            <MenuItem value="carsAgencys">car agency</MenuItem>
+            <MenuItem value="TRAVELS_AGENCY">travel agency</MenuItem>
             <MenuItem value="RAILWAY_OPERATOR">railway operator</MenuItem>
           </Select>
         </FormControl>

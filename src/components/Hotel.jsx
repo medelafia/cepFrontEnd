@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import image from "../assets/hotel4.jpeg" 
-export default function Hotel() {
+export default function Hotel({hotel}) {
     return (
         <div className="col-lg-4 col-md-6 col-sm-12 my-2">
             <div className="border-bottom border-top rounded mx-2">
@@ -10,8 +10,8 @@ export default function Hotel() {
                 <div className="p-3">
                     <div className="d-flex align-items-center justify-content-between">
                         <div>
-                            <h3>hotel name</h3>
-                            <div>martil , tetouan</div>
+                            <h5>{hotel.name}</h5>
+                            <div>{hotel.address}</div>
                         </div>
                         <div className="custom-bg-primary p-1 text-white rounded">
                             9.3

@@ -2,9 +2,11 @@ import { useSelect } from "@mui/base"
 import { FitScreen } from "@mui/icons-material"
 import { useRef } from "react"
 import { useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import Swal from "sweetalert2"
 import image from "../../assets/user.jpeg"
 import ProfileImage from "../../components/ProfileImage"
+import { update } from "../../features/userSlice"
 import { useFetch } from "../../hooks/custom-hooks"
 import { userSelector } from "../../store/selectors/userSelector"
 export default function UserInfo() {
@@ -15,6 +17,7 @@ export default function UserInfo() {
     const age = useRef(user?.age) 
     const country = useRef(user?.country) 
     const gender = useRef(user?.gender)
+    const dispatch = useDispatch()
     const updateProfile = () => {
         profileImage.current.click()
         profileImage.current.addEventListener("change" , (e) => {
@@ -28,7 +31,7 @@ export default function UserInfo() {
         const ageValue = age.current.value 
         const genderValue = gender.current.value 
         if(firstNameValue != "" && lastNameValue != "" && ageValue != "" && genderValue != "") {
-            fetch("http://localhost:8089/accounts/costumer/update/"+user.id , {
+            fetch("http://localhost:8089/costumer/"+user.id + "/update" , {
                 method : "POST" ,
                 headers: {
                     'Accept': 'application/json',
@@ -41,14 +44,40 @@ export default function UserInfo() {
                     "age" : Number.parseInt(ageValue) 
                 })
             })
-            .then(res => res.json())
-            .then(data => console.log(data))
+            .then(res =>{
+                if(res.status ==200) {
+                    return res.json()
+                }else {
+                    Swal.fire({
+                        icon : "error"  
+                        , title : "error since update try it again" , 
+                        timer : 2000
+                    })
+                }
+            })
+            .then(data => {
+                if(data != null ){
+                    Swal.fire({
+                        icon : "success" ,
+                        title : "your information was updated succesfully" , 
+                        timer : 2000
+                    })
+                    dispatch(update(
+                    [
+                        {item : "firstName" , value : data.firstName},
+                        { item : "lastName" , value : data.lastName } ,
+                        { item : "age" , value : data.age} , 
+                        { item : "gender" , value : data.gender }
+                    ]))
+                }
+            })
         }
     }
     return (
         <div className="d-flex align-items-center justify-content-center flex-column w-100">
-            <ProfileImage currentImage={user.profileImage.url == null ? image :  user.profileImage.url} changingUrl={"http://localhost:8089/costumer/"+updateProfile.id +"/changeProfileImage"}/> 
+            <ProfileImage currentImage={user.profileImage?.url == null ? image :  user.profileImage.url} changingUrl={"http://localhost:8089/costumer/"+updateProfile.id +"/changeProfileImage"}/> 
             <div className="form-group d-flex w-100">
+
                 <div className="w-100 me-3">
                     <label htmlFor="firstName" className="text-secondary text-capitalize mb-1">first name</label>
                     <input type="text" id="firstName" className="form-control" placeholder="first name" ref={firstName} defaultValue={user?.firstName}/>

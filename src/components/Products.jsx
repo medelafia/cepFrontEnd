@@ -6,11 +6,11 @@ export default function Products({close}) {
                         , {name : "contact" , path : "/contact"} 
                         , {name : "why chose us ? " , path : "/about"}]
                         ,
-                    "offers" : [ {name : "flights" , path : '/offers/flights'}
-                                ,{name : "hotels" , path : '/offers/hotels'}
+                    "offers" : [ {name : "flights" , path : '/offers/flights/'}
+                                ,{name : "hotels" , path : '/offers/hotels/'}
                                 ,{name : "destinations" , path : '/offers/destinations'}
-                                ,{name : "cars" , path : '/offers/cars'}
-                                ,{name : "train travels" , path : '/offers/trainTravels'}] 
+                                ,{name : "cars" , path : '/offers/cars/'}
+                                ,{name : "train travels" , path : '/offers/trainTravels/'}] 
                                 ,
                     "providers" : [ {name : "car agencies" , path : '/providers/car-agencies'}
                                     ,{name : "railways operators" , path : '/providers/railways-operators'}

@@ -63,7 +63,7 @@ export default function DashboardLayout() {
                             <i className="fa-solid fa-plane mx-2"></i>{activeLayout && "flights"}
                         </div>
                     </Link>}
-                    {user?.providerType == "CAR_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/cars"  className="text-decoration-none">
+                    {user?.providerType == "CARS_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/cars"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/cars" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-car-rear mx-2"></i>{activeLayout && "cars"}
                         </div>
@@ -88,7 +88,7 @@ export default function DashboardLayout() {
                             <i class="fa-solid fa-charging-station mx-2"></i>{activeLayout && "stations"}
                         </div>
                     </Link> }
-                    {user?.providerType == "TRAVEL_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/travels"  className="text-decoration-none">
+                    {user?.providerType == "TRAVELS_AGENCY" && user?.accountType == "PROVIDER" && <Link to="/dashboard/travels"  className="text-decoration-none">
                         <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/travels" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
                             <i class="fa-solid fa-earth-americas mx-2"></i>{activeLayout && "travels"}
                         </div>

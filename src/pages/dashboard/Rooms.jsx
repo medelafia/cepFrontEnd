@@ -15,6 +15,6 @@ export default function Rooms() {
     {field : "available" , headerName : "available"}
    ]
     return (
-        <DataPage columns={columns} dataUrl={"http://localhost:8089/hotels/"+user.id+"/rooms"} dataAddingPath="/dashboard/addRoom"/>
+        <DataPage columns={columns} dataUrl={"http://localhost:8089/hotels/"+user.id+"/rooms"} deletePath={"http://localhost:8089/hotels/"+user.id+"/rooms/"} dataAddingPath="/dashboard/addRoom"/>
     )
 }

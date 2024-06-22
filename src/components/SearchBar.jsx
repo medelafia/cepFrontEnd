@@ -1,13 +1,23 @@
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./components.css"
 import {motion} from "framer-motion"
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 export default function SearchBar() {
     const [current , setCurrent] = useState("flights")
-    const beginAirport = useRef()
     const [airports , setAirports] = useState([]) ; 
+    const flightsBeginAirport = useRef()
+    const flightArrivalAirport = useRef() 
+    const flightDate = useRef()
     const hotelSearchInput = useRef() ; 
+    const carAirport = useRef()
+    const nbOfSeats = useRef()
+    const trainTravelBeginStation = useRef()
+    const trainTravelArrivalStation = useRef()
+    const trainTravelDate = useRef()
+    const organizedTravelDestination = useRef() 
+    const organizedTravelDate = useRef( )
     const navigate = useNavigate()
     useEffect(()=> {
         fetch("http://localhost:8089/gates/airports/")
@@ -15,7 +25,7 @@ export default function SearchBar() {
         .then(data => setAirports(data)) 
     } , [] )
     const handleClick = (e) => {
-        const innerText = e.currentTarget.innerText ; 
+        const innerText = e.currentTarget.innerText.toLowerCase() ; 
         if(innerText) {
             setCurrent(innerText.split(" ").join("")) 
             console.log(current) 
@@ -27,20 +37,20 @@ export default function SearchBar() {
         })
         e.currentTarget.classList.add("active")
     }
-    const displayAirports = () => {
-        return airports.map((airport , index ) => <option value={airport.name} key={index}>{airport.name}</option>)
-    }
+    const renderAirport = useCallback(()=> {
+        return airports.map((airport, index) => <MenuItem value={airport.id}>{airport.iata} ({airport.name})</MenuItem>)
+    } , [airports] ) 
     const handleSearchClick = () => {
         switch(current) {
-            case "flights" : navigate("/offers/flights" , {beginAirport : beginAirport.current.value}) ; 
+            case "flights" : navigate(`/offers/flights/${flightsBeginAirport.current.value}/${flightArrivalAirport.current.value}/${flightDate.current.value}`) ; 
                 break; 
-            case "hotels" : navigate("/offers/hotels", {search : hotelSearchInput.current.value})
+            case "hotels" : navigate(`/offers/hotels/${hotelSearchInput.current.value}`) 
                 break ; 
-            case "cars" : navigate('/offers/cars')
+            case "cars" : navigate(`/offers/cars/${carAirport.current.Value}/${nbOfSeats.current.value}`)
                 break ; 
-            case "trainTravels" : navigate("/offers/trainTravels") 
+            case "traintravels" : navigate(`/offers/trainTravels/${trainTravelBeginStation.current.value}/${trainTravelArrivalStation.current.value}/${trainTravelDate.current.value}`) 
                 break ; 
-            case "organizedTravels" : navigate("/offers/organizedTravels")
+            case "organizedtravels" : navigate(`/offers/travels/${organizedTravelDestination.current.value}/${organizedTravelDate.current.value}`)
         }
     }
     return (
@@ -49,80 +59,74 @@ export default function SearchBar() {
             initial={{x:-100 , opacity : 0 ,scale : 0.5  }}
             transition = {{duration : 0.7}}
         >
-            <ul className="d-flex align-items-center justify-content-center custom-text-secondary my-1">
-                <li className="mx-2 active search-bar-item cursor-pointer" onClick={handleClick}>flights</li>
-                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>cars</li>
-                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>hotels</li>
-                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>train travels</li>
-                <li className="mx-2 search-bar-item cursor-pointer" onClick={handleClick}>organized travels</li>
+            <ul className="d-flex align-items-center justify-content-center text-capitalize custom-text-secondary my-1">
+                <li className="mx-3 active search-bar-item cursor-pointer" onClick={handleClick}>flights</li>
+                <li className="mx-3 search-bar-item cursor-pointer" onClick={handleClick}>cars</li>
+                <li className="mx-3 search-bar-item cursor-pointer" onClick={handleClick}>hotels</li>
+                <li className="mx-3 search-bar-item cursor-pointer" onClick={handleClick}>train travels</li>
+                <li className="mx-3 search-bar-item cursor-pointer" onClick={handleClick}>organized travels</li>
             </ul>
-            <div className="p-3 d-flex align-items-center justify-content-center">
+            <div className="p-4 d-flex align-items-center justify-content-center">
                 { current == "flights" && 
                         <div className="d-flex w-100 mx-2">
-                            <select name="from" ref={beginAirport} className="form-select mx-1 custom-text-secondary">
-                                {displayAirports()}
-                            </select> 
-                            <select name="from" id="" className="form-select mx-1 custom-text-secondary">
-                                {displayAirports()}
-                            </select>  
-                            <input type="date" className="form-control mx-1 custom-text-secondary"/> 
-                            <select name="" className="form-select custom-text-secondary">
-                                <option value="">economy</option>
-                                <option value="">premuim economy</option>
-                                <option value="">first class</option>
-                                <option value="">business class</option>
-                            </select>
+                            <FormControl className="me-1" fullWidth>
+                                <InputLabel>from</InputLabel>
+                                <Select inputRef={flightsBeginAirport}>
+                                    {renderAirport()}
+                                </Select>
+                            </FormControl>
+                            <FormControl className="mx-1" fullWidth >
+                                <InputLabel>to</InputLabel>
+                                <Select inputRef={flightArrivalAirport}>
+                                    {renderAirport()}
+                                </Select>
+                            </FormControl>
+                            <TextField label="date" inputRef={flightDate} className="mx-1" fullWidth type="date" focused/>
                         </div>
                 }
                 {current == "hotels" && 
                     <div className="d-flex w-100">
-                        <input ref={hotelSearchInput} type="text" className="form-control mx-1 custom-text-secondary" placeholder="hotel name or destination"/> 
+                        <TextField inputRef={hotelSearchInput} className="me-1" label="city or destination" fullWidth/>
                     </div>
                 }
                 { current == "cars" && 
                     <div className="d-flex w-100 mx-2">
-                        <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
-                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>
-                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="drop off"/> 
-                        <select name="" className="form-select custom-text-secondary">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
+                        <FormControl className="me-1" fullWidth>
+                                <InputLabel>airport</InputLabel>
+                                <Select inputRef={carAirport}>
+                                    {renderAirport()}
+                                </Select>
+                        </FormControl>
+                        <TextField label="pick up" type="date" inputRef={nbOfSeats} className="ms-1" focused fullWidth/>
                     </div>
                 }{
                     current == "traintravels" && 
                     <div className="d-flex w-100 mx-2">
-                        <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
-                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>
-                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="drop off"/> 
-                        <select name="" className="form-select custom-text-secondary">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
+                        <FormControl className="me-1" fullWidth>
+                                <InputLabel>from</InputLabel>
+                                <Select inputRef={trainTravelBeginStation}>
+                                    {renderAirport()}
+                                </Select>
+                            </FormControl>
+                            <FormControl className="mx-1" fullWidth >
+                                <InputLabel>to</InputLabel>
+                                <Select inputRef={trainTravelArrivalStation}>
+                                    {renderAirport()}
+                                </Select>
+                            </FormControl>
+                            <TextField label="date" className="mx-1" inputRef={trainTravelDate} fullWidth type="date" focused/>
                     </div>
                 }
                 {
                     current == "organizedtravels" &&
                     <div className="d-flex w-100 mx-2">
-                        <input type="text" className="form-select mx-1 custom-text-secondary" placeholder="city or airport"/> 
-                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="pick up"/>
-                        <input type="date" className="form-control mx-1 custom-text-secondary" placeholder="drop off"/> 
-                        <select name="" className="form-select custom-text-secondary">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
+                        <TextField label="destination" fullWidth inputRef={organizedTravelDestination}/>
+                        <TextField label="date of travel" className="mx-1" fullWidth type="date" inputRef={organizedTravelDate} focused/>
                     </div>
                 }
-                <button className="custom-btn-primary btn" onClick={handleSearchClick}>search</button>
+                <button className="custom-btn-primary btn p-3" onClick={handleSearchClick}>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </div>
         </motion.div>
     )

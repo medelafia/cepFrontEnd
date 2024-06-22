@@ -10,20 +10,20 @@ export default function Travels() {
     { field :  "id" , headerName : "ID" } , 
     { field :  "price", headerName : "price"} , 
     { field :  "distance", headerName : "distance"} , 
-    { field :  "date", headerName : "date"} , 
-    { field : "startTime" , headerName : "start time"} , 
-    { field : "endTime" , headerName : "end time"} , 
+    { field :  "departureDate", headerName : "date"} , 
+    { field : "departureTime" , headerName : "start time"} , 
+    { field : "arrivedTime" , headerName : "end time"} , 
     { field : "nbOfPlaces" , headerName : "nbOfPlaces"} ,
     { field : "nbOfStops" , headerName : "Stops"} , 
     { field : "reservedPlaces" , headerName : "reserved"} , 
     { field : "nbDays" , headerName : "days"} , 
-    { field : "country" , headerName : "country"} , 
-    { field : "city" , headerName : "city"} , 
+    { field : "origin" , headerName : "origin"} , 
+    { field : "destination" , headerName : "destination"} , 
     { field : "includeTrans" , headerName : "include Transort"} , 
     { field : "includeHotel" , headerName : "include hotel"} , 
   ]
   return (
-    <DataPage dataUrl={"http://localhost:8089/travelAgencies/"+user.id+"/organizedTravels"} columns={columns} />
+    <DataPage dataUrl={"http://localhost:8089/travelAgencies/"+user.id+"/organizedTravels"} dataAddingPath={"/dashboard/addTravel"} columns={columns} />
   );
 }
  
