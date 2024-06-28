@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Flight from "./componants/Flight";
@@ -8,15 +8,38 @@ import FlightSkeleton from "./componants/FlightSkeleton";
 import InternalError from "../../components/InternalError";
 import NoItems from "../../components/NoItems";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { FlightClassRounded } from "@mui/icons-material";
 
 export default function FlightsPage() {
+  const [flightTypeStatus , setFlightTypeStatus ] = useState("oneWay")  
+  const {from , to , date} = useParams()
+  const [flightType , setFlightType] = useState("oneWay") 
   const [showFilter , setShowFilter] = useState(false)
+  const srcAirportRef = useRef() 
+  const destAirportRef = useRef() 
+  const departureDateRef = useRef() 
+  const returnDateRef = useRef() 
   const [ nbElements , setNbElements ] = useState(8) 
-  const { data , isLoading , error } = useFetch("http://localhost:8089/flights/") 
+  const [ srcAiport , setSrcAirport] = useState(from != undefined)
+  const [ destAirport , setDestAirport] = useState(to)
+  const [departureDate , setDepartureDate ] = useState(date) 
+  const [ returnDate , setReturnDate] = useState() 
+  const toSqlDate = (date = "") => {
+    let dateArray = date.split("-")
+    return dateArray.join("-")
+  }
+  let flightsResponse = useFetch(`http://localhost:8089/flights/${flightType == "round" ? 'getRoundTrip' : 'getOneWayTrip'}?from=${srcAiport}&to=${destAirport}&depDate=${departureDate}${flightType == "round" ? `&returnDate=${returnDate}` : ''}`)
   const renderFlights = () => {
-    return data.map((flight, index) => <Flight />);
+    return flightsResponse.data?.map((flight, index) => <Flight flight={flight} key={index}/>);
   };
-  const [flightType , setFlightType] = useState("round") 
+  const search = (e) => {
+    e.preventDefault()
+    setFlightType(flightTypeStatus)
+    setSrcAirport(srcAirportRef.current.value)
+    setDestAirport(destAirportRef.current.value) 
+    setDepartureDate(toSqlDate(departureDateRef.current.value)) 
+    if(flightTypeStatus == "round") setReturnDate(toSqlDate(returnDateRef.current.value))
+  }
   const [ airports , setAirports ] = useState([])
   useEffect(()=> {
     fetch("http://localhost:8089/gates/airports/")
@@ -32,10 +55,10 @@ export default function FlightsPage() {
         <div className="col-md-4 col-sm-12 p-4 border rounded">
             <div className="text-capitalize h4 custom-text-primary">find your flight now !</div>
             <div className="d-flex border-bottom">
-                <div className={`me-3 cursor-pointer ${flightType == "round" && "active"}`} onClick={()=>{setFlightType("round")}}>
+                <div className={`me-3 cursor-pointer ${flightTypeStatus == "round" && "active"}`} onClick={()=>{setFlightTypeStatus("round")}}>
                     round trip
                 </div>
-                <div className={`mx-3 cursor-pointer ${flightType == "oneWay" && "active"}`} onClick={()=>{setFlightType("oneWay")}}>
+                <div className={`mx-3 cursor-pointer ${flightTypeStatus == "oneWay" && "active"}`} onClick={()=>{setFlightTypeStatus("oneWay")}}>
                     one way
                 </div>
             </div>
@@ -43,42 +66,40 @@ export default function FlightsPage() {
                 <div className="form-group my-2 w-100">
                   <FormControl fullWidth>
                       <InputLabel>from</InputLabel>
-                      <Select>
+                      <Select defaultValue={from} inputRef={srcAirportRef}>
+                        { renderAirports()}
                       </Select>
                     </FormControl>
                 </div>
                 <div className="form-group my-2 w-100">
                     <FormControl fullWidth>
                       <InputLabel>to</InputLabel>
-                      <Select>
+                      <Select defaultValue={to} inputRef={destAirportRef}>
+                        { renderAirports()} 
                       </Select>
                     </FormControl>
                 </div>
                 <div className="form-group my-2 w-100">
-                    <TextField label="dep date" type="date" fullWidth focused/> 
+                    <TextField label="dep date" type="date" fullWidth focused defaultValue={date} inputRef={departureDateRef} /> 
                 </div>
                 {
-                    flightType == "round" && (
+                    flightTypeStatus == "round" && (
                     <div className="form-group my-2 w-100">
-                      <TextField label="return date" type="date" fullWidth focused/> 
+                      <TextField label="return date" type="date" fullWidth focused inputRef={returnDateRef}/> 
                     </div>
                     )
                 }
-                { /*<div className="form-group my-1 w-100">
-                    <label htmlFor="" className="from-label">flight class :</label>
-                    <select name="" id="" className="form-select rounded-pill">
-                        <option value="">premieum</option>
-                        <option value="">busniss</option>
-                    </select>
-              </div>*/}
                 
-            <button className="btn custom-btn-primary rounded-pill my-3 w-100 ">
+            <button className="btn custom-btn-primary rounded-pill my-3 w-100 " onClick={search}>
               search
             </button>
           </form>
         </div>
         <div className="col-md-8 col-sm-12 py-3">
-          { isLoading ? 
+          { from == undefined && to == undefined && date == undefined ? 
+            <div>search your fligths now</div>
+            :
+          ( flightsResponse.isLoading ? 
           <>
             <FlightSkeleton />
             <FlightSkeleton />
@@ -86,13 +107,13 @@ export default function FlightsPage() {
             <FlightSkeleton />
           </>
           : 
-          ( error ? 
+          ( flightsResponse.error ? 
             <InternalError />
             : 
             <>
               <div className="d-flex align-items-center justify-content-between">
             <div>
-              {data?.length} flights
+              {flightsResponse.data?.length} flights
             </div>
             <div className="d-flex">
               <button className="btn border mx-2 d-flex align-items-center" onClick={()=>setShowFilter(!showFilter)}>
@@ -106,17 +127,18 @@ export default function FlightsPage() {
             </div>
             </div> 
             {
-              data?.length > 0 ? 
+              flightsResponse?.length > 0 ? 
               <>
                 {renderFlights()}
-                { data?.length > nbElements && <ShowMore /> }
+                { flightsResponse.data?.length > nbElements && <ShowMore /> }
               </>
               : <NoItems />
             }
             </>
 
           )
-          }
+          )
+        }
         </div>
       </div>
     </div>

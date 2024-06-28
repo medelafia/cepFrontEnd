@@ -15,8 +15,8 @@ export default function Contact() {
             >
                 contact <span className="custom-text-primary bold">travelboot </span>feedback !
             </motion.h1>
-            <div className="custom-container h-100 d-flex align-items-start justify-content-center mt-5">
-                <div className="mx-5">
+            <div className="custom-container h-100 row mt-5">
+                <div className="col-sm-12 col-lg-6 d-flex flex-column align-items-center">
                     <Brand /> 
                     <div className='ps-3 mt-3'>
                     <div className="my-2">
@@ -29,12 +29,11 @@ export default function Contact() {
                     </div>
                     <div className="my-2">
                         <i class="fa-solid fa-envelope mx-2 text-danger"></i> 
-                        <span>email </span>
+                        <a className="text-dark text-decoration-none" >travelboot@gmail.com</a>
                     </div>
                     </div>
                 </div>
-                <form className="mx-5 w-50 d-flex align-items-center justify-content-center flex-column">
-
+                <form className="col-sm-12 col-lg-6 d-flex align-items-center justify-content-center flex-column">
                     { user == null && <div className="form-group my-2 w-100">
                         <label htmlFor="">name : </label>
                         <input type="text" name="" id="" className="form-control" placeholder="enter your name"/>

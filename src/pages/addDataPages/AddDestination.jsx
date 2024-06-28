@@ -54,7 +54,7 @@ export default function AddDetination() {
     return (
         <div className="p-5">
             <CurrentPath />
-            <AddDataHeader title={"add flight"} /> 
+            <AddDataHeader title={"add attraction"} /> 
             <form className="mt-4">
                 <div className="form-group my-2">
                     <TextField label="the name of destination" fullWidth inputRef={nameRef}/> 

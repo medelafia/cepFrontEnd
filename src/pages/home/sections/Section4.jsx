@@ -3,7 +3,7 @@ import vid from "../../../assets/vid.mp4" ;
 import {motion} from "framer-motion"
 export default function Section4() {
     return (
-        <div className="page my-5">
+        <div className="my-5">
             <motion.div className="custom-container d-flex flex-column align-items-center justify-content-center"
                 initial={{opacity : 0  }}
                 whileInView = {{opacity : 1 }}

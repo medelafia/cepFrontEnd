@@ -9,16 +9,16 @@ export default function Flights() {
   const columns = [
     {field : "price", headerName : "price"} , 
     {field : "distance", headerName :"Distance" } , 
-    {field : "date", headerName : "date"} , 
+    {field : "departureDate", headerName : "date"} , 
     {field : "nbOfPlaces", headerName : "number of places"} , 
     {field : "nbOfStops", headerName : "numbers of stops"} , 
-    {field : "from", headerName : "from"} ,  
-    {field : "to" , headerName : "to"}, 
+    {field : "origin", headerName : "from"} ,  
+    {field : "destination" , headerName : "to"}, 
     {field : "reservedPlaces" , headerName : "reserved places"} , 
-    { field : "startTime" , headerName : "start time"} , 
-    {field : "endTime" , headerName : "end time"}
+    { field : "departureTime" , headerName : "start time"} , 
+    {field : "arrivedTime" , headerName : "end time"}
   ]
   return (
-    <DataPage dataUrl={"http://localhost:8089/airlines/"+ user.id + "/flights"} columns={columns} dataAddingPath="/dashboard/addFlight" />
+    <DataPage deletePath={`http://localhost:8089/airlines/${user.id}/flights/`} dataUrl={"http://localhost:8089/airlines/"+ user.id + "/flights"} columns={columns} dataAddingPath="/dashboard/addFlight" />
   );
 }

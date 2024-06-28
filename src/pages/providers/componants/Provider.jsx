@@ -17,7 +17,7 @@ export default function Provider({provider}) {
                     {provider.nbReviews} review
                 </div>
                 <button className="btn btn-outline-dark my-3">
-                    <Link to="/providers/provider/1" className="text-decoration-none text-dark">view profile</Link>
+                    <Link to={`/provider/${provider.id}`} className="text-decoration-none text-dark">view profile</Link>
                 </button>
             </div>
         </div>

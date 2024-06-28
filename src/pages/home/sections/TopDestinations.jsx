@@ -19,8 +19,8 @@ export default function TopDestinations() {
                     </div>
                     <a href="/offers/destinations" className="custom-text-secondary text-decoration-none">show more</a>
                 </motion.div>
-                <div className="row my-4" style={{height : "90%"}}>
-                    <motion.div className="col-md-4 custom-h-100 col-sm-12"
+                <div className="row p-sm-5" style={{height : "90%"}}>
+                    <motion.div className="col-md-4 custom-h-100 col-sm-12 my-4"
                         initial={{translateX : -50 }}
                         whileInView={{translateX : 0 }}
                         transition={{duration : 0.4  }}
@@ -28,14 +28,14 @@ export default function TopDestinations() {
                     >
                         <TopDestination destinationImage={image1} destinationName="dest"/>
                     </motion.div>
-                    <motion.div className="col-md-4 rounded"
+                    <motion.div className="col-md-4 rounded my-4"
                             initial={{translateY : -50 }}
                             whileInView={{translateY : 0 }}
                             transition={{duration : 0.5  }}
                         >
                             <TopDestination destinationImage={image1} destinationName="dest"/>
                     </motion.div>
-                    <motion.div className="col-md-4 col-sm-12"
+                    <motion.div className="col-md-4 col-sm-12 my-4"
                         initial={{translateX : 50 }}
                         whileInView={{translateX : 0 }}
                         transition={{duration : 0.5  }}

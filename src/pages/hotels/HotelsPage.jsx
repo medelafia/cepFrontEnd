@@ -10,19 +10,27 @@ import { useFetch } from "../../hooks/custom-hooks"
 import "./hotels.css"
 
 export default function HotelsPage() {
-    const { data , isLoading , error } = useFetch('http://localhost:8089/hotels/') 
-    const [nbElements , setNbElements ] = useState(9)
+    let hotelsResponse = useFetch('http://localhost:8089/hotels/')
+    const [ hotels , setHotels ] = useState([]) 
+    useEffect(()=>{
+        if ( hotelsResponse.data != null )
+            setHotels(hotelsResponse.data)
+    } , [hotelsResponse.isLoading])
+    const [nbElements , setNbElements ] = useState(10)
     const renderHotels = () => {
-        return data?.map((hotel,index) => <Hotel hotel={hotel}/>)
+        return hotels?.map((hotel,index) => <Hotel hotel={hotel}/>)
     }
-    const { search } = useParams() ; 
-    console.log(search)
+    const { search }= useParams()
     const findNearby = () => {
+        console.log("clicked")
         navigator.geolocation.getCurrentPosition(
             (pos)=> {
+                console.log("done")
                 console.log(pos.coords.latitude) ;
                 console.log(pos.coords.longitude) ; 
-
+                fetch(`http://localhost:8089/hotels/getNearby?lng=${pos.coords.longitude}&lat=${pos.coords.latitude}`)
+                .then(res => res.json())
+                .then(data => setHotels(data))
             } , (error) => {
                 console.log(error) ; 
             }
@@ -32,7 +40,7 @@ export default function HotelsPage() {
     return (
         <div className="w-100 page">
             { 
-                isLoading 
+                hotelsResponse?.isLoading 
                         ? 
                         <div className="row">
                             <DefaultSkelton /> 
@@ -44,12 +52,12 @@ export default function HotelsPage() {
                         </div>
                         : 
                         (
-                            error 
+                            hotelsResponse.error 
                             ? 
                             <InternalError />
                             : 
                             <>
-            <div className="w-100 p-3 d-flex align-items-center">
+            <div className="w-100 py-3 d-flex align-items-center">
                 <TextField label="hotel name or city" fullWidth defaultValue={search}/> 
                 <button className="btn custom-btn-secondary ms-1 p-3"><i class="fa-solid fa-magnifying-glass"></i></button>
                 <span className="text-secondary mx-4">or</span>
@@ -58,7 +66,7 @@ export default function HotelsPage() {
             <div className="w-100 row">
                 <div className="col-md-12 my-3">
                                 <div className="w-100 d-flex align-items-center justify-content-between">
-                        <div>{data?.length} results</div>
+                        <div>{hotels?.length} results</div>
                         <div className="d-flex w-25">
                             <button className="btn text-secondary mx-2" onClick={()=>{setShowFilter(!showFilter)}}>
                                 <i class="fa-solid fa-filter"></i>
@@ -79,12 +87,12 @@ export default function HotelsPage() {
                         </div>
                     }
                     <div className="my-4 row">
-                        {data?.length == 0 ? 
+                        {hotels?.length == 0 ? 
                         <NoItems /> 
                         : 
                         <>
                             {renderHotels().slice(0 , nbElements)}
-                            { data?.length > nbElements && <ShowMore callBack={setNbElements(nbElements+9)}/>  }
+                            { hotels?.length > nbElements && <ShowMore callBack={setNbElements(nbElements+9)}/>  }
                         </>
                         }
                     </div>           

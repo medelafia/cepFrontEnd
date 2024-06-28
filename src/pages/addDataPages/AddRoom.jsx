@@ -47,7 +47,7 @@ export default function AddRoom() {
         })
     }
     return (
-        <div >
+        <div>
             <div className="custom-container py-3">
                 <CurrentPath />
                 <AddDataHeader title="add room"/>

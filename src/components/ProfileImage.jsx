@@ -5,40 +5,34 @@ import Swal from "sweetalert2";
 import {update} from "../features/userSlice"
 
 export default function ProfileImage({ currentImage , changingUrl}) {
+  const [ newImage  , setNewImage ] = useState()
     const [imageProfile , setImageProfile] = useState(currentImage) ;
     const imageProfileRef = useRef() 
     const dispatch = useDispatch()
     const imageProfileChangeListener = () => {
         const image = imageProfileRef.current.files[0]
+        setNewImage(image)
         const imageProfileURL = URL.createObjectURL(image) 
         setImageProfile(imageProfileURL)
     }
     const changeImageProfile = () => {
         const formData = new FormData() 
-        formData.append("profile" , imageProfile)  
+        formData.append("image" , newImage )
         fetch(changingUrl , {
             method : "post" , 
             body : formData
         } )
         .then(res => {
             if(res.status == 200) {
-                return res.json() 
-            }
-        }).then(data => {
-            Swal.fire({
+              Swal.fire({
                 icon : "success" , 
                 timer : 2000 , 
                 title : "the profile image changed succeccfully"
-            })
-            console.log(data)
-            dispatch(update({item : "profileImage" , value : data}))
-        })
-        .catch(err => {
-            Swal.fire({
-                icon : "error" , 
-                timer : 2000 , 
-                title : "cannot change profile try it again"
-            })
+              })
+              return res.json()
+            }
+        }).then(data => {
+          dispatch(update([{item : "profileImage" , value : data}])) 
         })
     } 
   return (
@@ -73,8 +67,8 @@ export default function ProfileImage({ currentImage , changingUrl}) {
             </div>
             <div class="modal-body d-flex align-items-center justify-content-center flex-column">
                 <img src={imageProfile} className="rounded-circle" alt="" style={{ width : "300px" , height : "300px"}}/>
-                <input type="file" ref={imageProfileRef} name="" accept="image/*" id="profileImage" hidden onChange={imageProfileChangeListener}/>
-                <button className="btn btn-dark my-3" onClick={() => document.getElementById("profileImage").click()}>upload image</button>
+                <input type="file" ref={imageProfileRef} name="file" accept="image/*" id="profileImage" hidden onChange={imageProfileChangeListener}/>
+                <button className="btn btn-dark my-3" type="submit" onClick={() => document.getElementById("profileImage").click()}>upload image</button>
             </div>
             <div class="modal-footer">
               <button

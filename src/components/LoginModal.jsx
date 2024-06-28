@@ -25,18 +25,19 @@ export default function LoginModal() {
         case 200 : return res.json() ; 
         case 404 : setErrors("you are not registred") ; 
           return null 
-        case 401 : setErrors("incorrect password")
+        case 401 || 403 : setErrors("incorrect password")
           return null 
       }
     }
-    const loginSuccess = (userInfo ) => {
-      dispatch(login(userInfo))
+    const loginSuccess = (token) => {
+      dispatch(login({token : token , remember : true }))
       closeLoginModal() ;   
-      if(userInfo.accountType ==( "PROVIDER" || "ADMIN")) navigate("/dashboard/")
+      const user = jwtDecode(token)
+      if(user?.authority.startsWith("PROVIDER") || user?.authority == "ADMIN") navigate("/dashboard/")
       Swal.fire({
         timer : 2000 , 
         text : "the login successful" , 
-        text : "welcome" , 
+        title : "welcome" , 
         icon: "success"
       })
     }
@@ -58,7 +59,9 @@ export default function LoginModal() {
         })
         .then(res => verifierLogin(res))
         .then(data  => {
-          if(data != null)loginSuccess(data)
+          if(data != null){
+            loginSuccess(data.accessToken)
+          }
         })
       }
     }

@@ -75,7 +75,7 @@ export default function UserInfo() {
     }
     return (
         <div className="d-flex align-items-center justify-content-center flex-column w-100">
-            <ProfileImage currentImage={user.profileImage?.url == null ? image :  user.profileImage.url} changingUrl={"http://localhost:8089/costumer/"+updateProfile.id +"/changeProfileImage"}/> 
+            <ProfileImage currentImage={user.profileImage?.url == null ? image :  user.profileImage.url} changingUrl={"http://localhost:8089/costumer/"+user.id +"/changeProfileImage"}/> 
             <div className="form-group d-flex w-100">
 
                 <div className="w-100 me-3">

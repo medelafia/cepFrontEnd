@@ -56,12 +56,12 @@ export default function HomeLayout() {
   }
   return (
     <div className="position-relative">
-      <div className="custom-navbar border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container" style={{zIndex : 10 }}>
+      <div className="custom-navbar position-relative w-100 border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container" style={{zIndex : 10 }}>
         <Brand />
-        <div className="d-lg-flex d-sm-none flex-lg-row align-items-center justify-content-center text-capitalize">
+        <div className="custom-nav-menu text-capitalize active">
           <Link
             to="/"
-            className={`mx-3 text-decoration-none hover ${
+            className={`mx-3 text-decoration-none hover d-block ${
               pathname == "/" ? "active" : "custom-text-secondary"
             }`}
           >
@@ -69,7 +69,7 @@ export default function HomeLayout() {
           </Link>
           <Link
             to="/about"
-            className={`mx-3 text-decoration-none hover ${
+            className={`mx-3 text-decoration-none hover d-block ${
               pathname == "/about"? "active" : "custom-text-secondary"
             }`}
           >
@@ -81,7 +81,7 @@ export default function HomeLayout() {
           </button>
           <Link
             to="/contact"
-            className={`mx-3 text-decoration-none hover ${
+            className={`mx-3 text-decoration-none hover d-block ${
               pathname == "/contact" ? "active" : "custom-text-secondary"
             }`}
           >
@@ -122,11 +122,14 @@ export default function HomeLayout() {
                 } 
               </ul> 
               </div>
-              <button className="btn ms-1 custom-text-primary rounded-circle"><i class="fa-solid fa-lightbulb"></i></button>
+              {/*<button className="btn ms-1 custom-text-primary rounded-circle"><i class="fa-solid fa-lightbulb"></i></button>*/}
               { 
                 user?.accountType == "COSTUMER" && <button className="btn ms-1 custom-text-primary rounded-circle" onClick={()=>{navigate("/card")}}><i class="fa-solid fa-cart-shopping"></i></button>
-        
               }
+              <button className="btn custom-text-primary nav-menu-toogler" 
+                onClick={()=>document.querySelector(".custom-nav-menu").classList.toggle("active")}>
+                  =
+              </button>
         </div>
         </div>
       <LoginModal />

@@ -21,10 +21,11 @@ export default function SignUp() {
         tel : null , 
         registerByGoogle : false , 
         registerByFacebook : false , 
-        emailVerified : false 
+        emailVerified : false ,  
+
     }
+    const [ errors , setErrors ] = useState({})
     const [info , setInfo] = useState(intialState)
-    const [ accountCreated , setAccountCreated ] = useState(false)
     const updateItem = (key , value) => {
         setInfo(prev => ({
             ...prev , 
@@ -39,29 +40,25 @@ export default function SignUp() {
     const prev = () =>{
         if(step >= 1) setStep(step - 1)
     }
-    const register = () => {
-        let provider ; 
-        if(info.accountType == "PROVIDER") {
-            switch(info.providerType) {
-                case "AIRLINE" : provider = "airline" 
-                    break ; 
-                case "CAR_AGENCY" : provider = "carAgency" 
-                    break ;
-                case "TRAVEL_AGENCY" : provider = "travelAgency" 
-                    break ;
-                case "HOTEL" : provider = "hotel" 
-                    break ;
-                case "RAILWAY_OPERATOR" : provider = "railwaysOperator" 
-                    break ;
-            }
+    const formValid = () => {
+        if(errors == {}) return true 
+        else {
+            Object.entries(errors).forEach(elem => {
+                if (elem[1] != null)  return false 
+            })
         }
-        fetch("http://localhost:8089/"+info.accountType.toLowerCase()+"/register".concat(info.accountType == "PROVIDER" ? "/" + provider : "") , {
+    }
+    useEffect(()=>{
+        console.log(formValid())
+    },[errors])
+    const register = () => {
+        fetch(`http://localhost:8089/${info.accountType.toLowerCase()}/register${info.accountType == "PROVIDER" ? `/${info.providerType}` : "" }` , {
             method : "post"  , 
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },  
-            body : JSON.stringify(info)
+            body : JSON.stringify({...info , providerType : null})
         })
         .then(res => {
             if(res.status == 200){
@@ -88,7 +85,6 @@ export default function SignUp() {
     return (
         <div className="row w-100" style={{ height : "100vh"}}> 
             <div className="col-lg-4 bg-dark h-100">
-                jj
             </div>
             <div  className="p-5 col-lg-8 col-sm-12 my-3">
                 <h1 className="text-capitalize custom-text-primary text-center ">
@@ -103,16 +99,10 @@ export default function SignUp() {
                     ))}
                 </Stepper>
                 </div>
-                {
-                    accountCreated ?
-                        <div className="p-5">
-                            <h1>account created</h1>
-                        </div>
-                    :
-                    <>
-                    {step == 0 && <SignAccountInfo currentInfo={info} onChangeFunction={updateItem} next={next}/> }
-                    { step == 1 && info.accountType == "COSTUMER" && <SignCostumerInfo currentInfo={info} onChangeFunction={updateItem}/> }
-                    { step == 1 && info.accountType == "PROVIDER" && <SignCompanyInfo onChangeFunction={updateItem}/> }
+                    {step == 0 && <SignAccountInfo errors={errors} setErrors={setErrors} currentInfo={info} onChangeFunction={updateItem} next={next}/> }
+                    { step == 1 && info.accountType == "COSTUMER" &&
+                     <SignCostumerInfo currentInfo={info} onChangeFunction={updateItem} /> }
+                    { step == 1 && info.accountType == "PROVIDER" && <SignCompanyInfo onChangeFunction={updateItem} currentInfo={info} /> }
                     { step != 2 ? <div className="d-flex align-items-center justify-content-end my-3">
                         <button className="btn custom-btn-outlined-primary me-2 px-4" onClick={prev}>prev</button>
                         <button className="btn custom-btn-primary ms-2 px-4" onClick={next}>next</button>
@@ -126,8 +116,6 @@ export default function SignUp() {
                         </div>
                     </div>
                     }
-                    </>
-                }
             </div>
         </div> 
     )

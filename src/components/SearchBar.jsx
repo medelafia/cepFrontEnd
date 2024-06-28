@@ -46,7 +46,7 @@ export default function SearchBar() {
                 break; 
             case "hotels" : navigate(`/offers/hotels/${hotelSearchInput.current.value}`) 
                 break ; 
-            case "cars" : navigate(`/offers/cars/${carAirport.current.Value}/${nbOfSeats.current.value}`)
+            case "cars" : navigate(`/offers/cars/${carAirport.current.value}/${nbOfSeats.current.value}`)
                 break ; 
             case "traintravels" : navigate(`/offers/trainTravels/${trainTravelBeginStation.current.value}/${trainTravelArrivalStation.current.value}/${trainTravelDate.current.value}`) 
                 break ; 
@@ -97,7 +97,7 @@ export default function SearchBar() {
                                     {renderAirport()}
                                 </Select>
                         </FormControl>
-                        <TextField label="pick up" type="date" inputRef={nbOfSeats} className="ms-1" focused fullWidth/>
+                        <TextField label="number of seats" type="number" inputRef={nbOfSeats} className="ms-1" focused fullWidth/>
                     </div>
                 }{
                     current == "traintravels" && 

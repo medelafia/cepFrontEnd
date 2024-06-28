@@ -12,10 +12,12 @@ export default function Products({close}) {
                                 ,{name : "cars" , path : '/offers/cars/'}
                                 ,{name : "train travels" , path : '/offers/trainTravels/'}] 
                                 ,
-                    "providers" : [ {name : "car agencies" , path : '/providers/car-agencies'}
-                                    ,{name : "railways operators" , path : '/providers/railways-operators'}
-                                    ,{name : "travels agencies" , path : '/providers/travel-agencies'}
-                                    ,{name : "airlines" , path : '/providers/airlines'}]
+                    "providers" : [ {name : "car agencies" , path : '/providers/CARS_AGENCY'}
+                                    ,{name : "railways operators" , path : '/providers/RAILWAY_OPERATOR'}
+                                    ,{name : "travels agencies" , path : '/providers/TRAVELS_AGENCY'}
+                                    ,{name : "airlines" , path : '/providers/AIRLINE'} 
+                                    ,
+                                ]
 
         }
     return (

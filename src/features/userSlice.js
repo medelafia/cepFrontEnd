@@ -1,31 +1,54 @@
+import { ContentCutOutlined } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
+import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
 
-const initialState =  {
-    id : 2, 
-    username : "mohamed" , 
-    email : "email@gmail.com" , 
-    accountType : "PROVIDER" , 
-    providerType : "TRAVELS_AGENCY" , 
-    profileImage : {
-        url : "http://res.cloudinary.com/dl0zud05l/image/upload/v1718730001/db3dgdhqfybcgrvgof83.jpg"
+
+let initialState = null
+if(sessionStorage.getItem("token")) {
+    const tokenDecoded = jwtDecode(sessionStorage.getItem("token"))
+    console.log(tokenDecoded)
+    if( tokenDecoded.exp * 1000 > new Date().getTime()) {
+        initialState = tokenDecoded
+    }
+}else if(localStorage.getItem("token")){
+    const token = localStorage.getItem("token")
+    const tokenDecoded = jwtDecode(token) 
+    if( tokenDecoded.exp * 1000 > new Date().getTime() ) {
+        initialState = tokenDecoded
+    }else {
+        Swal.fire({
+            text : "the token was expired , please login" , 
+            timer : 4000 , 
+            icon : "error" 
+        }) 
     }
 }
+/*const initialState =    jwtDecode(sessionStorage.getItem("accessToken")) |
+                        jwtDecode(JSON.parse(localStorage.getItem("tokens")).accessToken) |
+                        null */
+
+console.log(sessionStorage.getItem("accessToken"))
 const userSlice = createSlice({
     name : "user" , 
     initialState ,
     reducers : {
         logout : (state) => {
+            localStorage.removeItem("token")
+            sessionStorage.removeItem("token") 
             return null
         } , 
         login : (state , action) => {
-            state = action.payload ; 
+            state = jwtDecode(action.payload.token) ;
+            console.log(state) 
+            if(action.remember) localStorage.setItem("token" , action.payload.token)
+            else sessionStorage.setItem("token" , action.payload.token)
             return state  
         } , 
         update : (state , action ) => {
             action.payload.forEach(elem => {
                 state[elem.item] = elem.value   
             })
-            console.log(state)
             return state 
         }
     }

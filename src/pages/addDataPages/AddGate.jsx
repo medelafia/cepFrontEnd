@@ -23,13 +23,13 @@ export default function AddGate() {
     const telRef = useRef()
     const airportTypeRef = useRef() 
     const nbPlatformRef = useRef() 
+    const iataRef = useRef() 
     const addGate = (e) => {
         e.preventDefault() ;
         let fetchUrl  ; 
         let fetchPrefix = "http://localhost:8089/gates/"; 
         let fetchOptions = {
             name : nameRef.current.value , 
-            address : addressRef.current.value , 
             city : cityRef.current.value , 
             country : countyRef.current.value , 
             lat : Number.parseFloat(latRef.current.value) , 
@@ -40,6 +40,7 @@ export default function AddGate() {
         switch(gateType) {
             case "airport" : fetchUrl = fetchPrefix + "airports/" ; 
                             fetchOptions['airportType'] = airportTypeRef.current.value 
+                            fetchOptions["iata"] = iataRef.current.value
                             break ; 
             case "trainStation" : fetchUrl = fetchPrefix + "trainStations/" ; 
                             fetchOptions["platformNb"] = Number.parseInt(nbPlatformRef.current.value)  
@@ -71,8 +72,7 @@ export default function AddGate() {
             <AddDataHeader title="add car"/>
             <form>
                 <div className="form-group my-2 d-flex">
-                    <TextField label="gate name" className="me-1" inputRef={nameRef} />
-                    <TextField label="gate name" className="ms-1" fullWidth inputRef={addressRef} />
+                    <TextField label="gate name" className="me-1" inputRef={nameRef} fullWidth />
                  </div>
                 <div className="form-group d-flex w-100 my-2">
                     <FormControl fullWidth className="me-1">
@@ -109,8 +109,9 @@ export default function AddGate() {
 
                 </div>
                 { gateType == "airport" && 
-                    <div className="form-group my-2">
-                        <FormControl fullWidth>
+                <>
+                    <div className="form-group my-2 d-flex">
+                        <FormControl fullWidth className="me-1">
                         <InputLabel>airport type</InputLabel>
                         <Select inputRef={airportTypeRef} >
                             <MenuItem value="NATIONAL">national</MenuItem>
@@ -118,7 +119,9 @@ export default function AddGate() {
                             <MenuItem value="COMMERCIAL">commercial</MenuItem>
                         </Select>
                         </FormControl>
+                        <TextField label="iata of airport" fullWidth inputRef={iataRef} className="ms-1"/> 
                     </div>
+                </>
                 }
                 {gateType == "trainStation" && 
                     <TextField label="number of platfprmes" fullWidth inputRef={nbPlatformRef} type="number" />

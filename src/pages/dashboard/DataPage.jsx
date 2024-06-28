@@ -17,6 +17,7 @@ export default function DataPage({
   columns,
   dataAddingPath,
   deletePath,
+  updatePath 
 }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -25,11 +26,10 @@ export default function DataPage({
     if (deletePath) {
       columns.push({
         field: "action",
-        headerName: "Action",
-        width: 180,
+        headerName: "Actions",
         sortable: false,
-        disableClickEventBubbling: true,
-
+        disableClickEventBubbling: true ,
+        
         renderCell: (params) => {
           const deleteRow = (e) => {
             const currentRow = params.row;
@@ -52,12 +52,16 @@ export default function DataPage({
               },
             });
           };
+          const update = () => {
+            const currentRow = params.row
+            navigate(updatePath + currentRow.id )
+          }
           return (
             <Stack
               direction="row"
               className="h-100 d-flex align-items-center justify-content-center"
             >
-              <button className="btn text-success">
+              <button className="btn text-success" onClick={update}>
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
               <button className="btn text-danger" onClick={deleteRow}>
@@ -70,7 +74,7 @@ export default function DataPage({
     }
   }, [columns]);
   return (
-    <div className="py-3 px-5 h-75 w-100">
+    <div className="custom-container pt-5">
       <div className="d-flex align-items-center justify-content-between">
         <CurrentPath />
         {dataAddingPath != null && (
@@ -109,6 +113,8 @@ export default function DataPage({
             }}
             pageSizeOptions={[5, 10]}
             checkboxSelection
+            disableRowSelectionOnClick
+          
           />
         </>
       )}

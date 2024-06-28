@@ -22,6 +22,6 @@ export default function Cars() {
     { field : "available" , headerName : "available" } 
   ]
   return (
-    <DataPage columns={columns} dataUrl={"http://localhost:8089/carsAgencies/"+user.id+"/cars"} dataAddingPath="/dashboard/AddCar"/>
+    <DataPage updatePath={"/dashboard/addCar/"} columns={columns} deletePath={`http://localhost:8089/carsAgencies/${user.id}/cars/`} dataUrl={"http://localhost:8089/carsAgencies/"+user.id+"/cars"} dataAddingPath="/dashboard/AddCar"/>
   );
 }

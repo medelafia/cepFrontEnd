@@ -3,7 +3,7 @@
   --secondary-color : #176B87;
   --third-color : white; */
   --primary-color :  #FB8122; 
-  --secondary-color : #1D2228 ; 
+  --secondary-color : #2f3641 ; 
   --third-color :  #E1E2E2; 
 
   --container-padding : 150px ;
@@ -134,10 +134,10 @@
 }
 @media (max-width : 500px ) {
   :root{
-    --container-padding :  20px ;  
+    --container-padding :  5px ;  
   }
 } 
-@media (max-width : 80 ) {
+@media (max-width : 800px ) {
   :root {
     --container-padding : 40px ; 
   }

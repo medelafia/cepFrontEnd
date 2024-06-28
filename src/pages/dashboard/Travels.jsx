@@ -23,7 +23,7 @@ export default function Travels() {
     { field : "includeHotel" , headerName : "include hotel"} , 
   ]
   return (
-    <DataPage dataUrl={"http://localhost:8089/travelAgencies/"+user.id+"/organizedTravels"} dataAddingPath={"/dashboard/addTravel"} columns={columns} />
+    <DataPage dataUrl={"http://localhost:8089/travelAgencies/"+user.id+"/organizedTravels"} deletePath={`http://localhost:8089/travelAgencies/${user.id}/organizedTravels/`} dataAddingPath={"/dashboard/addTravel"} columns={columns} />
   );
 }
  

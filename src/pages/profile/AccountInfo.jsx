@@ -55,20 +55,21 @@ export default function AccountInfo({changePasswordPath}) {
     }
     return (
         <div className="d-flex align-items-start justify-content-center flex-column w-100">
-            <div className="form-group d-flex w-100 my-3">
-                <div className="w-50 me-3">
-                    <TextField fullWidth id="standard-basic" label="username" inputRef={usernameRef} variant="standard" defaultValue={user?.username}/>
+            <div className="form-group row w-100 my-3">
+                <div className="col-sm-12 col-lg-6 my-3 ">
+                    <TextField fullWidth id="standard-basic" label="username" inputRef={usernameRef}  defaultValue={user?.username}/>
                 </div>
-                <div className="w-50 ms-3 d-flex align-items-center">
-                    <TextField fullWidth label="password" variant="standard" defaultValue="passwordhidden" disabled/>
-                    <button className="btn custom-btn-secondary ms-2"><Link to={changePasswordPath} className="text-white"><i class="fa-solid fa-pen-to-square"></i></Link></button>
+                <div className="col-sm-12 col-lg-6 d-flex align-items-center my-3">
+                    <TextField fullWidth label="password"  defaultValue="passwordhidden" disabled/>
+                    <button className="btn btn-light ms-2"><Link to={changePasswordPath} className="text-dark"><i class="fa-solid fa-pen-to-square"></i></Link></button>
                 </div>
             </div>
-            <div className="form-group w-100 my-3">
-                <TextField fullWidth label="email" inputRef={emailRef} variant="standard" type="email" defaultValue={user.email} />
+            <div className="form-group w-100 my-3 d-flex align-items-center justify-content-center">
+                <TextField fullWidth label="email" inputRef={emailRef}  type="email" defaultValue={user.email} />
+                { !user?.emailVerified && <button className="text-danger font-secondary btn">?</button>}
             </div>
             <div className="form-group my-3 w-100">
-                <TextField fullWidth label="number phone" inputRef={telRef} variant="standard" type="tel" defaultValue={user.tel }/>
+                <TextField fullWidth label="number phone" inputRef={telRef}  type="tel" defaultValue={user.tel }/>
             </div>
             <div className="d-flex align-items-center justify-content-end w-100 my-3">
                 <button className="btn custom-btn-outlined-primary mx-2">reset</button>

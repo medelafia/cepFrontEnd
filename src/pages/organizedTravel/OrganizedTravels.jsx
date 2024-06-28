@@ -7,7 +7,7 @@ import ShowMore from "../../components/ShowMore"
 import { useFetch } from "../../hooks/custom-hooks";
 export default function OrganizedTravels() {
     const { destination , date} = useParams()
-    const { data , error , isLoading } = useFetch("http://localhost:8089/organizedTravel")
+    const { data , error , isLoading } = useFetch("http://localhost:8089/organizedTravel/")
     const renderTravels = () => {
         return data?.map((travel , index) => <OrganizesTravel />)
     }
@@ -16,7 +16,7 @@ export default function OrganizedTravels() {
             <header className="d-flex align-items-center">
                 <TextField label="destination name" className="me-2" fullWidth defaultValue={destination}/> 
                 <TextField  className="me-2" type="date" fullWidth defaultValue={date}/>
-                <button className="btn btn-dark">search</button>
+                <button className="btn btn-dark py-3"><i class="fa-solid fa-magnifying-glass"></i></button>
             </header>
             {
                 isLoading ? 
