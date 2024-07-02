@@ -39,6 +39,7 @@ export default function DataPage({
               confirmButtonText: "yes",
               preConfirm: () => {
                 fetch(deletePath + currentRow.id, {
+                  headers : { "Authorization" : "Bearer " + sessionStorage.getItem("token")  }  , 
                   method: "POST",
                 }).then((res) => {
                   if (res.status == 200) {
@@ -54,7 +55,7 @@ export default function DataPage({
           };
           const update = () => {
             const currentRow = params.row
-            navigate(updatePath + currentRow.id )
+            navigate(dataAddingPath.concat(`/${currentRow.id}`) )
           }
           return (
             <Stack

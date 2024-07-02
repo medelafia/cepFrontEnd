@@ -103,6 +103,11 @@ export default function DashboardLayout() {
                         <i class="fa-solid fa-image mx-2"></i>{activeLayout && "images"}
                         </div>
                     </Link> }
+                    {user?.authority.startsWith("PROVIDER") && <Link to="/dashboard/reservations"  className="text-decoration-none">
+                        <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/reservations" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
+                        <i class="fa-solid fa-money-bill-transfer mx-2"></i>{activeLayout && "reservations"}
+                        </div>
+                    </Link> }
                     <Link to="/dashboard/settings"  className="text-decoration-none" style={{transition : "1s ease"}}>
                         <div className={`d-flex align-items-center justify-content-between my-1 p-2 dashboard-link ${pathname.match("settings") ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleShowSettingClick}>
                             <div><i class="fa-solid fa-gear mx-2"></i>{activeLayout && "settings" }</div>

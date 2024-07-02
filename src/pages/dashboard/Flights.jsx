@@ -19,6 +19,6 @@ export default function Flights() {
     {field : "arrivedTime" , headerName : "end time"}
   ]
   return (
-    <DataPage deletePath={`http://localhost:8089/airlines/${user.id}/flights/`} dataUrl={"http://localhost:8089/airlines/"+ user.id + "/flights"} columns={columns} dataAddingPath="/dashboard/addFlight" />
+    <DataPage deletePath={`http://localhost:8089/airlines/flights/`} dataUrl={"http://localhost:8089/airlines/flights"} columns={columns} dataAddingPath="/dashboard/addFlight" />
   );
 }

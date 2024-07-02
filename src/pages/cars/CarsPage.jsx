@@ -10,7 +10,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Car from "./componants/Car";
 import DefaultSkelton from "../../components/DefaultSkeltom";
 import FilterCell from "../../components/FilterCell";
@@ -19,12 +19,20 @@ import NoItems from "../../components/NoItems";
 import ShowMore from "../../components/ShowMore";
 import { useFetch } from "../../hooks/custom-hooks";
 import { useParams } from "react-router-dom";
+import { useTransform } from "framer-motion";
 
 export default function Cars() {
-  const { airport , nbSeats } = useParams()
-  console.log(airport , nbSeats)
-  const { data, isLoading, error } = useFetch(`http://localhost:8089/cars/${ (airport != undefined && nbSeats != undefined) ? `?airportId=${airport}&nbSeats=${nbSeats}` : "" }`);
+  const [cars , setCars ] =useState(null ) 
+  const airportRef = useRef()
+  const nbSeats = useRef() 
+  const [ isLoading , setIsLoading] = useState(false )
+  const [error , setError ] = useState(null)  
   const airports = useFetch("http://localhost:8089/gates/airports/");
+  useEffect(()=> {
+    fetch("http://localhost:8089/offer/cars")
+    .then( res => res.json() )
+    .then( data => setCars(data))
+  }, )
   const airportRendering = () => {
     return airports.data?.map((airport, index) => (
       <MenuItem value={airport.id}>
@@ -32,8 +40,18 @@ export default function Cars() {
       </MenuItem>
     ));
   };
+  const search = (e) => {
+    e.preventDefault() 
+    setIsLoading(true) 
+    fetch(`http://localhost:8089/offer/airportId=${airportRef.current.checked}&nbSeats=${nbSeats.current.checked}`)
+    .then(res => res.json())
+    .then( data => {
+      setCars(data) 
+      setIsLoading(false) 
+    })
+  }
   const displayCars = () => {
-    return data.map((car, index) => <Car key={index} car={car} />);
+    return cars.map((car, index) => <Car key={index} car={car} />);
   };
   const [nbElements, setNbElements] = useState(8);
   const [showFilter, setShowFilter] = useState(false);
@@ -58,11 +76,11 @@ export default function Cars() {
               <div className="d-flex mb-2 ">
                 <FormControl fullWidth className="me-2">
                   <InputLabel>airport</InputLabel>
-                  <Select>{airportRendering()}</Select>
+                  <Select inputRef={airportRef}>{airportRendering()}</Select>
                 </FormControl>
                 <FormControl fullWidth className="me-2">
                   <InputLabel>number of travelers</InputLabel>
-                  <Select>
+                  <Select inputRef={nbSeats}>
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
@@ -71,12 +89,12 @@ export default function Cars() {
                     <MenuItem value={6}>6</MenuItem>
                   </Select>
                 </FormControl>
-                <button className="btn btn-dark">
+                <button className="btn btn-dark" onClick={search}>
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
               </div>
               <div className="d-flex align-items-center justify-content-between mt-2">
-                <div className="text-capitalize">{data?.length} car</div>
+                <div className="text-capitalize">{cars?.length} car</div>
                 <div className="d-flex align-items-center w-25">
                   <button
                     className="btn p-3"
@@ -153,10 +171,10 @@ export default function Cars() {
                       </div>
                     </div>
                   )}
-                  {data?.length > 0 ? (
+                  {cars?.length > 0 ? (
                     <>
                       {displayCars()}
-                      {data?.length > nbElements && (
+                      {cars?.length > nbElements && (
                         <ShowMore
                           callBack={() => setNbElements(nbElements + 8)}
                         />

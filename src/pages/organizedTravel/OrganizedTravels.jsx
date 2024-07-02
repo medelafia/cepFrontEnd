@@ -1,23 +1,27 @@
 import { FormControl, InputLabel, TextField } from "@mui/material";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import InternalError from "../../components/InternalError";
 import LoadingComponent from "../../components/LoadingComponent";
-import OrganizesTravel from "../../components/OrganizedTravel";
+import OrganizesTravel from "./componants/OrganizedTravel";
 import ShowMore from "../../components/ShowMore"
-import { useFetch } from "../../hooks/custom-hooks";
+
 export default function OrganizedTravels() {
-    const { destination , date} = useParams()
-    const { data , error , isLoading } = useFetch("http://localhost:8089/organizedTravel/")
+    const [ travels , setTravel ] = useState(["" ,"","" ,"" ,"" ,"" ,"" ,"" ,"" ,""]) 
+    const [ isLoading , setIsLoading ] = useState(false)
+    const [ error , setError ] = useState(null)
+    const [ nbElements , setNbElements ] = useState(9)
     const renderTravels = () => {
-        return data?.map((travel , index) => <OrganizesTravel />)
+        return travels?.map((travel , index) => <OrganizesTravel />).slice(0 , nbElements)
     }
     return (
         <div>
             <header className="d-flex align-items-center">
-                <TextField label="destination name" className="me-2" fullWidth defaultValue={destination}/> 
-                <TextField  className="me-2" type="date" fullWidth defaultValue={date}/>
+                <TextField label="destination name" className="me-2" fullWidth /> 
+                <TextField  className="me-2" type="date" fullWidth/>
                 <button className="btn btn-dark py-3"><i class="fa-solid fa-magnifying-glass"></i></button>
             </header>
+            <div className="row mb-5">
             {
                 isLoading ? 
                     <LoadingComponent /> 
@@ -29,11 +33,13 @@ export default function OrganizedTravels() {
                     </div>
                     : 
                     <>
-                        <header></header>
+                        {renderTravels()}
+                        {travels?.length > nbElements && <ShowMore callBack={()=>setNbElements(nbElements + 6)}/>}
                     </>
                 )
 
             }
+            </div>
         </div>
     )
 }

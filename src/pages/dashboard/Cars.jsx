@@ -14,14 +14,14 @@ export default function Cars() {
     { field : "fuelType" , headerName : "fuel" } , 
     { field : "transType" , headerName : "trans"} , 
     { field : "styleType" , headerName : "style" } , 
-    { field : "numberOfSeats" , headerName : "seats"} , 
-    { field : "numberOfDoors" , headerName : "doors"} , 
-    { field : "numberOfSuitcases" , headerName : "suit cases"} , 
+    { field : "seats" , headerName : "seats"} , 
+    { field : "doors" , headerName : "doors"} , 
+    { field : "bags" , headerName : "suit cases"} , 
     { field : "airConditioning" , headerName : "air conditioning"} , 
     { field : "freeCancelation" , headerName : "free cancelation"} , 
     { field : "available" , headerName : "available" } 
   ]
   return (
-    <DataPage updatePath={"/dashboard/addCar/"} columns={columns} deletePath={`http://localhost:8089/carsAgencies/${user.id}/cars/`} dataUrl={"http://localhost:8089/carsAgencies/"+user.id+"/cars"} dataAddingPath="/dashboard/AddCar"/>
+    <DataPage updatePath={"/dashboard/addCar/"} columns={columns} deletePath={`http://localhost:8089/carsAgencies/cars/`} dataUrl={"http://localhost:8089/carsAgencies/cars"} dataAddingPath="/dashboard/AddCar"/>
   );
 }

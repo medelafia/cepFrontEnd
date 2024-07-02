@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 
 const URL_PREFIX = "http://localhost:8888/" ; 
-export const useFetch = (url , method = "get", dataToFetch , authorization = null) => {
+export const useFetch = (url , method = "get", dataToFetch , authorization = null , useAuth = true ) => {
     const [ data , setData ] = useState(null) 
     const [ isLoading , setIsLoading ] = useState(true)
     const [ error ,setError ] = useState(null) 
     useEffect(()=> {
         fetch(url , {
             headers : { 
-                "Authorization" : "Bearer " + sessionStorage.getItem("token")  
-            }
+                "Authorization" : useAuth ? null : "Bearer ".concat(sessionStorage.getItem("token")) , 
+                "Accept" : "application/json",
+                "Content-Type": "application/json",
+            } , 
+            body : JSON.stringify(dataToFetch)
         })
         .then(res => {
             if(!res.ok) {

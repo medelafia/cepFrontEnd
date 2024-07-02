@@ -2,11 +2,13 @@ import { TextField } from "@mui/material"
 import { useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2"
-import image from "../assets/user.jpeg"
-import { userSelector } from "../store/selectors/userSelector"
-import ProfileImage from "./ProfileImage"
-import {update} from "../features/userSlice"
+import image from "../../../assets/user.jpeg"
+import {update} from "../../../features/userSlice"
+import { useEffect } from "react"
+import { useFetch } from "../../../hooks/custom-hooks"
+import ProfileImage from "../../../components/ProfileImage"
 export default function CompanySetting() {
+    const { data , error , isLoading } = useFetch("")
     const user = useSelector(userSelector) 
     const nameOfCompanyRef = useRef() 
     const faxRef = useRef() 
@@ -15,7 +17,7 @@ export default function CompanySetting() {
     const dispatch = useDispatch() 
     const updateInfo = (e) => {
         e.preventDefault() 
-        fetch(`http://localhost:8089/provider/${user.id}/update` , {
+        fetch(`http://localhost:8089/provider/update` , {
             method : "POST" , 
             headers: {
                 'Accept': 'application/json',
@@ -24,8 +26,7 @@ export default function CompanySetting() {
             body : JSON.stringify({
                 name : nameOfCompanyRef.current.value , 
                 webSite : webSiteUrlRef.current.value , 
-                fax : faxRef.current.value , 
-                address : addressRef.current.value  
+                fax : faxRef.current.value 
             })
         }).then(res => {
             if(res.status == 200) {
@@ -47,17 +48,14 @@ export default function CompanySetting() {
     }
     return (
         <div  className="w-100">
-            <form className="d-flex align-items-center justify-content-center flex-column w-100">
+            <form className="d-flex align-items-center justify-content-center flex-column w-100" onSubmit={(e)=>e.preventDefault()}>
                 <ProfileImage currentImage={user.logo == null ? image :  user.logo.url} changingUrl={"http://localhost:8089/provider/"+user.id +"/changeLogo"}/> 
                 <div className="form-group my-2 w-100">
                     <TextField label="name of company" fullWidth inputRef={nameOfCompanyRef} defaultValue={user.name}/>
                 </div>
                 <div className="form-group row w-100">
-                    <TextField label="fax" className="col-sm-12 col-lg-6 my-2 " fullWidth inputRef={faxRef} defaultValue={user.fax}/> 
-                    <TextField label="web site url" className="col-sm-12 col-lg-6 my-2 " fullWidth inputRef={webSiteUrlRef} defaultValue={user.webSiteUrl}/>
-                </div>
-                <div className="form-group my-2 w-100">
-                    <TextField  label="physical address" fullWidth inputRef={addressRef} defaultValue={user.physicalAddress}/>
+                    <TextField label="fax" className="col-sm-6 my-2" fullWidth inputRef={faxRef} defaultValue={user.fax}/> 
+                    <TextField label="web site url" className="col-sm-6 my-2" fullWidth inputRef={webSiteUrlRef} defaultValue={user.webSiteUrl}/>
                 </div>
                 <div className="w-100 d-flex align-items-center justify-content-end my-3">
                     <button className="btn custom-btn-outlined-primary me-2" type="reset">reset</button>

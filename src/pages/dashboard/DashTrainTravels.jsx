@@ -18,6 +18,6 @@ export default function DashTrainTravel() {
         {field : "returnDate" , headerName : "return date"} 
     ]
     return (
-        <DataPage columns={columns} dataAddingPath={"/dashboard/addTrainTravel"} dataUrl={`http://localhost:8089//railwaysOperators/${user.id}/createTravel`}/>
+        <DataPage columns={columns} dataAddingPath={"/dashboard/addTrainTravel"} dataUrl={`http://localhost:8089/railwaysOperators/createTravel`}/>
     )
 }

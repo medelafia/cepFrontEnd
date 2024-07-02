@@ -14,7 +14,7 @@ export default function Provider({provider}) {
                     defaultValue={provider.score }
                 />
                 <div className="text-secondary">
-                    {provider.nbReviews} review
+                    {provider.reviewsCount} review
                 </div>
                 <button className="btn btn-outline-dark my-3">
                     <Link to={`/provider/${provider.id}`} className="text-decoration-none text-dark">view profile</Link>

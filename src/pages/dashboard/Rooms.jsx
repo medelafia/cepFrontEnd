@@ -8,13 +8,16 @@ export default function Rooms() {
     const user = useSelector(userSelector)
    const columns = [
     {field : "id" , headerName : "ID" } , 
-    {field : "nbOfRooms" , headerName : "Rooms" } , 
+    { field : "price" , header : "price"} , 
     {field : "roomType" , headerName : "room type" } , 
-    {field : "nbOfAdults" , headerName : "Adults" } , 
-    {field : "nbOfChild" , headerName : "Child" }  , 
-    {field : "available" , headerName : "available"}
+    {field : "adults" , headerName : "Adults" } , 
+    {field : "childs" , headerName : "Child" }  , 
+    {field : "available" , headerName : "available"} , 
+    {field : "hasTv" , headerName : "has tv" } , 
+    {field : "freeWifi" , headerName : "free wifi" }  , 
+    {field : "airConditioning" , headerName : "air conditioning"}
    ]
     return (
-        <DataPage columns={columns} dataUrl={"http://localhost:8089/hotels/"+user.id+"/rooms"} deletePath={"http://localhost:8089/hotels/"+user.id+"/rooms/"} dataAddingPath="/dashboard/addRoom"/>
+        <DataPage columns={columns} dataUrl={"http://localhost:8089/hotels/rooms"} deletePath={"http://localhost:8089/hotels/rooms/"} dataAddingPath="/dashboard/addRoom"/>
     )
 }

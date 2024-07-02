@@ -11,26 +11,32 @@ import ProviderSkeleton from "./componants/ProviderSkeleton";
 
 export default function ProvidersPage() {
   const { type } = useParams() 
-  const { data , error , isLoading} = useFetch("http://localhost:8089/provider/")
+  const [ isLoading , setIsLoading] = useState(false)
+  const [ error , setError ] = useState(true)
   const [ nbElements , setNbElements ] = useState(8)
   const [ providerType , setProviderType ] = useState("all") 
   const [ providers  , setProviders ] = useState([])
   useEffect(()=>{
     setProviderType(type == undefined ? "all" : type)
-  },[])
-  useEffect(()=>{
-    setProviders(data)
-  } , [data])
-  useEffect(()=>{
-    setNbElements(8)
-    if(providerType == "all") {
+    fetch("http://localhost:8089/public/providers/")
+    .then(res => {
+      if(res.status == 200) {
+        setIsLoading(false)
+        return res.json()
+      }else {
+        setError("cannot read data") 
+        setIsLoading(false)
+      }
+    })
+    .then(data => {
       setProviders(data)
-    }else {
-      setProviders( data?.filter((provider , index) => provider.providerType == providerType))
-    }
-  } , [providerType])
+    })
+  },[])
   const renderProviders = () => {
-    return providers?.map((provider , index) => <Provider provider={provider}/>).slice(0, nbElements)
+    return providerType == "all" ? providers?.map((provider , index) => <Provider provider={provider}/>).slice(0, nbElements)
+     : providers?.filter((provider , index) => provider.providerType == providerType)
+                .map((provider , index) => <Provider provider={provider}/>).slice(0, nbElements)
+
   }
   return (
     <div className="page">
@@ -38,10 +44,10 @@ export default function ProvidersPage() {
         <header className="w-100 d-flex align-items-center justify-content-start p-3 border-bottom">
           <ProviderItemsMenu text="all" active={providerType == "all"} onClickFunction={()=>setProviderType("all")}/> 
           <ProviderItemsMenu text="airlines" active={providerType == "AIRLINE"} onClickFunction={()=>setProviderType("AIRLINE")}/> 
-          <ProviderItemsMenu text="railways" active={providerType == "RAILWAY_OPERATOR"} onClickFunction={()=>setProviderType("RAILWAYS_OPERATOR")}/> 
+          <ProviderItemsMenu text="railways" active={providerType == "RAILWAYOPERATOR"} onClickFunction={()=>setProviderType("RAILWAYOPERATOR")}/> 
           <ProviderItemsMenu text="hotels" active={providerType == "HOTEL"} onClickFunction={()=>setProviderType("HOTEL")}/> 
-          <ProviderItemsMenu text="cars agencies" active={providerType == "CARS_AGENCY"} onClickFunction={()=>setProviderType("CARS_AGENCY")}/>
-          <ProviderItemsMenu text="travels agencies" active={providerType == "TRAVELS_AGENCY"} onClickFunction={()=>setProviderType("TRAVELS_AGENCY")}/>
+          <ProviderItemsMenu text="cars agencies" active={providerType == "CARAGENCY"} onClickFunction={()=>setProviderType("CARAGENCY")}/>
+          <ProviderItemsMenu text="travels agencies" active={providerType == "TRAVELAGENCY"} onClickFunction={()=>setProviderType("TRAVELAGENCY")}/>
         </header>
         <div className="d-flex align-items-center justify-content-between my-2">
             <div>{providers?.length} result</div>
@@ -63,7 +69,7 @@ export default function ProvidersPage() {
                     <ProviderSkeleton /> 
                 </>
                 : ( 
-                    error ? 
+                    error == null  ? 
                         <><InternalError /></>
                     :
                     <>

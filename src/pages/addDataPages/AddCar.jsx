@@ -22,6 +22,8 @@ import CurrentPath from "../../components/CurrentPath";
 import { json, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import CoverImageUpload from "./componants/CoverImageUpload";
+import AddDataTemplate from "./AddDataTemplate";
 
 export default function AddCar() { 
   const { id } = useParams()
@@ -31,7 +33,11 @@ export default function AddCar() {
       .then((res) => res.json())
       .then((data) => setAirports(data));
     if(id != undefined) {
-      fetch(`http://localhost:8089/cars/${id}`)
+      fetch(`http://localhost:8089/carsAgencies/cars/${id}`, {
+        headers : {
+          "Authorization" :  "Bearer " + sessionStorage.getItem("token")
+        }
+      })
       .then(res => res.json() ) 
       .then( data => {
         setCar(data)
@@ -42,7 +48,7 @@ export default function AddCar() {
   const user = useSelector(userSelector);
   const navigate = useNavigate();
   /** states  */
-  const [imageUrl , setImageUrl ] = useState(car?.image ) 
+  const [imageUrl , setImageUrl ] = useState( car?.image.url ) 
   const [step, setStep] = useState(0);
   const [airports, setAirports] = useState([]);
   /**references */
@@ -59,7 +65,7 @@ export default function AddCar() {
   const freeCancRef = useRef();
   const airportRef = useRef();
   const availableRef = useRef();
-  const imageRef = useRef() 
+  const [ carImage , setCarImage ]= useState() 
 
   /**methods  */
   const renderAirports = () => {
@@ -69,70 +75,83 @@ export default function AddCar() {
       </MenuItem>
     ));
   };
-  const addCar = (e) => {
-    e.preventDefault();
+  const getCar = () => {
     const makeValue = makeRef.current.value;
     const modelValue = modelRef.current.value;
     const priceValue = Number.parseFloat(priceRef.current.value);
     const fuelTypeValue = fuelTypeRef.current.value;
     const transValue = transmissionRef.current.value;
     const styleValue = styleRef.current.value;
-    const seatsValue = seatsRef.current.value;
-    const doorsValue = doorsRef.current.value;
-    const suitCasesValue = suitCasesRef.current.value;
+    const seatsValue = Number.parseInt(seatsRef.current.value);
+    const doorsValue = Number.parseInt(doorsRef.current.value) ;
+    const suitCasesValue = Number.parseInt(suitCasesRef.current.value);
     const airCondValue = airCondRef.current.checked;
     const freeCancelValue = freeCancRef.current.checked;
     const availableValue = availableRef.current.checked;
-    fetch(`http://localhost:8089/carsAgencies/${user.id}/${id == undefined ? "createCar" : `updateCar/${id}`}`, {
+    return {
+      price: priceValue,
+      make: makeValue,
+      model: modelValue,
+      fuelType: fuelTypeValue,
+      transType: transValue,
+      styleType: styleValue,
+      seats: seatsValue,
+      doors: doorsValue,
+      bags: suitCasesValue,
+      airConditioning: airCondValue,
+      freeCancelation: freeCancelValue,
+      available: availableValue,
+      airport : { id : airportRef.current.value }
+    }
+  }
+  const verifierResponse = (res) => {
+    if (res.status == 200) {
+      Swal.fire({
+        icon: "success",
+        timer: 2000,
+        title: "success",
+        text: `the car ${id == undefined ? "created" : updated} successfully` ,
+      }); 
+      navigate("/dashboard/cars")
+    }else {
+      Swal.fire({
+        icon: "error",
+        timer: 2000,
+        text: `error since creation of the car` ,
+      }); 
+    }
+  }
+  const updateCar = (e) => {
+    e.prevenetDefault() 
+    fetch(`http://localhost:8089/carsAgencies/createCar`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Authorization" : "Bearer " + sessionStorage.getItem("token")  , 
       },
-      body: JSON.stringify({
-        image : imageRef.current.files[0] , 
-        price: priceValue,
-        make: makeValue,
-        model: modelValue,
-        fuelType: fuelTypeValue,
-        transType: transValue,
-        styleType: styleValue,
-        seats: seatsValue,
-        doors: doorsValue,
-        bags: suitCasesValue,
-        airConditioning: airCondValue,
-        freeCancelation: freeCancelValue,
-        available: availableValue,
-        airportId : airportRef.current.value 
-      }),
+      body: JSON.stringify(getCar()),
     })
-      .then((res) => {
-        if (res.status == 200) {
-          Swal.fire({
-            icon: "success",
-            timer: 2000,
-            title: "success",
-            text: `the car ${id == undefined ? "created" : updated} successfully` ,
-          }); 
-            return res.json()
-        }
-        navigate("/dashboard/cars")
-      })
+    .then(verifierResponse)
+  }
+  const addCar = (e) => {
+    e.preventDefault();
+    const formData = new FormData() 
+    formData.append("image" , carImage) 
+    formData.append("car" , new Blob([JSON.stringify(getCar())] , {type : "applicaltion/json"})) 
+    fetch(`http://localhost:8089/carsAgencies/createCar`, {
+      method: "POST",
+      headers: {
+        "Authorization" : "Bearer " + sessionStorage.getItem("token")  , 
+      },
+      body: formData,
+    })
+    .then(verifierResponse)
   };
-
   return (
-    <div className="bg-light">
-      <div className="custom-container py-5">
-        <CurrentPath />
-        <form className="p-4 rounded shadow bg-white my-3">
-          <div className="text-uppercase text-secondary">
-            car infomation 
-          </div>
-          <div className="my-3 d-flex justify-content-between align-items-center flex-column">
-            <img style={{width : "250px" , height : "250px"}} src={imageUrl}/>
-            <input type="file" accept="image/*" id="carImage" hidden ref={imageRef} onChange={(e)=>setImageUrl(URL.createObjectURL(e.currentTarget.files[0]))}/>
-            <button className="btn btn-dark mt-3" onClick={()=>document.getElementById("carImage").click()}>upload image</button>
-          </div>
+    <AddDataTemplate name="car information">
+      <>   
+        <CoverImageUpload changeHandler={(e)=>setCarImage(e)}/>
           <div className="my-3 d-flex justify-content-between">
             <TextField
               className="me-1"
@@ -140,7 +159,7 @@ export default function AddCar() {
               fullWidth
               inputRef={makeRef}
               required
-              defaultValue={'cjkd'} 
+              defaultValue={car?.make} 
             />
             <TextField
               className="ms-1"
@@ -244,12 +263,11 @@ export default function AddCar() {
             <button className="btn btn-outline-dark px-3 mx-3" type="reset">
               reset
             </button>
-            <button className="btn btn-dark px-3 mx-3" onClick={addCar}>
+            <button className="btn btn-dark px-3 mx-3" onClick={id == undefined ? addCar : updateCar}>
               { id == undefined ? "save"  : "update" }
             </button>
           </div>
-        </form> 
-      </div>
-    </div>
+      </> 
+      </AddDataTemplate>
   );
 }

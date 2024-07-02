@@ -1,4 +1,4 @@
-import image from "../assets/chefchaouen.jpg"
+import image from "../../../assets/chefchaouen.jpg"
 export default function OrganizesTravel() {
     return (
         <div className="col-lg-4 col-md-6 col-sm-12 my-2">
@@ -11,6 +11,9 @@ export default function OrganizesTravel() {
                         <h4 className="text-capitalize">destination</h4>
                     </div>
                     <div className="mx-2">
+                        <div>
+                            20/10/2024 
+                        </div>
                         <div>
                             <span className="text-secondary">numbers of days : </span><strong>7 days</strong>
                         </div>

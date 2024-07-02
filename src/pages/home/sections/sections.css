@@ -11,6 +11,9 @@
     font-family: "Briem Hand", cursive;
     font-weight: 400;
 }
+.hero-title > * {
+    font-family: inherit;
+}
 .section {
     min-height: 30vh ;
 }

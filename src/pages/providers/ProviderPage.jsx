@@ -6,7 +6,6 @@ import ImageSlider from "../../components/ImageSlider"
 import CurrentPath from "../../components/CurrentPath";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import Hotel from '../../components/Hotel'
 import { Rating } from "@mui/material";
 import Flight from "../flights/componants/Flight";
 import NoItems from "../../components/NoItems";

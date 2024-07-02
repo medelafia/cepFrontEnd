@@ -1,7 +1,7 @@
 import IndexBox from "./componants/IndexBox";
 import MessageBox from "./componants/MessageBox";
 
-export default function Index() {
+export default function AdminIndex() {
     return (
         <div className="py-3 px-5">
             <div className="row w-100 p-1">

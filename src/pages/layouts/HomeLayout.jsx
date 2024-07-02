@@ -56,7 +56,7 @@ export default function HomeLayout() {
   }
   return (
     <div className="position-relative">
-      <div className="custom-navbar position-relative w-100 border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container" style={{zIndex : 10 }}>
+      <div className="custom-navbar w-100 border-bottom sticky-top bg-white d-flex align-items-center justify-content-between custom-container" style={{zIndex : 10 }}>
         <Brand />
         <div className="custom-nav-menu text-capitalize active">
           <Link
@@ -88,7 +88,7 @@ export default function HomeLayout() {
             Contact 
           </Link>
         </div>
-        <div className="custom-text-primary">
+        <div className="custom-text-primary d-flex align-items-center">
               <div class="dropdown d-inline">
                 <button type="button" className="custom-btn btn custom-text-primary rounded-pill" data-bs-toggle="dropdown">
                   <i className="fa-solid fa-user"></i>
@@ -123,13 +123,14 @@ export default function HomeLayout() {
               </ul> 
               </div>
               {/*<button className="btn ms-1 custom-text-primary rounded-circle"><i class="fa-solid fa-lightbulb"></i></button>*/}
+              <button className="custom-text-primary nav-menu-toogler" 
+                onClick={()=>document.querySelector(".custom-nav-menu").classList.toggle("active")}>
+                  <i class="fa-solid fa-bars-staggered"></i>
+              </button>
               { 
                 user?.accountType == "COSTUMER" && <button className="btn ms-1 custom-text-primary rounded-circle" onClick={()=>{navigate("/card")}}><i class="fa-solid fa-cart-shopping"></i></button>
               }
-              <button className="btn custom-text-primary nav-menu-toogler" 
-                onClick={()=>document.querySelector(".custom-nav-menu").classList.toggle("active")}>
-                  =
-              </button>
+              
         </div>
         </div>
       <LoginModal />

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import image from "../assets/hotel4.jpeg" 
+import image from "./../../../assets/hotel4.jpeg"
 export default function Hotel({hotel}) {
     return (
         <div className="col-lg-4 col-md-6 col-sm-12 my-2">

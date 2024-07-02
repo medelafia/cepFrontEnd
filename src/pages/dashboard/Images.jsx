@@ -13,7 +13,7 @@ import { userSelector } from "../../store/selectors/userSelector";
 export default function Images() {
   const user = useSelector(userSelector);
   const { data, isLoading, error } = useFetch(
-    `http://localhost:8089/provider/${user.id}/getImages`
+    `http://localhost:8089/provider/getImages`
   );
   const [selectedImages , setSelectedImages ] = useState([])
   const renderImages = () => {
@@ -45,6 +45,33 @@ export default function Images() {
       icon :"question" , 
       confirmButtonText : "yes delete" ,
       preConfirm : ()=>{
+        fetch("http://localhost:8089/provider/deleteImages" , {
+          method : "post" ,
+          headers : { 
+              "Authorization" : "Bearer " + sessionStorage.getItem("token")  , 
+              "Accept" : "application/json",
+              "Content-Type": "application/json",
+          } , 
+          body : JSON.stringify(selectedImages)
+        })
+        .then(res => {
+          if(res.status == 200 ){
+            selectedImages.forEach(imageId => {
+            data?.filter((image) => image.id != imageId )
+          })
+          Swal.fire({
+            icon : "success" , 
+            title :"the images was deleted successfully" , 
+            timer : 2000 
+          })
+        }else {
+          Swal.fire({
+            icon : "error" , 
+            title :"cannot delete now try it again" , 
+            timer : 2000 
+          })
+        }
+      })
       } 
     })
   }

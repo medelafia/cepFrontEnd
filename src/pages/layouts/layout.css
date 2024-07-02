@@ -41,7 +41,9 @@
     flex-direction: row ;
 }
 .nav-menu-toogler {
-    display: block;
+    border: none ;
+    background-color: transparent;
+    display: none;
 }
 @media (max-width : 800px ) {
     .custom-nav-menu {
@@ -62,6 +64,6 @@
         margin: 20px 0px;
     }
     .nav-menu-toogler {
-        display: none;
+        display: block ;
     }
 }

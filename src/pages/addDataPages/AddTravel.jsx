@@ -87,15 +87,15 @@ export default function AddTravel({ type , onSuccessPath}) {
     }
     let fetchUrl  ; 
     switch(type) {
-      case "flight" : fetchUrl = `http://localhost:8089/airlines/${user.id}/createFlight`
+      case "flight" : fetchUrl = `http://localhost:8089/airlines/createFlight`
                       body['from'] = {id : Number.parseInt(srcAirportRef.current.value) }
                       body['to'] = {id : Number.parseInt(destAirportRef.current.value) } 
                       break ; 
-      case "train" :  fetchUrl = `http://localhost:8089/railwaysOperators/${user.id}/createTravel`
+      case "train" :  fetchUrl = `http://localhost:8089/railwaysOperators/createTravel`
                       body['from'] = {id : Number.parseInt(srcStation.current.value) }
                       body['to'] = {id : Number.parseInt(destStation.current.value) } 
                       break  ; 
-      case "organized" : fetchUrl = `http://localhost:8089/travelAgencies/${user.id}/createTravel`
+      case "organized" : fetchUrl = `http://localhost:8089/travelAgencies/createTravel`
                         body['originAirport'] = {id : Number.parseInt(originAirportRef.current.value) }
                         body['nbDays'] = Number.parseInt(nbDaysRef.current.value)
                         body['includeTrans'] = includeTransTef.current.checked
@@ -108,6 +108,7 @@ export default function AddTravel({ type , onSuccessPath}) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Authorization" : `Bearer ${sessionStorage.getItem('token')}`
       },
       body: JSON.stringify(body)
     }).then(res => {
