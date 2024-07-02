@@ -8,12 +8,9 @@ export default function Stations() {
     {field :"name" , headerName : "name"} ,
     {field : "address" , headerName : "address"}  ,
     {field : "country" , headerName : "country" } ,
-    {field : "city" , headerName :"city"  } ,
     {field :  "lng" , headerName : "longitue" }, 
-    { field : "lat" , headerName : "latitude" },
-    {field : "emailContact" , headerName : "email"} , 
-    {field : "nbPhoneContact" , headerName : "contact number"}] 
+    { field : "lat" , headerName : "latitude" }] 
     return (
-        <DataPage columns={columns} dataUrl="http://localhost:8089/gates/" deletePath="http://localhost:8089/gates/" dataAddingPath="/dashboard/addGate"/>
+        <DataPage columns={columns} dataUrl="http://localhost:8089/admin/gates/" deletePath="http://localhost:8089/admin/gates/" dataAddingPath="/dashboard/addGate"/>
     )
 }

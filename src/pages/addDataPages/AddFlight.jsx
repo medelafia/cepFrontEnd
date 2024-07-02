@@ -5,11 +5,12 @@ import { useFetch } from "../../hooks/custom-hooks";
 import AddDataTemplate from "./AddDataTemplate";
 
 export default function AddFlight() {
-  const [stopAirports, setStopAirports] = useState(0);
   const [airports, setAirport] = useState([]);
-  const { data, isLoading, error } = useFetch(
-    "http://localhost:8089/gates/airports/"
-  );
+  useEffect(()=> {
+    fetch("http://localhost:8089/public/gates/airports/") 
+    .then(res => res.json()) 
+    .then(data => setAirport(data))
+  } , [])
   const navigate = useNavigate();
   /* offre elements */ /*travel elements*/
   const departureDateRef = useRef();
@@ -19,23 +20,17 @@ export default function AddFlight() {
   const nbOfStopsRef = useRef();
   const distance = useRef();
   const nbOfPlacesRef = useRef();
-  const reservedPlacesRef = useRef();
   const distanceRef = useRef();
   const travelDurationRef = useRef();
   /**flight elements = */
   const srcAirportRef = useRef();
   const destAirportRef = useRef();
-  const [passedAirports, setPasswordAirports] = useState([]);
   const [flightsClasses, setFlightsClasses] = useState([]);
   const flightClassName = useRef()
   const flightClassPrice = useRef()
   const flightClassPlaces = useRef()
-  const addStopAirport = (e) => {
-    e.preventDefault();
-    document.getElementById("stopAirports").append(<StopAirport />);
-  };
   const renderAirport = useCallback(() => {
-    return data?.map((airport, index) => (
+    return airports?.map((airport, index) => (
       <MenuItem value={airport.id}>
         {airport.iata} ({airport.name})
       </MenuItem>
@@ -49,15 +44,15 @@ export default function AddFlight() {
     e.preventDefault();
     const body = {
       distance: Number.parseInt(distanceRef.current.value),
-      nbOfPlaces: Number.parseInt(nbOfPlacesRef.current.value),
       nbOfStops: Number.parseInt(nbOfStopsRef.current.value),
-      reservedPlaces: Number.parseInt(reservedPlacesRef.current.value),
       departureDate: toSqlDate(departureDateRef.current.value),
       departureTime: departureTimeRef.current.value + ":00",
       arrivedTime: arrivedTimeRef.current.value + ":00",
       returnDate: toSqlDate(returnDateRef?.current?.ref),
       travelDuration: travelDurationRef.current.value + ":00",
-      
+      from : { id : Number.parseInt(srcAirportRef.current.value) } , 
+      to : { id : Number.parseInt(destAirportRef.current.value) } , 
+      flightClasses : flightsClasses 
     };
     fetch("http://localhost:8089/airlines/createFlight", {
       method: "POST",
@@ -117,6 +112,28 @@ export default function AddFlight() {
         </div>
       </div>
       <div className="form-group my-2 d-flex w-100">
+        <FormControl fullWidth className="me-1">
+          <InputLabel>start airport</InputLabel>
+          <Select
+            required
+            onChange={(e) => setFlightType(e.target.value)}
+            inputRef={srcAirportRef}
+          >
+            {renderAirport}
+          </Select>
+        </FormControl>
+        <FormControl fullWidth className="ms-1">
+          <InputLabel>arrived airport</InputLabel>
+          <Select
+            required
+            onChange={(e) => setFlightType(e.target.value)}
+            inputRef={destAirportRef}
+          >
+            {renderAirport}
+          </Select>
+        </FormControl>
+      </div>
+      <div className="form-group my-2 d-flex w-100">
         <TextField
           required
           label="start date"
@@ -165,14 +182,6 @@ export default function AddFlight() {
           fullWidth
           inputRef={nbOfStopsRef}
         />
-        <TextField
-          label="number of seats"
-          type="number"
-          className="mx-1"
-          required
-          fullWidth
-          inputRef={nbOfPlacesRef}
-        />
         <TextField label="price" className="mx-1" fullWidth />
       </div>
       <div className="form-group my-2 w-100 d-flex">
@@ -188,36 +197,10 @@ export default function AddFlight() {
           label="travel duration"
           className="ms-1"
           fullWidth
+          type="time" 
+
           inputRef={travelDurationRef}
         />
-      </div>
-      <div className="form-group my-2 d-flex w-100">
-        <FormControl fullWidth className="me-1">
-          <InputLabel>start airport</InputLabel>
-          <Select
-            required
-            onChange={(e) => setFlightType(e.target.value)}
-            inputRef={srcAirportRef}
-          >
-            {renderAirport}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth className="ms-1">
-          <InputLabel>arrived airport</InputLabel>
-          <Select
-            required
-            onChange={(e) => setFlightType(e.target.value)}
-            inputRef={destAirportRef}
-          >
-            {renderAirport}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth className="ms-1">
-          <InputLabel>arrived airport</InputLabel>
-          <Select required inputRef={destAirportRef}>
-            {renderAirport}
-          </Select>
-        </FormControl>
       </div>
       <div className="p-2 w-100 border rounded">
         <h6 className="text-capitalize">flight classes</h6>

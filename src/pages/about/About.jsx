@@ -2,14 +2,14 @@ import AboutCell from "../../components/AboutCell";
 import {motion} from "framer-motion"
 
 export default function About() {
-    const services =  [{title : "recommendation" , text : "text1"} , 
-                    {title : "recommendation" , text : "text1"} , 
-                    {title : "recommendation" , text : "text1"} , 
+    const services =  [{title : "recommendation" , text : "travelboot give you recommendation to explore new experiences" } , 
+                    {title : "recent offers" , text : "travelboot give to their client the last offers for the famous providers"} , 
+                    {title : "offers management" , text : "travelboot is the best choose for manage your offers"} , 
                     {title : "recommendation" , text : "text1"} ,
                     {title : "recommendation" , text : "text1"} ,
                     {title : "recommendation" , text : "text1"}  ] ; 
     const renderServices = () => {
-        return services.map((ser , index)=><AboutCell number={index + 1}  title={ser.text} text={ser.text}/> )
+        return services.map((ser , index)=><AboutCell number={index + 1}  title={ser.title} text={ser.text}/> )
     }
     return (
         <div className="page d-flex flex-column">

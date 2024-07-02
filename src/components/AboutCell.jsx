@@ -7,7 +7,7 @@ export default function AboutCell({number , title , text}) {
             transition = {{duration : number / 5    }}
         >
             <div className="container text-center position-relative" style={{zIndex : 1000}}>
-                <div className="bold font-secondary">
+                <div className="bold font-secondary text-capitalize">
                     {title}
                 </div>
                 <p className="text-secondary">

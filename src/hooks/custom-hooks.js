@@ -8,7 +8,7 @@ export const useFetch = (url , method = "get", dataToFetch , authorization = nul
     useEffect(()=> {
         fetch(url , {
             headers : { 
-                "Authorization" : useAuth ? null : "Bearer ".concat(sessionStorage.getItem("token")) , 
+                "Authorization" : "Bearer ".concat(sessionStorage.getItem("token")) , 
                 "Accept" : "application/json",
                 "Content-Type": "application/json",
             } , 

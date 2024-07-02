@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import AddDataHeader from "../../components/AddDataHeader";
 import CurrentPath from "../../components/CurrentPath";
+import AddDataTemplate from "./AddDataTemplate";
 
 export default function AddGate() {
     const [gateType , setGateType] = useState("airport") ; 
@@ -19,23 +20,18 @@ export default function AddGate() {
     const countyRef = useRef() ; 
     const latRef = useRef() 
     const lngRef = useRef() ; 
-    const emailRef = useRef() 
-    const telRef = useRef()
     const airportTypeRef = useRef() 
     const nbPlatformRef = useRef() 
     const iataRef = useRef() 
     const addGate = (e) => {
         e.preventDefault() ;
         let fetchUrl  ; 
-        let fetchPrefix = "http://localhost:8089/gates/"; 
+        let fetchPrefix = "http://localhost:8089/admin/"; 
         let fetchOptions = {
             name : nameRef.current.value , 
-            city : cityRef.current.value , 
             country : countyRef.current.value , 
             lat : Number.parseFloat(latRef.current.value) , 
             lng : Number.parseFloat(lngRef.current.value) , 
-            emailContact :  emailRef.current.value , 
-            nbPhoneContact :  telRef.current.value 
         }; 
         switch(gateType) {
             case "airport" : fetchUrl = fetchPrefix + "airports/" ; 
@@ -49,7 +45,8 @@ export default function AddGate() {
             method : "POST" , 
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json' ,
+                "Authorization" :  "Bearer " + sessionStorage.getItem("token")
                 },
             body : JSON.stringify(fetchOptions)
         }).then(res => {
@@ -66,12 +63,8 @@ export default function AddGate() {
 
     }
     return (
-        <div>
-        <div className="custom-container py-5">
-            <CurrentPath />
-            <AddDataHeader title="add car"/>
-            <form>
-                <div className="form-group my-2 d-flex">
+        <AddDataTemplate name="gate informations">
+            <div className="form-group my-2 d-flex">
                     <TextField label="gate name" className="me-1" inputRef={nameRef} fullWidth />
                  </div>
                 <div className="form-group d-flex w-100 my-2">
@@ -92,12 +85,6 @@ export default function AddGate() {
                     <TextField fullWidth label="latitude" className="me-1" inputRef={latRef}/>
                     <TextField fullWidth label="longitude" className="me-1" inputRef={lngRef}/>
                 </div>
-                <div className="form-group my-2">
-                    <TextField type ="email" label="email contact of feedback " inputRef={emailRef} fullWidth/> 
-                </div>
-                <div className="form-group my-2">
-                    <TextField type ="email" label="phone number of feedback :" inputRef={telRef} fullWidth/> 
-                </div> 
                 <div className="form-group my-2">
                     <FormControl  fullWidth className="ms-1">
                             <InputLabel>gate type</InputLabel>
@@ -127,8 +114,7 @@ export default function AddGate() {
                     <TextField label="number of platfprmes" fullWidth inputRef={nbPlatformRef} type="number" />
                 }
                 <button className="btn custom-btn-primary w-100 my-3" onClick={addGate}>save </button>
-            </form>
-        </div>
-        </div>
+            
+        </AddDataTemplate> 
     )
 }

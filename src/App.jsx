@@ -8,10 +8,8 @@ import Flights from './pages/dashboard/Flights';
 import Cars from './pages/dashboard/Cars';
 import Stations from './pages/dashboard/Stations'  ; 
 import Rooms from './pages/dashboard/Rooms'  ; 
-import Providers from './pages/dashboard/Providers'  ; 
 import Travels from './pages/dashboard/Travels'  ; 
 import Destinations from './pages/dashboard/Destinations'  ;  
-import Clients from './pages/dashboard/Clients'; 
 import About from "./pages/about/About" ; 
 import Contact from "./pages/contact/Contact" ;
 import { useSelector } from 'react-redux';
@@ -36,7 +34,6 @@ import AddCar from "./pages/addDataPages/AddCar";
 import AddRoom from "./pages/addDataPages/AddRoom";
 import AddGate from "./pages/addDataPages/AddGate";
 import PaymentSetting from "./components/PaymentSetting";
-import AddDestination from "./pages/addDataPages/AddDestination";
 import ResetPassword from "./pages/forgotPassword/ResetPassword";
 import TrainTravels from "./pages/trainTravels/TrainTravels";
 import OrganizedTravels from "./pages/organizedTravel/OrganizedTravels";
@@ -51,6 +48,8 @@ import ProviderIndex from "./pages/dashboard/ProviderIndex";
 import AdminIndex from "./pages/dashboard/AdminIndex";
 import CompanySetting from "./pages/dashboard/componants/CompanySetting";
 import AddFlight from "./pages/addDataPages/AddFlight";
+import Users from "./pages/dashboard/Users";
+import AddUser from "./pages/addDataPages/AddUser";
 
 export default function App() {
   const user = useSelector(userSelector)
@@ -100,8 +99,7 @@ export default function App() {
               <Route element={user?.authority == "ADMIN" ? <Destinations/> : <ErrorPage status={401}/> } path="/dashboard/destinations" />
               <Route element={user?.authority == "PROVIDER_HOTEL" ? <Rooms /> : <ErrorPage status={401}/> } path="/dashboard/rooms" />
               <Route element={user?.authority == "PROVIDER_TRAVELAGENCY" ? <Travels/> : <ErrorPage status={401}/>} path="/dashboard/travels" />
-              <Route element={user?.authority == "ADMIN" ? <Providers/> : <ErrorPage status={401}/>} path="/dashboard/providers" />
-              <Route element={user?.authority == "ADMIN" ? <Clients /> : <ErrorPage status={401}/>} path="/dashboard/clients" /> 
+              <Route element={user?.authority == "ADMIN" ? <Users /> : <ErrorPage status={401}/>} path="/dashboard/users" />
               <Route element={user?.authority == "provider_RAILWAYOPERATOR" ? <DashTrainTravel /> : <ErrorPage status={401}/> } path="/dashboard/train-travels" />
               <Route element={user?.authority.startsWith("PROVIDER") ? <Images /> : <ErrorPage status={401}/>} path="/dashboard/images" />
               <Route element={user?.authority.startsWith("PROVIDER") ? <Reservation /> : <ErrorPage status={401} />} path="/dashboard/reservations" /> 
@@ -117,9 +115,9 @@ export default function App() {
               <Route element={user?.authority == "PROVIDER_HOTEL" ? <AddRoom /> : <ErrorPage status={401} />} path="/dashboard/addRoom" /> 
               <Route element={user?.authority == "PROVIDER_HOTEL" ? <AddRoom /> : <ErrorPage status={401} />} path="/dashboard/addRoom/:id" /> 
               <Route element={user?.authority == "ADMIN" ? <AddGate /> : <ErrorPage status={401} />} path="/dashboard/addGate" />
-              <Route element={user?.authority == "ADMIN" ? <AddDestination /> : <ErrorPage status={401}/>} path="/dashboard/addDestination" />
               <Route element={user?.authority == "PROVIDER_TRAVELAGENCY" ? <AddTravel type="organized" onSuccessPath="/dashboard/travels"/> : <ErrorPage status={401}/>} path="/dashboard/addTravel" />
               <Route element={user?.authority == "PROVIDER_RAILWAYOPERATOR" ? <AddTravel type="train" onSuccessPath="/dashboard/train-travels"/> : <ErrorPage status={401} />} path="/dashboard/addTrainTravel" /> 
+              <Route element={user?.authority == "ADMIN" ? <AddUser /> : <ErrorPage status={401} />} path="/dashboard/addUser" />
             </Route>
             <Route path="/*" element={<ErrorPage status={404} message="page not found"/>} /> 
             <Route path="/payment" element={<PayementPage /> } />

@@ -9,7 +9,7 @@ export default function Services() {
                     <p className="text-secondary">our plateform give you some services</p>
                 </header>
                 <div className="row w-100">
-                    <Service/>
+                    <Service />
                     <Service/>
                     <Service/>
                     <Service/>

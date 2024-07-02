@@ -73,14 +73,9 @@ export default function DashboardLayout() {
                             <i class="fa-solid fa-hotel mx-2"></i>{activeLayout && "rooms"}
                         </div>
                     </Link>}
-                    {user?.authority == "ADMIN" && <Link to="/dashboard/clients"  className="text-decoration-none">
-                        <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/clients" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
-                            <i class="fa-solid fa-user mx-2"></i>{activeLayout && "clients"}
-                        </div>
-                    </Link> }
-                    {user?.authority == "ADMIN" && <Link to="/dashboard/providers"  className="text-decoration-none">
-                        <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/providers" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
-                            <i class="fa-solid fa-user mx-2"></i>{activeLayout && "providers"}
+                    {user?.authority == "ADMIN" && <Link to="/dashboard/users"  className="text-decoration-none">
+                        <div className={`my-1 p-2 dashboard-link ${getCurrentDashboardPage() == "/users" ? "active-dashboard-link" : "custom-text-secondary"}`} onClick={handleClick}>
+                            <i class="fa-solid fa-user mx-2"></i>{activeLayout && "users"}
                         </div>
                     </Link> }
                     {user?.authority == "ADMIN" && <Link to="/dashboard/stations"  className="text-decoration-none">

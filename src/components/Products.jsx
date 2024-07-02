@@ -8,15 +8,14 @@ export default function Products({close}) {
                         ,
                     "offers" : [ {name : "flights" , path : '/offers/flights/'}
                                 ,{name : "hotels" , path : '/offers/hotels/'}
-                                ,{name : "destinations" , path : '/offers/destinations'}
                                 ,{name : "cars" , path : '/offers/cars/'}
                                 ,{name : "train travels" , path : '/offers/trainTravels/'}] 
                                 ,
-                    "providers" : [ {name : "car agencies" , path : '/providers/CARS_AGENCY'}
+                    "providers" : [ { name : "all" , path : "/providers/"}
+                                    ,{name : "car agencies" , path : '/providers/CARS_AGENCY'}
                                     ,{name : "railways operators" , path : '/providers/RAILWAY_OPERATOR'}
                                     ,{name : "travels agencies" , path : '/providers/TRAVELS_AGENCY'}
-                                    ,{name : "airlines" , path : '/providers/AIRLINE'} 
-                                    ,
+                                    ,{name : "airlines" , path : '/providers/AIRLINE'}
                                 ]
 
         }
